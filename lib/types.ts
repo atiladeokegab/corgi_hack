@@ -10,6 +10,7 @@ export type ClickEvent = {
   source: Source
   dmJob: string | null      // which of E-01's twelve jobs the reply was answering
   via: string | null        // uid of whoever passed the link on, when recoverable
+  subscriberId: string | null // ManyChat subscriber id, when the link came from a flow
   refClass: RefClass
   referrer: string
   device: string
@@ -19,7 +20,8 @@ export type ClickEvent = {
 export type Item = {
   slug: string; ref: string; name: string; category: string
   tier: 'entry' | 'mid' | 'premium'
-  style: string; status: string; sofiaSays: string; destination: string
+  style: string; status: string; sofiaSays: string
+  destination: string; realDestination: boolean
 }
 
 export type Post = {
@@ -55,4 +57,5 @@ export type Profile = {
   topSlug: string
   sharerUid: string | null
   sharedToCount: number
+  subscriberId: string | null
 }

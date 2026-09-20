@@ -27,6 +27,7 @@ function classifyReferrer(referrer: string, src: string | null): RefClass {
  *   ?p=E-03.4   the post whose caption carried this link
  *   ?d=BUDGET   the DM job this reply was answering (E-01's labels)
  *   ?v=<uid>    whoever passed the link on
+ *   ?s=<id>     ManyChat subscriber id, filled in by the flow
  *   ?src=       force the arrival channel, for demonstrating a share
  *   ?dry=1      record the open and show the row instead of leaving the site
  */
@@ -39,6 +40,9 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ slug: strin
   const postRef = url.searchParams.get('p')
   const dmJob = url.searchParams.get('d')
   const via = url.searchParams.get('v')
+  // ManyChat resolves {{subscriber_id}} inside the URL before it sends the message,
+  // so an identified click costs nothing more than a longer link.
+  const subscriberId = url.searchParams.get('s')
   const dry = url.searchParams.get('dry') === '1'
 
   const existing = req.cookies.get(COOKIE)?.value
@@ -58,6 +62,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ slug: strin
     source,
     dmJob,
     via,
+    subscriberId,
     refClass,
     referrer,
     device: req.headers.get('user-agent')?.slice(0, 60) ?? 'unknown',

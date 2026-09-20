@@ -49,6 +49,12 @@ const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/
 
 const tierOf = p => (p < 80 ? 'entry' : p <= 120 ? 'mid' : 'premium')
 
+// Real retailer pages, where we have them. Anything not listed falls back to a
+// search URL so the redirect still resolves to something sensible in a demo.
+const DESTINATIONS = {
+  'black-blazer': 'https://www.zara.com/uk/en/tailored-blazer-with-shoulder-pads-p02753329.html?v1=595638605&v2=2420925',
+}
+
 const items = ev('wardrobe.csv').map(r => ({
   slug: slugify(r.item),
   ref: r.ref,
@@ -58,7 +64,9 @@ const items = ev('wardrobe.csv').map(r => ({
   style: r.style,
   status: r.status,
   sofiaSays: r.sofia_says,
-  destination: `https://www.net-a-porter.com/en-gb/shop/search?q=${encodeURIComponent(r.item)}`,
+  destination: DESTINATIONS[slugify(r.item)]
+    ?? `https://www.net-a-porter.com/en-gb/shop/search?q=${encodeURIComponent(r.item)}`,
+  realDestination: Boolean(DESTINATIONS[slugify(r.item)]),
 }))
 const itemBySlug = Object.fromEntries(items.map(i => [i.slug, i]))
 
@@ -183,6 +191,7 @@ function emitPerson({ uid, archetype, source, post, dmJob, anchorMs, refClass, v
       source,                       // 'post' | 'dm' | 'share'
       dmJob: dmJob ?? null,
       via: via ?? null,
+      subscriberId: null,   // seeded history predates the ManyChat link format
       refClass,
       referrer: pick(REFERRERS[refClass]),
       device: pick(DEVICES),
