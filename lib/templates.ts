@@ -43,6 +43,12 @@ export const DEFAULT_TEMPLATES: Record<string, string> = {
   'CONSIDERATION': `you've come back to this one a few times x here it is again — {link}\nfor what it's worth: {verdict}.`,
 }
 
+/**
+ * Questions that ship WITHOUT a draft. This is a default, not a rule — every one
+ * of these has an empty template you can write, and the moment you do, those
+ * messages move over to the sendable pile. We only pre-write the ones where a
+ * template cannot get it wrong.
+ */
 export const NEEDS_YOU: Record<string, string> = {
   'DECISION': 'They want you to choose. That is what they came for.',
   'ADAPTATION': 'They need it restyled for their life, not yours.',
@@ -50,6 +56,13 @@ export const NEEDS_YOU: Record<string, string> = {
   'POST-PURCHASE': 'They already bought it. They want styling, not a link.',
   'CONSTRAINT': 'They do not want to buy anything. Nothing to link here.',
 }
+
+/** Every question type, whether or not it ships with a draft. */
+export const ALL_JOBS = [
+  'EXACT ITEM REQUEST', 'FIT', 'BUDGET', 'SOCIAL SHARING', 'TRUST',
+  'SECOND-HAND DISCOVERY', 'CONSIDERATION',
+  'DECISION', 'ADAPTATION', 'INTENT', 'POST-PURCHASE', 'CONSTRAINT',
+] as const
 
 export const ASKING: Record<string, string> = {
   'EXACT ITEM REQUEST': 'Where is it',
@@ -67,10 +80,11 @@ export const ASKING: Record<string, string> = {
 }
 
 export function getTemplates(): Record<string, string> {
+  const blank = Object.fromEntries(ALL_JOBS.map(j => [j, '']))
   try {
-    return { ...DEFAULT_TEMPLATES, ...JSON.parse(fs.readFileSync(TEMPLATE_FILE, 'utf8')) }
+    return { ...blank, ...DEFAULT_TEMPLATES, ...JSON.parse(fs.readFileSync(TEMPLATE_FILE, 'utf8')) }
   } catch {
-    return { ...DEFAULT_TEMPLATES }
+    return { ...blank, ...DEFAULT_TEMPLATES }
   }
 }
 
@@ -90,6 +104,7 @@ export function saveTemplates(next: Record<string, string>) {
  * £120 shoes to someone who asked for a blazer under £120 costs you their trust.
  */
 export function renderTemplate(text: string, ctx: ReplyContext): string | null {
+  if (!text.trim()) return null
   const values: Record<string, string | null> = {
     '{link}': ctx.link,
     '{piece}': ctx.item.name.toLowerCase(),

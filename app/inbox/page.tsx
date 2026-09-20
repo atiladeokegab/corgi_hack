@@ -38,7 +38,7 @@ export default async function InboxPage() {
     return diff !== 0 ? diff : b.ts.localeCompare(a.ts)
   })
   const counts: Record<string, number> = {}
-  for (const d of pending) if (templates[d.job]) counts[d.job] = (counts[d.job] ?? 0) + 1
+  for (const d of pending) counts[d.job] = (counts[d.job] ?? 0) + 1
 
   const cards = pending.map(dm => {
     const item = bySlug[dm.slug] ?? items[0]
@@ -68,8 +68,12 @@ export default async function InboxPage() {
       asking: ASKING[dm.job] ?? dm.job,
       autoable: Boolean(draft),
       // Either this question always needs her, or the template could not be filled in.
-      needsHer: NEEDS_YOU[dm.job]
-        ?? (template && !draft ? 'No cheaper piece of the same kind, so this one is yours.' : null),
+      needsHer: draft
+        ? null
+        : NEEDS_YOU[dm.job]
+          ?? (template?.trim()
+            ? 'Your template asks for a cheaper piece of the same kind and there is not one.'
+            : 'No template for this question yet. Write one and these come over.'),
       draft,
       link,
     }
@@ -101,7 +105,7 @@ Make a link →
         </p>
       </header>
 
-      <TemplateEditor templates={templates} placeholders={PLACEHOLDERS} counts={counts} />
+      <TemplateEditor templates={templates} placeholders={PLACEHOLDERS} counts={counts} hints={NEEDS_YOU} />
 
       <Triage cards={cards} />
     </main>

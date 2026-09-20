@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { DmPreview } from '../components/DmPreview'
+import { CommentDemo } from './CommentDemo'
 import type { Dm, Item, Post } from '@/lib/types'
 
 const MERGE_FIELD = '{{subscriber_id}}'
@@ -48,54 +48,12 @@ export function LinkBuilder({ items, posts, jobs, dms }: {
   return (
     <div className="space-y-10">
 
-      {/* What ManyChat is, shown rather than explained. */}
-      <section className="rounded-2xl border p-5 sm:p-6 bg-surface-2" style={{ borderColor: 'var(--border)' }}>
-        <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium">
-          What the automation does
-        </p>
-        <p className="text-sm text-ink-2 mt-2 max-w-2xl leading-relaxed">
-          Put a keyword in your caption. Anyone who comments it gets your link
-          automatically, at any hour, without you touching it.
-        </p>
-
-        <div className="grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-5 items-center mt-6">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.12em] text-ink-3 font-medium mb-2">
-              Your caption says
-            </p>
-            <div className="rounded-xl border p-3.5 text-sm leading-relaxed"
-                 style={{ borderColor: 'var(--border)', background: 'var(--background)' }}>
-              <p>The one I keep reaching for. Comment{' '}
-                <strong className="font-semibold" style={{ color: 'var(--accent)' }}>{keyword}</strong>
-                {' '}and I&apos;ll send you the link x</p>
-            </div>
-            <div className="mt-3 space-y-1.5">
-              {['@ellawears', '@junodaily', '@mira.edit'].map(h => (
-                <p key={h} className="text-xs text-ink-2">
-                  <span className="font-medium">{h}</span> {keyword}
-                </p>
-              ))}
-              <p className="text-xs text-ink-3">…and 400 more</p>
-            </div>
-          </div>
-
-          <p className="text-2xl text-ink-3 text-center md:rotate-0 rotate-90" aria-hidden>→</p>
-
-          <DmPreview
-            handle="@ellawears"
-            caption="Two seconds later, in their DMs"
-            bubbles={[
-              { from: 'them', text: keyword },
-              {
-                from: 'you',
-                text: "here you go x",
-                link: `${origin}/r/${slug}`,
-                linkLabel: item?.name ?? 'the piece',
-              },
-            ]}
-          />
-        </div>
-      </section>
+      <CommentDemo
+        keyword={keyword}
+        itemName={item?.name ?? 'the piece'}
+        slug={slug}
+        postSlug={postSlug}
+      />
 
       <div className="grid lg:grid-cols-[minmax(0,19rem)_minmax(0,1fr)] gap-8 items-start">
         <div className="space-y-5">

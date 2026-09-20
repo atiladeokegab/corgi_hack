@@ -9,7 +9,7 @@ echo '[]' > data/live-log.local.json  # clear the live feed
 npm run dev
 ```
 
-Open two tabs: **`/`** and **`/inbox`**. Leave the inbox scrolled to the top.
+Open three tabs: **`/`**, **`/inbox`** and **`/links`**. Leave the inbox at the top.
 Have a phone or a second window ready if you want to tap a link live.
 
 Numbers below are what the seed currently produces. Re-read them after seeding —
@@ -44,6 +44,17 @@ Point at the bar.
 >
 > No forms. No sign-ups. Nobody notices anything.
 
+**Tab 3 — `/links`, press "Watch it run".**
+
+> This is the part that scales. She puts a keyword in the caption, people comment
+> it, and every one of them gets the link automatically.
+
+Let it play. Five comments arrive, five DMs go out.
+
+> Be straight about this: the sending is simulated — Edna is not wired to
+> ManyChat. The five taps it just produced are real, and they are in the feed at
+> the bottom of this page. Connecting it is an account and an API key.
+
 **Tab 2 — the inbox.** This is the bit that matters.
 
 > Ninety-four messages waiting. Forty-five of them are questions she has answered
@@ -65,10 +76,10 @@ Click the **Needs you** tab.
 > would you actually buy?" There is no template for that, and there shouldn't be
 > — that is the thing they came for. Edna does not try.
 
-Open **Your reply templates** at the top.
+Open **Your reply templates**, pick **post-purchase**, type anything, save.
 
-> She writes these, not us. Change a word, save, and every draft underneath
-> rewrites itself.
+> Though that is her call, not ours. Every question has a template she can write.
+> Write one and those messages move across immediately.
 
 ---
 
@@ -127,6 +138,20 @@ arithmetic printed next to it, and why the page ends by asking the brand for a
 discount code — which would make it exact.
 
 **"Does it send the DMs?"**
-Not today. The reply is built and copied; sending needs a ManyChat Pro account
-and an API key. The architecture is one server call, and nothing about the
-product changes.
+Not today, and the page says so. The reply is built, filled in and copied;
+sending needs a ManyChat Pro account and an API key. Browser → our server →
+ManyChat, about thirty lines. Replying to someone who just messaged you is
+inside Instagram's 24-hour window, so it is allowed.
+
+**"Does it really auto-reply to comments?"**
+The comment trigger is a real ManyChat feature and we have not connected it, so
+no. What runs on `/links` is a simulation of the sending and a real recording of
+the clicks — the feed underneath proves the second half. Say that plainly; it is
+a better answer than a vague yes.
+
+**"Why do a third of the messages have no draft?"**
+Most of them are the five questions where a template would be a forgery —
+"which would you actually buy" is the thing her audience came for. The rest are
+budget questions where nothing cheaper of the same kind exists among the eight
+pieces loaded. Both are choices you can see on screen, and she can override
+either by writing a template.

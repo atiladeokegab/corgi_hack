@@ -5,10 +5,11 @@ import { useRef, useState } from 'react'
 
 type Placeholder = { token: string; rule: string }
 
-export function TemplateEditor({ templates, placeholders, counts }: {
+export function TemplateEditor({ templates, placeholders, counts, hints }: {
   templates: Record<string, string>
   placeholders: readonly Placeholder[]
   counts: Record<string, number>
+  hints: Record<string, string>
 }) {
   const router = useRouter()
   const jobs = Object.keys(templates)
@@ -43,6 +44,8 @@ export function TemplateEditor({ templates, placeholders, counts }: {
   }
 
   const dirty = drafts[job] !== templates[job]
+  const written = jobs.filter(j => (templates[j] ?? '').trim()).length
+  const blank = !(drafts[job] ?? '').trim()
 
   return (
     <details className="rounded-2xl border bg-surface-2 mb-8" style={{ borderColor: 'var(--border)' }}>
@@ -51,7 +54,7 @@ export function TemplateEditor({ templates, placeholders, counts }: {
           Your reply templates
         </span>
         <span className="text-sm text-ink-2">
-          {jobs.length} questions answer themselves. Change the wording here.
+          {written} of {jobs.length} questions answer themselves. Write the rest and they will too.
         </span>
         <span className="ml-auto text-xs text-ink-3">open</span>
       </summary>
@@ -68,17 +71,27 @@ export function TemplateEditor({ templates, placeholders, counts }: {
                 color: job === j ? '#fff' : 'inherit',
               }}
             >
-              {j.toLowerCase()}
+              <span className={(templates[j] ?? '').trim() ? '' : 'opacity-60'}>{j.toLowerCase()}</span>
               {counts[j] ? <span className="opacity-70 ml-1.5 tnum">{counts[j]}</span> : null}
             </button>
           ))}
         </div>
+
+        {blank && hints[job] && (
+          <p className="text-xs text-ink-2 mb-2 rounded-lg px-3 py-2 leading-relaxed"
+             style={{ background: 'var(--background)' }}>
+            <strong className="text-foreground font-medium">Left blank on purpose.</strong>{' '}
+            {hints[job]} Write something here and these {counts[job] ?? 0} messages move
+            over to the sendable pile — your call, not ours.
+          </p>
+        )}
 
         <textarea
           ref={box}
           value={drafts[job] ?? ''}
           onChange={e => setDrafts(d => ({ ...d, [job]: e.target.value }))}
           rows={4}
+          placeholder="Empty — these messages come to you instead."
           className="w-full rounded-lg border p-3 text-sm leading-relaxed bg-background text-foreground"
           style={{ borderColor: 'var(--border)' }}
         />
