@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import type { ClickEvent, Dm, Item, PendingDm, Post } from './types'
+import type { ClickEvent, Customer, Dm, Item, PendingDm, Post } from './types'
 
 const DATA = path.join(process.cwd(), 'data')
 const read = <T,>(f: string, fallback: T): T => {
@@ -12,8 +12,7 @@ export const getItems = (): Item[] => read<Item[]>('items.json', [])
 export const getPosts = (): Post[] => read<Post[]>('posts.json', [])
 export const getDms = (): Dm[] => read<Dm[]>('dms.json', [])
 export const getPendingDms = (): PendingDm[] => read<PendingDm[]>('inbox-pending.json', [])
-export const getCustomers = (): { uid: string; orders: number; totalSpent: number }[] =>
-  read<{ uid: string; orders: number; totalSpent: number }[]>('customers.json', [])
+export const getCustomers = (): Customer[] => read<Customer[]>('customers.json', [])
 export const getTruth = () => read<{ uid: string; archetype: string }[]>('ground-truth.json', [])
 export const getReconciliation = () => read<Record<string, string | number>>('reconciliation.json', {})
 

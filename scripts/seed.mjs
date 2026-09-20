@@ -188,6 +188,13 @@ const PHRASINGS = {
 // How many of yesterday's messages are still sitting there.
 const PENDING_DMS = 94
 
+// Affiliate networks only pay out when the purchase lands inside the click window,
+// which for creator networks is typically 24 hours. People take about 3.4 days to
+// decide. Anything in between is a sale she caused and was not paid for.
+const AFFILIATE_WINDOW_HOURS = 24
+const CHASEABLE_DAYS = 5
+const COMMISSION_RATE = 0.10
+
 // -------------------------------------------------------------- behaviour model
 // Five ways of behaving, each defined by what a redirect can actually observe.
 const ARCHETYPES = {
@@ -414,6 +421,9 @@ for (const e of events) {
   openedBy.get(e.uid).add(e.slug)
 }
 
+const firstSeen = new Map()
+for (const e of events) if (!firstSeen.has(e.uid)) firstSeen.set(e.uid, Date.parse(e.ts))
+
 const customers = []
 for (const t of truth) {
   const model = PURCHASE_MODEL[t.archetype]
@@ -439,7 +449,23 @@ for (const t of truth) {
     spent += sorted[idx].price
   }
   if (!bought.size) continue
-  customers.push({ uid: t.uid, orders: bought.size, totalSpent: spent })
+
+  // When each of those purchases happened, relative to first seeing her content.
+  const seenAt = firstSeen.get(t.uid) ?? NOW_MS - hours(72)
+  const purchases = [...bought].map(idx => {
+    const daysAfter = between(0.2, 6.5)
+    const at = Math.min(seenAt + hours(daysAfter * 24), NOW_MS - hours(between(0.2, 6)))
+    const gapDays = (at - seenAt) / DAY
+    return {
+      slug: sorted[idx].slug,
+      value: sorted[idx].price,
+      ts: iso(at),
+      daysAfterSeeing: +gapDays.toFixed(2),
+      paidOut: gapDays * 24 <= AFFILIATE_WINDOW_HOURS,
+    }
+  }).sort((a, b) => a.ts.localeCompare(b.ts))
+
+  customers.push({ uid: t.uid, orders: bought.size, totalSpent: spent, purchases })
 }
 
 // ------------------------------------------------------------- pending inbox
@@ -470,19 +496,28 @@ const peopleIn = s => new Set(bySource(s).map(e => e.uid)).size
 const totalSaves = posts.reduce((a, p) => a + p.saves, 0)
 
 const report = {
-  'people tracked': uidN,
-  'link opens recorded': events.length,
-  'from a caption link': `${peopleIn('post')} people`,
-  'from a DM reply': `${peopleIn('dm')} people`,
-  'from a friend passing it on': `${peopleIn('share')} people`,
-  'assumed: savers who open a link': `${(100 * CLICK_RATE_OF_SAVERS).toFixed(0)}% of ${totalSaves.toLocaleString()} saves`,
-  'assumed: DM replies carrying a link': DM_REPLIES_WITH_A_LINK.toLocaleString(),
-  'shares where the sender is identifiable': `${(100 * SHARER_ATTRIBUTION_RATE).toFixed(0)}%`,
-  'kinds of question tracked': DM_JOBS.length,
-  'wardrobe pieces linked (of 36)': items.length,
-  'people she can actually name': `${new Set(events.filter(e => e.handle).map(e => e.uid)).size} of ${uidN}`,
+  'people who clicked': uidN,
+  'times your links were opened': events.length,
+  'came from a caption': `${peopleIn('post')} people`,
+  'came from a DM': `${peopleIn('dm')} people`,
+  'came from a friend': `${peopleIn('share')} people`,
+  'guess: savers who open a link': `${(100 * CLICK_RATE_OF_SAVERS).toFixed(0)}% of ${totalSaves.toLocaleString()} saves`,
+  'guess: DM replies that carry a link': DM_REPLIES_WITH_A_LINK.toLocaleString(),
+  'forwards where you can see who sent it': `${(100 * SHARER_ATTRIBUTION_RATE).toFixed(0)}%`,
+  'kinds of question you get': DM_JOBS.length,
+  'your pieces in here (of 36)': items.length,
+  'people you can actually name': `${new Set(events.filter(e => e.handle).map(e => e.uid)).size} of ${uidN}`,
   'DMs waiting this morning': pending.length,
-  'spend reported back by the retailer': `${customers.length} customers · £${customers.reduce((a, c) => a + c.totalSpent, 0).toLocaleString('en-GB')}`,
+  'what the shop says people spent': `${customers.length} customers · £${customers.reduce((a, c) => a + c.totalSpent, 0).toLocaleString('en-GB')}`,
+  'sales you were never paid for': (() => {
+    const all = customers.flatMap(c => c.purchases)
+    const unpaid = all.filter(p => !p.paidOut && p.daysAfterSeeing <= CHASEABLE_DAYS)
+    return `${unpaid.length} of ${all.length} · £${Math.round(unpaid.reduce((a, p) => a + p.value, 0) * COMMISSION_RATE).toLocaleString('en-GB')} in commission`
+  })(),
+  'days people take to decide (middle)': (() => {
+    const d = customers.flatMap(c => c.purchases).map(p => p.daysAfterSeeing).sort((a, b) => a - b)
+    return d[Math.floor(d.length / 2)].toFixed(1)
+  })(),
 }
 
 fs.mkdirSync(path.join(ROOT, 'data'), { recursive: true })

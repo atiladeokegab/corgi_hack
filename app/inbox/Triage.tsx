@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from 'react'
 import { londonTime } from '@/lib/time'
+import { DmPreview } from '../components/DmPreview'
 
 type Card = {
   id: string; handle: string; job: string; text: string; ts: string
   segment: string; segmentLabel: string; segmentColor: string
-  itemName: string; asking: string
+  itemName: string; asking: string; totalSpent: number
   autoable: boolean; needsHer: string | null
   draft: string | null; link: string
 }
@@ -21,7 +22,7 @@ const ago = (iso: string) => {
 export function Triage({ cards }: { cards: Card[] }) {
   const [tab, setTab] = useState<'ready' | 'needs' | 'done'>('ready')
   const [edits, setEdits] = useState<Record<string, string>>({})
-  const [done, setDone] = useState<Record<string, 'template' | 'custom'>>({})
+  const [done, setDone] = useState<Record<string, { mode: 'template' | 'custom'; text: string }>>({})
 
   const ready = useMemo(() => cards.filter(c => c.autoable && !done[c.id]), [cards, done])
   const needs = useMemo(() => cards.filter(c => !c.autoable && !done[c.id]), [cards, done])
@@ -33,7 +34,7 @@ export function Triage({ cards }: { cards: Card[] }) {
     if (!text.trim()) return
     const usedTemplate = text === c.draft
     navigator.clipboard?.writeText(text).catch(() => { /* clipboard blocked; reply still logged */ })
-    setDone(d => ({ ...d, [c.id]: usedTemplate ? 'template' : 'custom' }))
+    setDone(d => ({ ...d, [c.id]: { mode: usedTemplate ? 'template' : 'custom', text } }))
     fetch('/api/reply', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -63,7 +64,7 @@ export function Triage({ cards }: { cards: Card[] }) {
         <Tab id="done" label="Cleared" count={cleared} />
         {cleared > 0 && (
           <p className="text-xs text-ink-3 ml-auto tnum">
-            {cleared} answered · {Math.round((cleared / cards.length) * 100)}% of the backlog
+{cleared} sent · {Math.round((cleared / cards.length) * 100)}% of today done
           </p>
         )}
       </div>
@@ -71,8 +72,8 @@ export function Triage({ cards }: { cards: Card[] }) {
       {!visible.length && (
         <p className="text-sm text-ink-3 py-10">
           {tab === 'ready'
-            ? 'Nothing left that answers itself. What remains is in "Needs you".'
-            : tab === 'needs' ? 'Nothing waiting on your judgement.' : 'Nothing cleared yet.'}
+            ? 'All the easy ones are done. What is left needs you.'
+            : tab === 'needs' ? 'Nothing is waiting on you.' : 'You have not sent anything yet.'}
         </p>
       )}
 
@@ -89,6 +90,9 @@ export function Triage({ cards }: { cards: Card[] }) {
                 <span className="size-2 rounded-full shrink-0" style={{ background: c.segmentColor }} />
                 <p className="font-medium text-sm">@{c.handle}</p>
                 <p className="text-[11px] text-ink-3">{c.segmentLabel}</p>
+                {c.totalSpent > 0 && (
+                  <p className="text-[11px] text-ink-3">· spent £{Math.round(c.totalSpent)} with you</p>
+                )}
                 <p className="text-[11px] text-ink-3 ml-auto">{ago(c.ts)} · {londonTime(c.ts)}</p>
               </div>
 
@@ -102,15 +106,25 @@ export function Triage({ cards }: { cards: Card[] }) {
               </p>
 
               {isDone ? (
-                <p className="text-sm mt-3" style={{ color: 'var(--seg-3)' }}>
-                  ✓ answered {done[c.id] === 'template' ? 'with the template' : 'in your own words'} — copied, ready to paste
-                </p>
+                <div className="mt-4">
+                  <p className="text-sm mb-3" style={{ color: 'var(--seg-3)' }}>
+                    ✓ Sent {done[c.id].mode === 'template' ? '' : 'in your own words'}
+                  </p>
+                  <DmPreview
+                    handle={`@${c.handle}`}
+                    caption="What they just got"
+                    bubbles={[
+                      { from: 'them', text: c.text },
+                      { from: 'you', text: done[c.id].text.replace(c.link, '').trim(), link: c.link, linkLabel: c.itemName },
+                    ]}
+                  />
+                </div>
               ) : (
                 <>
                   {c.needsHer && (
                     <p className="text-xs mt-3 rounded-lg px-3 py-2 leading-relaxed"
                        style={{ background: 'var(--background)', color: 'var(--text-secondary)' }}>
-                      {c.needsHer} Their link is ready if you want it.
+                      {c.needsHer} Their link is ready below if you want it.
                     </p>
                   )}
                   <textarea
@@ -118,7 +132,7 @@ export function Triage({ cards }: { cards: Card[] }) {
                     onChange={e => setEdits(v => ({ ...v, [c.id]: e.target.value }))}
                     onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') send(c) }}
                     rows={c.autoable ? 3 : 2}
-                    placeholder={c.autoable ? '' : 'Your words — nobody can write this one for you'}
+                    placeholder={c.autoable ? '' : 'Your words. Nobody can write this one for you.'}
                     className="w-full rounded-lg border p-3 text-sm mt-3 leading-relaxed bg-background text-foreground"
                     style={{ borderColor: 'var(--border)' }}
                   />
@@ -159,7 +173,7 @@ export function Triage({ cards }: { cards: Card[] }) {
 
       {visible.length > 25 && (
         <p className="text-xs text-ink-3 mt-5">
-          Showing 25 of {visible.length}. Clear these and the rest come up.
+          Showing 25 of {visible.length}. Send these and the next lot appear.
         </p>
       )}
     </div>

@@ -160,7 +160,7 @@ export type QueueRow = {
  */
 export function dmPriority(
   profiles: Profile[],
-  customers: { uid: string; orders: number; totalSpent: number }[],
+  customers: { uid: string; totalSpent: number; orders: number }[],
   opts: { group?: SegmentKey | 'ALL'; limit?: number } = {},
 ): QueueRow[] {
   const spend = new Map(customers.map(c => [c.uid, c]))

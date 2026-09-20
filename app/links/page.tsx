@@ -6,8 +6,8 @@ import { getDms, getItems, getPosts } from '@/lib/data'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Link builder — Lookbook',
-  description: 'Build a link that tells Sofia who opened it and what brought them.',
+  title: 'Make a link — Lookbook',
+  description: 'A link that tells you who opened it and what brought them.',
 }
 
 export default function LinksPage() {
@@ -19,30 +19,34 @@ export default function LinksPage() {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 sm:px-6 py-10 sm:py-14">
       <header className="mb-9">
-        <Link href="/" className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium hover:text-foreground transition-colors">
-          ← Lookbook
-        </Link>
-        <h1 className="text-3xl sm:text-[2.4rem] font-semibold mt-2 tracking-tight leading-[1.1]">
-          Build a link
+        <div className="flex items-baseline justify-between gap-4 flex-wrap">
+          <Link href="/" className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium hover:text-foreground transition-colors">
+            ← Lookbook
+          </Link>
+          <Link
+            href="/inbox"
+            className="text-xs rounded-lg border px-3 py-1.5 hover:bg-surface-2 transition-colors"
+            style={{ borderColor: 'var(--border)' }}
+          >
+            Your inbox →
+          </Link>
+        </div>
+        <h1 className="text-3xl sm:text-[2.4rem] font-semibold mt-3 tracking-tight leading-[1.1]">
+          Make a link
         </h1>
         <p className="text-base text-ink-2 mt-4 max-w-2xl leading-relaxed">
-          Sofia already pastes links into her replies. This makes the same link carry a
-          few extra characters, so that when someone opens it she learns which post or
-          question brought them — and, if it went out through ManyChat, who they are.
-          The person clicking sees no difference at all. ManyChat handles the
-          comment auto-replies; her DMs stay hers to answer, using the link
-          beside each name on the replies list.
+          Same link you always send, with a few extra letters on the end. Those letters
+          tell you who opened it and what brought them to it. Whoever taps it just lands
+          on the shop, exactly like before.
         </p>
       </header>
 
       <LinkBuilder items={items} posts={posts} jobs={jobs} dms={dms} />
 
       <section className="mt-14">
-        <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium">Proof</p>
-        <h2 className="text-xl font-semibold mt-1.5 tracking-tight">Clicks landing right now</h2>
+        <h2 className="text-xl font-semibold tracking-tight">Clicks landing right now</h2>
         <p className="text-sm text-ink-2 mt-2 max-w-2xl leading-relaxed">
-          Hit <em>Test it</em> above and the click shows up here within two seconds — the
-          same record that feeds the audience breakdown on the main page.
+          Open one of your links and it shows up here straight away.
         </p>
         <div className="mt-5 rounded-xl border px-4 bg-surface-2" style={{ borderColor: 'var(--border)' }}>
           <LiveFeed />

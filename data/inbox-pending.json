@@ -1,848 +1,848 @@
 [
  {
-  "id": "dm_01o",
-  "uid": "u_0049q",
-  "handle": "delphineedit2",
-  "job": "SOCIAL SHARING",
-  "slug": "white-tee",
-  "text": "just sent this to my girlfriend, she'll love the white tee",
-  "ts": "2026-09-19T04:52:13.271Z"
- },
- {
-  "id": "dm_00h",
-  "uid": "u_0046t",
-  "handle": "ellawears2",
-  "job": "POST-PURCHASE",
-  "slug": "black-blazer",
-  "text": "I bought the black blazer. what should I wear with it?",
-  "ts": "2026-09-19T04:54:10.319Z"
- },
- {
-  "id": "dm_01y",
-  "uid": "u_003vh",
-  "handle": "orla_archive",
-  "job": "POST-PURCHASE",
-  "slug": "vintage-leather",
-  "text": "I bought the vintage leather. what should I wear with it?",
-  "ts": "2026-09-19T05:05:13.930Z"
- },
- {
-  "id": "dm_02h",
-  "uid": "u_003b5",
-  "handle": "ella_styles",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "red-slingback",
-  "text": "WHERE is the red slingback I'm begging you",
-  "ts": "2026-09-19T05:15:00.110Z"
- },
- {
-  "id": "dm_00e",
-  "uid": "u_00490",
-  "handle": "roisinedit2",
-  "job": "POST-PURCHASE",
-  "slug": "grey-knit",
-  "text": "I bought the grey knit. what should I wear with it?",
-  "ts": "2026-09-19T05:28:43.913Z"
- },
- {
-  "id": "dm_019",
-  "uid": "u_003hl",
-  "handle": "sophia.daily",
-  "job": "POST-PURCHASE",
-  "slug": "black-blazer",
-  "text": "the black blazer came today!! how would you style it",
-  "ts": "2026-09-19T05:31:34.100Z"
- },
- {
-  "id": "dm_01x",
-  "uid": "u_003ht",
-  "handle": "ella.daily",
-  "job": "FIT",
-  "slug": "grey-knit",
-  "text": "is the grey knit true to size? I'm between sizes atm",
-  "ts": "2026-09-19T06:02:10.551Z"
- },
- {
-  "id": "dm_00g",
-  "uid": "u_0049a",
-  "handle": "priyaedit2",
-  "job": "BUDGET",
-  "slug": "black-blazer",
-  "text": "is there a cheaper version of the black blazer anywhere",
-  "ts": "2026-09-19T06:02:35.506Z"
- },
- {
-  "id": "dm_01p",
-  "uid": "u_0048l",
-  "handle": "imogen_wears2",
-  "job": "INTENT",
-  "slug": "black-blazer",
-  "text": "need something like the black blazer but for a work christmas do",
-  "ts": "2026-09-19T06:21:31.891Z"
- },
- {
-  "id": "dm_01c",
-  "uid": "u_003qa",
-  "handle": "lottie_fits",
-  "job": "CONSTRAINT",
-  "slug": "white-tee",
-  "text": "on a no-buy this year, how do I get this look with what I have",
-  "ts": "2026-09-19T06:24:36.384Z"
- },
- {
-  "id": "dm_00i",
-  "uid": "u_003zr",
-  "handle": "juno.thrifts",
-  "job": "INTENT",
-  "slug": "grey-knit",
-  "text": "something with the same feel as the grey knit but for summer?",
-  "ts": "2026-09-19T07:19:22.271Z"
- },
- {
-  "id": "dm_02d",
-  "uid": "u_003ux",
-  "handle": "sophia_archive",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "grey-knit",
-  "text": "where's the grey knit from??",
-  "ts": "2026-09-19T08:21:56.082Z"
- },
- {
-  "id": "dm_00k",
-  "uid": "u_00395",
-  "handle": "niamhstyles",
-  "job": "FIT",
-  "slug": "silk-skirt",
-  "text": "what size are you in the silk skirt? I'm usually an 8 but brands are all over the place",
-  "ts": "2026-09-19T08:30:47.646Z"
- },
- {
-  "id": "dm_010",
-  "uid": "u_003g5",
-  "handle": "ella_edit",
-  "job": "CONSTRAINT",
-  "slug": "black-blazer",
-  "text": "on a no-buy this year, how do I get this look with what I have",
-  "ts": "2026-09-19T08:31:45.156Z"
- },
- {
-  "id": "dm_00j",
-  "uid": "u_003c9",
-  "handle": "aylawears",
-  "job": "POST-PURCHASE",
-  "slug": "wide-leg-denim",
-  "text": "I bought the wide-leg denim. what should I wear with it?",
-  "ts": "2026-09-19T09:03:58.177Z"
- },
- {
-  "id": "dm_015",
-  "uid": "u_0049e",
-  "handle": "ninaedit2",
-  "job": "BUDGET",
-  "slug": "white-tee",
-  "text": "love the white tee but it's way out of my budget, any dupes?",
-  "ts": "2026-09-19T09:24:30.978Z"
- },
- {
-  "id": "dm_00x",
-  "uid": "u_0046x",
-  "handle": "imogenwears2",
-  "job": "BUDGET",
-  "slug": "silk-skirt",
-  "text": "is there a cheaper version of the silk skirt anywhere",
-  "ts": "2026-09-19T10:23:17.447Z"
- },
- {
-  "id": "dm_00t",
-  "uid": "u_003ey",
-  "handle": "amelie.edit",
-  "job": "FIT",
-  "slug": "grey-knit",
-  "text": "is the grey knit true to size? I'm between sizes atm",
-  "ts": "2026-09-19T10:58:54.297Z"
- },
- {
-  "id": "dm_006",
-  "uid": "u_004a1",
-  "handle": "georgia.edit2",
-  "job": "ADAPTATION",
-  "slug": "vintage-leather",
-  "text": "I love the outfit but I live in trainers. how would you change it?",
-  "ts": "2026-09-19T11:20:54.411Z"
- },
- {
-  "id": "dm_00f",
-  "uid": "u_003vk",
-  "handle": "delphine_archive",
-  "job": "CONSIDERATION",
-  "slug": "black-blazer",
-  "text": "I've opened the black blazer three times now. still deciding",
-  "ts": "2026-09-19T11:21:33.516Z"
- },
- {
-  "id": "dm_00l",
-  "uid": "u_003ko",
-  "handle": "kara.ldn",
-  "job": "TRUST",
-  "slug": "white-tee",
-  "text": "genuinely trust your taste more than any shop",
-  "ts": "2026-09-19T11:32:48.238Z"
- },
- {
-  "id": "dm_020",
-  "uid": "u_003fd",
-  "handle": "freya.edit",
-  "job": "CONSIDERATION",
-  "slug": "black-blazer",
-  "text": "still not sure about the black blazer, is it worth it",
-  "ts": "2026-09-19T11:44:50.343Z"
- },
- {
-  "id": "dm_02i",
-  "uid": "u_00497",
-  "handle": "georgiaedit2",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "red-slingback",
-  "text": "hiii where is the red slingback from",
-  "ts": "2026-09-19T11:59:44.231Z"
- },
- {
-  "id": "dm_01d",
-  "uid": "u_003w3",
-  "handle": "imogenlookbook",
-  "job": "ADAPTATION",
-  "slug": "red-slingback",
-  "text": "how would you wear the red slingback if you never wear heels",
-  "ts": "2026-09-19T12:13:09.349Z"
- },
- {
-  "id": "dm_01v",
-  "uid": "u_003nu",
-  "handle": "tilly_wardrobe",
-  "job": "ADAPTATION",
-  "slug": "red-slingback",
-  "text": "how would you wear the red slingback if you never wear heels",
-  "ts": "2026-09-19T13:01:49.341Z"
- },
- {
-  "id": "dm_01r",
-  "uid": "u_003yh",
-  "handle": "ellathrifts",
-  "job": "SOCIAL SHARING",
-  "slug": "grey-knit",
-  "text": "showing my mum the grey knit immediately",
-  "ts": "2026-09-19T14:05:20.743Z"
- },
- {
-  "id": "dm_014",
-  "uid": "u_003er",
-  "handle": "aylaedit",
-  "job": "DECISION",
-  "slug": "vintage-leather",
-  "text": "ok but if you were me, which one would you actually buy?",
-  "ts": "2026-09-19T14:25:00.374Z"
- },
- {
-  "id": "dm_02a",
-  "uid": "u_003bf",
-  "handle": "ayla_styles",
-  "job": "CONSTRAINT",
-  "slug": "red-slingback",
-  "text": "on a no-buy this year, how do I get this look with what I have",
-  "ts": "2026-09-19T14:54:39.404Z"
- },
- {
-  "id": "dm_01n",
-  "uid": "u_003ry",
-  "handle": "lottie.closet",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "grey-knit",
-  "text": "where's the grey knit from??",
-  "ts": "2026-09-19T15:22:32.229Z"
- },
- {
-  "id": "dm_021",
-  "uid": "u_003h5",
-  "handle": "saoirsedaily",
-  "job": "ADAPTATION",
-  "slug": "wide-leg-denim",
-  "text": "how would you wear the wide-leg denim if you never wear heels",
-  "ts": "2026-09-19T15:29:23.118Z"
- },
- {
   "id": "dm_00w",
-  "uid": "u_00407",
-  "handle": "freya_thrifts",
-  "job": "FIT",
-  "slug": "black-blazer",
-  "text": "does the black blazer run small?",
-  "ts": "2026-09-19T15:52:04.832Z"
- },
- {
-  "id": "dm_02b",
-  "uid": "u_003b8",
-  "handle": "nina_styles",
-  "job": "POST-PURCHASE",
-  "slug": "black-blazer",
-  "text": "I bought the black blazer. what should I wear with it?",
-  "ts": "2026-09-19T16:36:35.593Z"
- },
- {
-  "id": "dm_02g",
-  "uid": "u_003sr",
-  "handle": "imogen_closet",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "white-tee",
-  "text": "obsessed with the white tee, where is it from",
-  "ts": "2026-09-19T17:14:26.280Z"
- },
- {
-  "id": "dm_004",
-  "uid": "u_0047f",
-  "handle": "sophia.wears2",
-  "job": "DECISION",
-  "slug": "red-slingback",
-  "text": "ok but if you were me, which one would you actually buy?",
-  "ts": "2026-09-19T17:50:44.671Z"
- },
- {
-  "id": "dm_01a",
-  "uid": "u_003k1",
-  "handle": "sarah.ldn",
-  "job": "SECOND-HAND DISCOVERY",
-  "slug": "grey-knit",
-  "text": "someone sent me your post about the grey knit, where is it from",
-  "ts": "2026-09-19T17:54:39.358Z"
- },
- {
-  "id": "dm_02l",
-  "uid": "u_003h3",
-  "handle": "imogendaily",
-  "job": "BUDGET",
+  "uid": "u_003it",
+  "handle": "saoirse_daily",
+  "job": "INTENT",
   "slug": "wide-leg-denim",
-  "text": "anything like the wide-leg denim but under £120? I'm not paying £400 lol",
-  "ts": "2026-09-19T18:10:18.785Z"
- },
- {
-  "id": "dm_018",
-  "uid": "u_003up",
-  "handle": "yara.archive",
-  "job": "TRUST",
-  "slug": "grey-knit",
-  "text": "genuinely trust your taste more than any shop",
-  "ts": "2026-09-19T18:14:25.583Z"
- },
- {
-  "id": "dm_01k",
-  "uid": "u_0039y",
-  "handle": "amelie.styles",
-  "job": "CONSIDERATION",
-  "slug": "black-blazer",
-  "text": "I've opened the black blazer three times now. still deciding",
-  "ts": "2026-09-19T18:40:19.555Z"
- },
- {
-  "id": "dm_00y",
-  "uid": "u_003ri",
-  "handle": "roisin.closet",
-  "job": "SOCIAL SHARING",
-  "slug": "grey-knit",
-  "text": "just sent this to my girlfriend, she'll love the grey knit",
-  "ts": "2026-09-19T18:44:43.218Z"
- },
- {
-  "id": "dm_023",
-  "uid": "u_003li",
-  "handle": "kara_ldn",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "red-slingback",
-  "text": "obsessed with the red slingback, where is it from",
-  "ts": "2026-09-19T18:55:34.324Z"
- },
- {
-  "id": "dm_02k",
-  "uid": "u_003k7",
-  "handle": "georgia.ldn",
-  "job": "ADAPTATION",
-  "slug": "vintage-leather",
-  "text": "would the vintage leather work for someone who works from home",
-  "ts": "2026-09-19T19:04:33.282Z"
- },
- {
-  "id": "dm_01u",
-  "uid": "u_003an",
-  "handle": "orla.styles",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "black-blazer",
-  "text": "hiii where is the black blazer from",
-  "ts": "2026-09-19T19:06:23.106Z"
- },
- {
-  "id": "dm_00o",
-  "uid": "u_00470",
-  "handle": "tillywears2",
-  "job": "BUDGET",
-  "slug": "red-slingback",
-  "text": "is there a cheaper version of the red slingback anywhere",
-  "ts": "2026-09-19T19:08:12.709Z"
- },
- {
-  "id": "dm_002",
-  "uid": "u_003ev",
-  "handle": "yaraedit",
-  "job": "SECOND-HAND DISCOVERY",
-  "slug": "vintage-leather",
-  "text": "my bf sent me your vintage leather video because he thinks I need it",
-  "ts": "2026-09-19T19:17:51.360Z"
- },
- {
-  "id": "dm_025",
-  "uid": "u_003fz",
-  "handle": "laura_edit",
-  "job": "SOCIAL SHARING",
-  "slug": "grey-knit",
-  "text": "just sent this to my girlfriend, she'll love the grey knit",
-  "ts": "2026-09-19T19:22:47.699Z"
- },
- {
-  "id": "dm_02c",
-  "uid": "u_003y2",
-  "handle": "delphine_lookbook",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "grey-knit",
-  "text": "where's the grey knit from??",
-  "ts": "2026-09-19T19:25:46.378Z"
- },
- {
-  "id": "dm_028",
-  "uid": "u_0038w",
-  "handle": "esme",
-  "job": "CONSIDERATION",
-  "slug": "wide-leg-denim",
-  "text": "been thinking about the wide-leg denim all week, talk me into it",
-  "ts": "2026-09-19T20:32:01.206Z"
- },
- {
-  "id": "dm_024",
-  "uid": "u_003us",
-  "handle": "amelie_archive",
-  "job": "BUDGET",
-  "slug": "black-blazer",
-  "text": "anything like the black blazer but under £120? I'm not paying £400 lol",
-  "ts": "2026-09-19T20:41:10.789Z"
- },
- {
-  "id": "dm_00v",
-  "uid": "u_003xo",
-  "handle": "jamie_lookbook",
-  "job": "CONSTRAINT",
-  "slug": "grey-knit",
-  "text": "I'm trying not to buy more stuff. can you help me use what I own?",
-  "ts": "2026-09-19T22:40:34.375Z"
- },
- {
-  "id": "dm_027",
-  "uid": "u_003z1",
-  "handle": "sarah.thrifts",
-  "job": "FIT",
-  "slug": "black-blazer",
-  "text": "does the black blazer run small?",
-  "ts": "2026-09-19T22:44:11.025Z"
- },
- {
-  "id": "dm_00q",
-  "uid": "u_003f9",
-  "handle": "clara.edit",
-  "job": "CONSTRAINT",
-  "slug": "wide-leg-denim",
-  "text": "can I make the wide-leg denim look work without buying it",
-  "ts": "2026-09-19T23:05:39.203Z"
- },
- {
-  "id": "dm_00z",
-  "uid": "u_0047z",
-  "handle": "orla.wears2",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "black-blazer",
-  "text": "WHERE is the black blazer I'm begging you",
-  "ts": "2026-09-19T23:58:13.801Z"
- },
- {
-  "id": "dm_013",
-  "uid": "u_003gu",
-  "handle": "racheldaily",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "red-slingback",
-  "text": "where's the red slingback from??",
-  "ts": "2026-09-20T00:12:10.380Z"
- },
- {
-  "id": "dm_026",
-  "uid": "u_0044s",
-  "handle": "amelie.styles2",
-  "job": "BUDGET",
-  "slug": "grey-knit",
-  "text": "love the grey knit but it's way out of my budget, any dupes?",
-  "ts": "2026-09-20T00:13:20.315Z"
- },
- {
-  "id": "dm_000",
-  "uid": "u_0041i",
-  "handle": "roisin.rewears",
-  "job": "FIT",
-  "slug": "grey-knit",
-  "text": "what size are you in the grey knit? I'm usually an 8 but brands are all over the place",
-  "ts": "2026-09-20T00:20:05.871Z"
- },
- {
-  "id": "dm_01t",
-  "uid": "u_003yq",
-  "handle": "esmethrifts",
-  "job": "CONSTRAINT",
-  "slug": "red-slingback",
-  "text": "I'm trying not to buy more stuff. can you help me use what I own?",
-  "ts": "2026-09-20T00:32:51.791Z"
- },
- {
-  "id": "dm_022",
-  "uid": "u_003e7",
-  "handle": "sarahedit",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "wide-leg-denim",
-  "text": "hiii where is the wide-leg denim from",
-  "ts": "2026-09-20T00:49:27.349Z"
- },
- {
-  "id": "dm_01g",
-  "uid": "u_00453",
-  "handle": "clara.styles2",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "grey-knit",
-  "text": "WHERE is the grey knit I'm begging you",
-  "ts": "2026-09-20T01:01:58.950Z"
- },
- {
-  "id": "dm_01h",
-  "uid": "u_00391",
-  "handle": "yara",
-  "job": "DECISION",
-  "slug": "vintage-leather",
-  "text": "the vintage leather or the other one? I can only get one",
-  "ts": "2026-09-20T01:58:30.122Z"
- },
- {
-  "id": "dm_00b",
-  "uid": "u_003e5",
-  "handle": "niamhedit",
-  "job": "CONSIDERATION",
-  "slug": "black-blazer",
-  "text": "been thinking about the black blazer all week, talk me into it",
-  "ts": "2026-09-20T01:59:14.694Z"
- },
- {
-  "id": "dm_01j",
-  "uid": "u_0048w",
-  "handle": "delphine_wears2",
-  "job": "BUDGET",
-  "slug": "red-slingback",
-  "text": "cheaper alternative to the red slingback?? 🥲",
-  "ts": "2026-09-20T02:01:40.317Z"
- },
- {
-  "id": "dm_01l",
-  "uid": "u_0042x",
-  "handle": "ayla_rewears",
-  "job": "DECISION",
-  "slug": "vintage-leather",
-  "text": "ok but if you were me, which one would you actually buy?",
-  "ts": "2026-09-20T02:05:05.852Z"
- },
- {
-  "id": "dm_00n",
-  "uid": "u_003gg",
-  "handle": "mira_edit",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "grey-knit",
-  "text": "link for the grey knit pls 🙏",
-  "ts": "2026-09-20T02:34:36.485Z"
- },
- {
-  "id": "dm_00r",
-  "uid": "u_003vu",
-  "handle": "rachellookbook",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "red-slingback",
-  "text": "WHERE is the red slingback I'm begging you",
-  "ts": "2026-09-20T02:48:25.927Z"
- },
- {
-  "id": "dm_01q",
-  "uid": "u_003k0",
-  "handle": "roisin.ldn",
-  "job": "TRUST",
-  "slug": "black-blazer",
-  "text": "genuinely trust your taste more than any shop",
-  "ts": "2026-09-20T03:10:36.531Z"
- },
- {
-  "id": "dm_02e",
-  "uid": "u_003m3",
-  "handle": "imogenwardrobe",
-  "job": "CONSTRAINT",
-  "slug": "grey-knit",
-  "text": "on a no-buy this year, how do I get this look with what I have",
-  "ts": "2026-09-20T03:17:31.931Z"
- },
- {
-  "id": "dm_001",
-  "uid": "u_00432",
-  "handle": "delphine_rewears",
-  "job": "BUDGET",
-  "slug": "red-slingback",
-  "text": "cheaper alternative to the red slingback?? 🥲",
-  "ts": "2026-09-20T03:23:23.899Z"
+  "text": "need something like the wide-leg denim but for a work christmas do",
+  "ts": "2026-09-19T04:55:41.018Z"
  },
  {
   "id": "dm_009",
-  "uid": "u_003dm",
-  "handle": "priya_wears",
-  "job": "INTENT",
-  "slug": "red-slingback",
-  "text": "need something like the red slingback but for a work christmas do",
-  "ts": "2026-09-20T03:33:28.618Z"
+  "uid": "u_003p6",
+  "handle": "rachel.fits",
+  "job": "POST-PURCHASE",
+  "slug": "silk-skirt",
+  "text": "got the silk skirt on your rec, what else do I need",
+  "ts": "2026-09-19T05:11:59.308Z"
  },
  {
-  "id": "dm_005",
-  "uid": "u_0044u",
-  "handle": "roisin.styles2",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "black-blazer",
-  "text": "where's the black blazer from??",
-  "ts": "2026-09-20T04:03:31.319Z"
- },
- {
-  "id": "dm_01e",
-  "uid": "u_003k4",
-  "handle": "maya.ldn",
+  "id": "dm_001",
+  "uid": "u_003s0",
+  "handle": "tilly.closet",
   "job": "EXACT ITEM REQUEST",
   "slug": "grey-knit",
-  "text": "hiii where is the grey knit from",
-  "ts": "2026-09-20T04:14:27.329Z"
+  "text": "where's the grey knit from??",
+  "ts": "2026-09-19T05:31:17.485Z"
  },
  {
-  "id": "dm_01f",
-  "uid": "u_0042h",
-  "handle": "laura_rewears",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "grey-knit",
-  "text": "link for the grey knit pls 🙏",
-  "ts": "2026-09-20T04:18:11.817Z"
- },
- {
-  "id": "dm_012",
-  "uid": "u_00390",
-  "handle": "kara",
-  "job": "DECISION",
-  "slug": "grey-knit",
-  "text": "the grey knit or the other one? I can only get one",
-  "ts": "2026-09-20T04:20:11.751Z"
- },
- {
-  "id": "dm_017",
-  "uid": "u_00498",
-  "handle": "jessedit2",
+  "id": "dm_00g",
+  "uid": "u_003zc",
+  "handle": "jamie.thrifts",
   "job": "SOCIAL SHARING",
-  "slug": "wide-leg-denim",
-  "text": "just sent this to my girlfriend, she'll love the wide-leg denim",
-  "ts": "2026-09-20T04:30:35.270Z"
- },
- {
-  "id": "dm_00a",
-  "uid": "u_0041g",
-  "handle": "amelie.rewears",
-  "job": "ADAPTATION",
-  "slug": "black-blazer",
-  "text": "would the black blazer work for someone who works from home",
-  "ts": "2026-09-20T04:58:47.061Z"
- },
- {
-  "id": "dm_00p",
-  "uid": "u_00441",
-  "handle": "sarahstyles2",
-  "job": "TRUST",
   "slug": "red-slingback",
-  "text": "this is the first creator account where I actually save everything",
-  "ts": "2026-09-20T05:08:18.523Z"
+  "text": "just sent this to my girlfriend, she'll love the red slingback",
+  "ts": "2026-09-19T05:53:11.982Z"
+ },
+ {
+  "id": "dm_02e",
+  "uid": "u_0045j",
+  "handle": "yara.styles2",
+  "job": "BUDGET",
+  "slug": "vintage-leather",
+  "text": "is there a cheaper version of the vintage leather anywhere",
+  "ts": "2026-09-19T06:19:45.397Z"
  },
  {
   "id": "dm_01z",
-  "uid": "u_003zv",
-  "handle": "sarah_thrifts",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "red-slingback",
-  "text": "where's the red slingback from??",
-  "ts": "2026-09-20T05:19:02.778Z"
- },
- {
-  "id": "dm_007",
-  "uid": "u_0048v",
-  "handle": "yara_wears2",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "black-blazer",
-  "text": "hiii where is the black blazer from",
-  "ts": "2026-09-20T06:14:55.402Z"
- },
- {
-  "id": "dm_01i",
-  "uid": "u_004a8",
-  "handle": "nina.edit2",
-  "job": "BUDGET",
-  "slug": "black-blazer",
-  "text": "love the black blazer but it's way out of my budget, any dupes?",
-  "ts": "2026-09-20T06:46:22.327Z"
- },
- {
-  "id": "dm_00c",
-  "uid": "u_003o5",
-  "handle": "niamhfits",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "grey-knit",
-  "text": "link for the grey knit pls 🙏",
-  "ts": "2026-09-20T06:53:51.772Z"
- },
- {
-  "id": "dm_01s",
-  "uid": "u_003pm",
-  "handle": "mira.fits",
-  "job": "DECISION",
-  "slug": "vintage-leather",
-  "text": "genuinely cannot decide, what would you do",
-  "ts": "2026-09-20T06:53:57.395Z"
- },
- {
-  "id": "dm_016",
-  "uid": "u_0038u",
-  "handle": "tilly",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "red-slingback",
-  "text": "where's the red slingback from??",
-  "ts": "2026-09-20T08:23:22.004Z"
- },
- {
-  "id": "dm_02f",
-  "uid": "u_003lw",
-  "handle": "jesswardrobe",
-  "job": "ADAPTATION",
-  "slug": "grey-knit",
-  "text": "would the grey knit work for someone who works from home",
-  "ts": "2026-09-20T08:41:29.266Z"
- },
- {
-  "id": "dm_01w",
-  "uid": "u_003ap",
-  "handle": "yara.styles",
-  "job": "SECOND-HAND DISCOVERY",
-  "slug": "white-tee",
-  "text": "someone sent me your post about the white tee, where is it from",
-  "ts": "2026-09-20T10:01:58.772Z"
- },
- {
-  "id": "dm_00d",
-  "uid": "u_003am",
-  "handle": "mira.styles",
-  "job": "EXACT ITEM REQUEST",
-  "slug": "white-tee",
-  "text": "hiii where is the white tee from",
-  "ts": "2026-09-20T10:09:36.850Z"
- },
- {
-  "id": "dm_01m",
-  "uid": "u_0046t",
-  "handle": "ellawears2",
-  "job": "DECISION",
-  "slug": "black-blazer",
-  "text": "genuinely cannot decide, what would you do",
-  "ts": "2026-09-20T10:35:21.592Z"
- },
- {
-  "id": "dm_00s",
-  "uid": "u_003v9",
-  "handle": "imogen_archive",
-  "job": "SECOND-HAND DISCOVERY",
-  "slug": "black-blazer",
-  "text": "my friend sent me this, do you have a link for the black blazer",
-  "ts": "2026-09-20T11:01:23.391Z"
- },
- {
-  "id": "dm_00u",
-  "uid": "u_003h0",
-  "handle": "jamiedaily",
+  "uid": "u_003mn",
+  "handle": "laura.wardrobe",
   "job": "INTENT",
-  "slug": "grey-knit",
-  "text": "can you find me a version of the grey knit for a wedding? same energy, less corporate",
-  "ts": "2026-09-20T11:03:16.464Z"
+  "slug": "black-blazer",
+  "text": "can you find me a version of the black blazer for a wedding? same energy, less corporate",
+  "ts": "2026-09-19T07:07:52.272Z"
+ },
+ {
+  "id": "dm_00n",
+  "uid": "u_003wg",
+  "handle": "amelie.lookbook",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "wide-leg-denim",
+  "text": "hiii where is the wide-leg denim from",
+  "ts": "2026-09-19T07:11:10.866Z"
+ },
+ {
+  "id": "dm_00a",
+  "uid": "u_003lc",
+  "handle": "tilly_ldn",
+  "job": "TRUST",
+  "slug": "red-slingback",
+  "text": "this is the first creator account where I actually save everything",
+  "ts": "2026-09-19T07:42:31.025Z"
+ },
+ {
+  "id": "dm_014",
+  "uid": "u_003gx",
+  "handle": "claradaily",
+  "job": "DECISION",
+  "slug": "black-blazer",
+  "text": "genuinely cannot decide, what would you do",
+  "ts": "2026-09-19T07:54:37.344Z"
+ },
+ {
+  "id": "dm_00f",
+  "uid": "u_004av",
+  "handle": "georgia_edit2",
+  "job": "SECOND-HAND DISCOVERY",
+  "slug": "red-slingback",
+  "text": "my bf sent me your red slingback video because he thinks I need it",
+  "ts": "2026-09-19T08:05:34.678Z"
+ },
+ {
+  "id": "dm_017",
+  "uid": "u_0048q",
+  "handle": "esme_wears2",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "red-slingback",
+  "text": "hiii where is the red slingback from",
+  "ts": "2026-09-19T08:09:56.442Z"
+ },
+ {
+  "id": "dm_002",
+  "uid": "u_0049o",
+  "handle": "karaedit2",
+  "job": "FIT",
+  "slug": "vintage-leather",
+  "text": "what size are you in the vintage leather? I'm usually an 8 but brands are all over the place",
+  "ts": "2026-09-19T09:25:48.567Z"
  },
  {
   "id": "dm_029",
-  "uid": "u_00495",
-  "handle": "lauraedit2",
-  "job": "SOCIAL SHARING",
-  "slug": "silk-skirt",
-  "text": "sending the silk skirt to my sister because she needs this exact vibe",
-  "ts": "2026-09-20T11:09:01.010Z"
- },
- {
-  "id": "dm_011",
-  "uid": "u_003ol",
-  "handle": "imogenfits",
-  "job": "FIT",
-  "slug": "black-blazer",
-  "text": "what size are you in the black blazer? I'm usually an 8 but brands are all over the place",
-  "ts": "2026-09-20T11:47:26.499Z"
- },
- {
-  "id": "dm_00m",
-  "uid": "u_003gp",
-  "handle": "sarahdaily",
-  "job": "CONSTRAINT",
+  "uid": "u_003db",
+  "handle": "niamh_wears",
+  "job": "DECISION",
   "slug": "white-tee",
-  "text": "can I make the white tee look work without buying it",
-  "ts": "2026-09-20T12:19:26.382Z"
+  "text": "ok but if you were me, which one would you actually buy?",
+  "ts": "2026-09-19T09:35:24.783Z"
  },
  {
-  "id": "dm_008",
-  "uid": "u_0045d",
-  "handle": "beth.styles2",
+  "id": "dm_01e",
+  "uid": "u_003a1",
+  "handle": "sarah.styles",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "wide-leg-denim",
+  "text": "WHERE is the wide-leg denim I'm begging you",
+  "ts": "2026-09-19T09:45:07.353Z"
+ },
+ {
+  "id": "dm_00b",
+  "uid": "u_003yy",
+  "handle": "amelie.thrifts",
   "job": "EXACT ITEM REQUEST",
   "slug": "black-blazer",
-  "text": "obsessed with the black blazer, where is it from",
-  "ts": "2026-09-20T13:01:14.176Z"
+  "text": "where's the black blazer from??",
+  "ts": "2026-09-19T09:47:33.413Z"
  },
  {
-  "id": "dm_003",
-  "uid": "u_003kq",
-  "handle": "delphine.ldn",
-  "job": "INTENT",
+  "id": "dm_00q",
+  "uid": "u_003xz",
+  "handle": "orla_lookbook",
+  "job": "POST-PURCHASE",
+  "slug": "grey-knit",
+  "text": "the grey knit came today!! how would you style it",
+  "ts": "2026-09-19T10:07:23.514Z"
+ },
+ {
+  "id": "dm_000",
+  "uid": "u_0045p",
+  "handle": "sarah_styles2",
+  "job": "BUDGET",
   "slug": "red-slingback",
-  "text": "something with the same feel as the red slingback but for summer?",
-  "ts": "2026-09-20T13:11:07.507Z"
+  "text": "cheaper alternative to the red slingback?? 🥲",
+  "ts": "2026-09-19T10:16:49.244Z"
+ },
+ {
+  "id": "dm_00j",
+  "uid": "u_003rz",
+  "handle": "saoirse.closet",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "red-slingback",
+  "text": "WHERE is the red slingback I'm begging you",
+  "ts": "2026-09-19T10:37:56.550Z"
+ },
+ {
+  "id": "dm_02i",
+  "uid": "u_003x0",
+  "handle": "tilly.lookbook",
+  "job": "ADAPTATION",
+  "slug": "grey-knit",
+  "text": "I love the outfit but I live in trainers. how would you change it?",
+  "ts": "2026-09-19T10:38:11.170Z"
  },
  {
   "id": "dm_02j",
-  "uid": "u_003tg",
-  "handle": "priyaarchive",
-  "job": "POST-PURCHASE",
+  "uid": "u_0046z",
+  "handle": "saoirsewears2",
+  "job": "BUDGET",
   "slug": "black-blazer",
-  "text": "I bought the black blazer. what should I wear with it?",
-  "ts": "2026-09-20T13:33:28.953Z"
+  "text": "love the black blazer but it's way out of my budget, any dupes?",
+  "ts": "2026-09-19T11:18:43.073Z"
+ },
+ {
+  "id": "dm_01f",
+  "uid": "u_004aj",
+  "handle": "yara.edit2",
+  "job": "POST-PURCHASE",
+  "slug": "grey-knit",
+  "text": "got the grey knit on your rec, what else do I need",
+  "ts": "2026-09-19T11:33:14.871Z"
+ },
+ {
+  "id": "dm_01g",
+  "uid": "u_0039h",
+  "handle": "ellastyles",
+  "job": "ADAPTATION",
+  "slug": "red-slingback",
+  "text": "how would you wear the red slingback if you never wear heels",
+  "ts": "2026-09-19T11:42:15.652Z"
+ },
+ {
+  "id": "dm_00o",
+  "uid": "u_003qe",
+  "handle": "esme_fits",
+  "job": "SOCIAL SHARING",
+  "slug": "vintage-leather",
+  "text": "just sent this to my girlfriend, she'll love the vintage leather",
+  "ts": "2026-09-19T11:45:43.246Z"
+ },
+ {
+  "id": "dm_01c",
+  "uid": "u_0042n",
+  "handle": "ella_rewears",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "wide-leg-denim",
+  "text": "obsessed with the wide-leg denim, where is it from",
+  "ts": "2026-09-19T11:55:42.471Z"
+ },
+ {
+  "id": "dm_018",
+  "uid": "u_003s9",
+  "handle": "juno.closet",
+  "job": "POST-PURCHASE",
+  "slug": "vintage-leather",
+  "text": "got the vintage leather on your rec, what else do I need",
+  "ts": "2026-09-19T12:02:48.539Z"
+ },
+ {
+  "id": "dm_00e",
+  "uid": "u_003w8",
+  "handle": "esmelookbook",
+  "job": "ADAPTATION",
+  "slug": "red-slingback",
+  "text": "I love the outfit but I live in trainers. how would you change it?",
+  "ts": "2026-09-19T12:10:36.000Z"
+ },
+ {
+  "id": "dm_02k",
+  "uid": "u_003x3",
+  "handle": "ayla.lookbook",
+  "job": "BUDGET",
+  "slug": "wide-leg-denim",
+  "text": "love the wide-leg denim but it's way out of my budget, any dupes?",
+  "ts": "2026-09-19T12:53:26.654Z"
+ },
+ {
+  "id": "dm_01x",
+  "uid": "u_0039x",
+  "handle": "junostyles",
+  "job": "BUDGET",
+  "slug": "white-tee",
+  "text": "anything like the white tee but under £120? I'm not paying £400 lol",
+  "ts": "2026-09-19T13:00:08.001Z"
+ },
+ {
+  "id": "dm_015",
+  "uid": "u_003t1",
+  "handle": "yara_closet",
+  "job": "BUDGET",
+  "slug": "red-slingback",
+  "text": "anything like the red slingback but under £120? I'm not paying £400 lol",
+  "ts": "2026-09-19T13:02:13.179Z"
+ },
+ {
+  "id": "dm_01q",
+  "uid": "u_00401",
+  "handle": "georgia_thrifts",
+  "job": "ADAPTATION",
+  "slug": "grey-knit",
+  "text": "how would you wear the grey knit if you never wear heels",
+  "ts": "2026-09-19T13:18:40.094Z"
+ },
+ {
+  "id": "dm_010",
+  "uid": "u_00464",
+  "handle": "lottie_styles2",
+  "job": "POST-PURCHASE",
+  "slug": "white-tee",
+  "text": "got the white tee on your rec, what else do I need",
+  "ts": "2026-09-19T13:20:43.716Z"
+ },
+ {
+  "id": "dm_01v",
+  "uid": "u_003rf",
+  "handle": "junocloset",
+  "job": "FIT",
+  "slug": "vintage-leather",
+  "text": "is the vintage leather true to size? I'm between sizes atm",
+  "ts": "2026-09-19T13:46:39.612Z"
+ },
+ {
+  "id": "dm_01l",
+  "uid": "u_0046e",
+  "handle": "delphine_styles2",
+  "job": "TRUST",
+  "slug": "black-blazer",
+  "text": "you're the only person whose links I actually click tbh",
+  "ts": "2026-09-19T13:57:28.199Z"
+ },
+ {
+  "id": "dm_02b",
+  "uid": "u_003jr",
+  "handle": "aylaldn",
+  "job": "CONSIDERATION",
+  "slug": "white-tee",
+  "text": "I've opened the white tee three times now. still deciding",
+  "ts": "2026-09-19T14:00:16.338Z"
+ },
+ {
+  "id": "dm_00h",
+  "uid": "u_003r8",
+  "handle": "esmecloset",
+  "job": "ADAPTATION",
+  "slug": "grey-knit",
+  "text": "how would you wear the grey knit if you never wear heels",
+  "ts": "2026-09-19T14:46:02.799Z"
+ },
+ {
+  "id": "dm_008",
+  "uid": "u_003yr",
+  "handle": "aylathrifts",
+  "job": "BUDGET",
+  "slug": "white-tee",
+  "text": "cheaper alternative to the white tee?? 🥲",
+  "ts": "2026-09-19T15:31:30.723Z"
+ },
+ {
+  "id": "dm_021",
+  "uid": "u_003t4",
+  "handle": "ameliearchive",
+  "job": "TRUST",
+  "slug": "vintage-leather",
+  "text": "you're the only person whose links I actually click tbh",
+  "ts": "2026-09-19T15:56:01.336Z"
+ },
+ {
+  "id": "dm_01t",
+  "uid": "u_003g0",
+  "handle": "rachel_edit",
+  "job": "CONSTRAINT",
+  "slug": "grey-knit",
+  "text": "I'm trying not to buy more stuff. can you help me use what I own?",
+  "ts": "2026-09-19T16:12:37.000Z"
+ },
+ {
+  "id": "dm_006",
+  "uid": "u_003ef",
+  "handle": "claraedit",
+  "job": "SOCIAL SHARING",
+  "slug": "black-blazer",
+  "text": "showing my mum the black blazer immediately",
+  "ts": "2026-09-19T16:24:43.805Z"
+ },
+ {
+  "id": "dm_024",
+  "uid": "u_003g7",
+  "handle": "freya_edit",
+  "job": "BUDGET",
+  "slug": "red-slingback",
+  "text": "anything like the red slingback but under £120? I'm not paying £400 lol",
+  "ts": "2026-09-19T16:41:49.217Z"
+ },
+ {
+  "id": "dm_01d",
+  "uid": "u_00444",
+  "handle": "mayastyles2",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "red-slingback",
+  "text": "WHERE is the red slingback I'm begging you",
+  "ts": "2026-09-19T17:17:46.103Z"
+ },
+ {
+  "id": "dm_00k",
+  "uid": "u_003sz",
+  "handle": "orla_closet",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "red-slingback",
+  "text": "link for the red slingback pls 🙏",
+  "ts": "2026-09-19T17:46:52.481Z"
+ },
+ {
+  "id": "dm_02c",
+  "uid": "u_003ey",
+  "handle": "amelie.edit",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "grey-knit",
+  "text": "where's the grey knit from??",
+  "ts": "2026-09-19T18:23:20.577Z"
+ },
+ {
+  "id": "dm_00i",
+  "uid": "u_003rq",
+  "handle": "jess.closet",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "white-tee",
+  "text": "WHERE is the white tee I'm begging you",
+  "ts": "2026-09-19T19:10:19.974Z"
+ },
+ {
+  "id": "dm_02a",
+  "uid": "u_003j4",
+  "handle": "amelieldn",
+  "job": "FIT",
+  "slug": "grey-knit",
+  "text": "what size did you get in the grey knit",
+  "ts": "2026-09-19T19:19:24.177Z"
+ },
+ {
+  "id": "dm_019",
+  "uid": "u_003j7",
+  "handle": "sarahldn",
+  "job": "SECOND-HAND DISCOVERY",
+  "slug": "white-tee",
+  "text": "my friend sent me this, do you have a link for the white tee",
+  "ts": "2026-09-19T19:47:32.822Z"
+ },
+ {
+  "id": "dm_011",
+  "uid": "u_0049s",
+  "handle": "amelie.edit2",
+  "job": "FIT",
+  "slug": "wide-leg-denim",
+  "text": "does the wide-leg denim run small?",
+  "ts": "2026-09-19T20:11:23.179Z"
+ },
+ {
+  "id": "dm_005",
+  "uid": "u_004ay",
+  "handle": "priya_edit2",
+  "job": "DECISION",
+  "slug": "vintage-leather",
+  "text": "ok but if you were me, which one would you actually buy?",
+  "ts": "2026-09-19T20:21:52.785Z"
+ },
+ {
+  "id": "dm_00t",
+  "uid": "u_003bf",
+  "handle": "ayla_styles",
+  "job": "SOCIAL SHARING",
+  "slug": "red-slingback",
+  "text": "just sent this to my girlfriend, she'll love the red slingback",
+  "ts": "2026-09-19T20:23:50.445Z"
+ },
+ {
+  "id": "dm_012",
+  "uid": "u_00463",
+  "handle": "imogen_styles2",
+  "job": "CONSTRAINT",
+  "slug": "grey-knit",
+  "text": "I'm trying not to buy more stuff. can you help me use what I own?",
+  "ts": "2026-09-19T20:28:56.345Z"
+ },
+ {
+  "id": "dm_01p",
+  "uid": "u_0039u",
+  "handle": "karastyles",
+  "job": "POST-PURCHASE",
+  "slug": "vintage-leather",
+  "text": "I bought the vintage leather. what should I wear with it?",
+  "ts": "2026-09-19T20:36:03.902Z"
+ },
+ {
+  "id": "dm_02l",
+  "uid": "u_003v3",
+  "handle": "clara_archive",
+  "job": "CONSTRAINT",
+  "slug": "white-tee",
+  "text": "can I make the white tee look work without buying it",
+  "ts": "2026-09-19T20:55:17.727Z"
+ },
+ {
+  "id": "dm_027",
+  "uid": "u_003rz",
+  "handle": "saoirse.closet",
+  "job": "CONSTRAINT",
+  "slug": "white-tee",
+  "text": "can I make the white tee look work without buying it",
+  "ts": "2026-09-19T20:59:18.438Z"
+ },
+ {
+  "id": "dm_020",
+  "uid": "u_00448",
+  "handle": "jessstyles2",
+  "job": "BUDGET",
+  "slug": "black-blazer",
+  "text": "is there a cheaper version of the black blazer anywhere",
+  "ts": "2026-09-19T21:47:33.894Z"
+ },
+ {
+  "id": "dm_00m",
+  "uid": "u_003ch",
+  "handle": "niamh.wears",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "wide-leg-denim",
+  "text": "hiii where is the wide-leg denim from",
+  "ts": "2026-09-19T22:54:55.167Z"
+ },
+ {
+  "id": "dm_00z",
+  "uid": "u_003ig",
+  "handle": "maya_daily",
+  "job": "POST-PURCHASE",
+  "slug": "red-slingback",
+  "text": "I bought the red slingback. what should I wear with it?",
+  "ts": "2026-09-19T23:31:50.471Z"
+ },
+ {
+  "id": "dm_00p",
+  "uid": "u_003z5",
+  "handle": "laura.thrifts",
+  "job": "SOCIAL SHARING",
+  "slug": "black-blazer",
+  "text": "showing my mum the black blazer immediately",
+  "ts": "2026-09-19T23:42:42.831Z"
+ },
+ {
+  "id": "dm_003",
+  "uid": "u_003oq",
+  "handle": "esmefits",
+  "job": "CONSIDERATION",
+  "slug": "grey-knit",
+  "text": "I've opened the grey knit three times now. still deciding",
+  "ts": "2026-09-20T00:14:35.308Z"
+ },
+ {
+  "id": "dm_01m",
+  "uid": "u_0048e",
+  "handle": "jess_wears2",
+  "job": "CONSIDERATION",
+  "slug": "silk-skirt",
+  "text": "still not sure about the silk skirt, is it worth it",
+  "ts": "2026-09-20T00:37:55.353Z"
+ },
+ {
+  "id": "dm_01i",
+  "uid": "u_003ld",
+  "handle": "beth_ldn",
+  "job": "BUDGET",
+  "slug": "black-blazer",
+  "text": "cheaper alternative to the black blazer?? 🥲",
+  "ts": "2026-09-20T00:40:14.025Z"
+ },
+ {
+  "id": "dm_00r",
+  "uid": "u_003b8",
+  "handle": "nina_styles",
+  "job": "ADAPTATION",
+  "slug": "black-blazer",
+  "text": "how would you wear the black blazer if you never wear heels",
+  "ts": "2026-09-20T00:46:48.163Z"
+ },
+ {
+  "id": "dm_01n",
+  "uid": "u_0045m",
+  "handle": "amelie_styles2",
+  "job": "SOCIAL SHARING",
+  "slug": "red-slingback",
+  "text": "just sent this to my girlfriend, she'll love the red slingback",
+  "ts": "2026-09-20T01:27:06.050Z"
+ },
+ {
+  "id": "dm_004",
+  "uid": "u_003hr",
+  "handle": "clara.daily",
+  "job": "ADAPTATION",
+  "slug": "red-slingback",
+  "text": "I love the outfit but I live in trainers. how would you change it?",
+  "ts": "2026-09-20T01:32:15.669Z"
+ },
+ {
+  "id": "dm_01y",
+  "uid": "u_003cw",
+  "handle": "nina.wears",
+  "job": "INTENT",
+  "slug": "red-slingback",
+  "text": "can you find me a version of the red slingback for a wedding? same energy, less corporate",
+  "ts": "2026-09-20T01:43:22.241Z"
+ },
+ {
+  "id": "dm_007",
+  "uid": "u_0043p",
+  "handle": "beth2",
+  "job": "INTENT",
+  "slug": "vintage-leather",
+  "text": "something with the same feel as the vintage leather but for summer?",
+  "ts": "2026-09-20T01:55:30.273Z"
+ },
+ {
+  "id": "dm_022",
+  "uid": "u_003n6",
+  "handle": "kara.wardrobe",
+  "job": "DECISION",
+  "slug": "black-blazer",
+  "text": "the black blazer or the other one? I can only get one",
+  "ts": "2026-09-20T02:01:49.889Z"
+ },
+ {
+  "id": "dm_02h",
+  "uid": "u_003d9",
+  "handle": "juno.wears",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "black-blazer",
+  "text": "WHERE is the black blazer I'm begging you",
+  "ts": "2026-09-20T02:09:06.742Z"
+ },
+ {
+  "id": "dm_02g",
+  "uid": "u_0046w",
+  "handle": "ninawears2",
+  "job": "SOCIAL SHARING",
+  "slug": "red-slingback",
+  "text": "showing my mum the red slingback immediately",
+  "ts": "2026-09-20T02:19:56.749Z"
+ },
+ {
+  "id": "dm_013",
+  "uid": "u_0048u",
+  "handle": "kara_wears2",
+  "job": "DECISION",
+  "slug": "black-blazer",
+  "text": "genuinely cannot decide, what would you do",
+  "ts": "2026-09-20T02:25:10.826Z"
+ },
+ {
+  "id": "dm_00d",
+  "uid": "u_0040q",
+  "handle": "hannahrewears",
+  "job": "ADAPTATION",
+  "slug": "grey-knit",
+  "text": "how would you wear the grey knit if you never wear heels",
+  "ts": "2026-09-20T03:11:37.000Z"
  },
  {
   "id": "dm_01b",
-  "uid": "u_003ci",
-  "handle": "roisin.wears",
+  "uid": "u_0038o",
+  "handle": "jamie",
+  "job": "CONSTRAINT",
+  "slug": "silk-skirt",
+  "text": "on a no-buy this year, how do I get this look with what I have",
+  "ts": "2026-09-20T03:20:45.895Z"
+ },
+ {
+  "id": "dm_00u",
+  "uid": "u_003kh",
+  "handle": "saoirse.ldn",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "red-slingback",
+  "text": "WHERE is the red slingback I'm begging you",
+  "ts": "2026-09-20T04:58:56.369Z"
+ },
+ {
+  "id": "dm_026",
+  "uid": "u_00483",
+  "handle": "juno.wears2",
+  "job": "CONSTRAINT",
+  "slug": "wide-leg-denim",
+  "text": "can I make the wide-leg denim look work without buying it",
+  "ts": "2026-09-20T05:59:12.897Z"
+ },
+ {
+  "id": "dm_01a",
+  "uid": "u_003sc",
+  "handle": "roisin_closet",
+  "job": "SECOND-HAND DISCOVERY",
+  "slug": "silk-skirt",
+  "text": "my bf sent me your silk skirt video because he thinks I need it",
+  "ts": "2026-09-20T06:40:27.852Z"
+ },
+ {
+  "id": "dm_01h",
+  "uid": "u_00452",
+  "handle": "jess.styles2",
+  "job": "BUDGET",
+  "slug": "vintage-leather",
+  "text": "is there a cheaper version of the vintage leather anywhere",
+  "ts": "2026-09-20T06:45:18.298Z"
+ },
+ {
+  "id": "dm_00l",
+  "uid": "u_0049k",
+  "handle": "esmeedit2",
+  "job": "SECOND-HAND DISCOVERY",
+  "slug": "white-tee",
+  "text": "my bf sent me your white tee video because he thinks I need it",
+  "ts": "2026-09-20T06:50:55.978Z"
+ },
+ {
+  "id": "dm_025",
+  "uid": "u_003j6",
+  "handle": "roisinldn",
   "job": "SOCIAL SHARING",
   "slug": "grey-knit",
-  "text": "showing my mum the grey knit immediately",
-  "ts": "2026-09-20T13:56:43.483Z"
+  "text": "sending the grey knit to my sister because she needs this exact vibe",
+  "ts": "2026-09-20T06:52:00.889Z"
+ },
+ {
+  "id": "dm_01s",
+  "uid": "u_003bc",
+  "handle": "tilly_styles",
+  "job": "FIT",
+  "slug": "white-tee",
+  "text": "is the white tee true to size? I'm between sizes atm",
+  "ts": "2026-09-20T07:32:24.057Z"
+ },
+ {
+  "id": "dm_00c",
+  "uid": "u_0046s",
+  "handle": "priyawears2",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "wide-leg-denim",
+  "text": "WHERE is the wide-leg denim I'm begging you",
+  "ts": "2026-09-20T08:21:42.537Z"
+ },
+ {
+  "id": "dm_00y",
+  "uid": "u_003b5",
+  "handle": "ella_styles",
+  "job": "BUDGET",
+  "slug": "red-slingback",
+  "text": "love the red slingback but it's way out of my budget, any dupes?",
+  "ts": "2026-09-20T08:36:06.710Z"
+ },
+ {
+  "id": "dm_00x",
+  "uid": "u_003jo",
+  "handle": "tillyldn",
+  "job": "BUDGET",
+  "slug": "white-tee",
+  "text": "anything like the white tee but under £120? I'm not paying £400 lol",
+  "ts": "2026-09-20T09:09:35.351Z"
+ },
+ {
+  "id": "dm_01k",
+  "uid": "u_0048m",
+  "handle": "lottie_wears2",
+  "job": "DECISION",
+  "slug": "red-slingback",
+  "text": "genuinely cannot decide, what would you do",
+  "ts": "2026-09-20T09:19:01.434Z"
+ },
+ {
+  "id": "dm_028",
+  "uid": "u_003sh",
+  "handle": "laura_closet",
+  "job": "BUDGET",
+  "slug": "white-tee",
+  "text": "anything like the white tee but under £120? I'm not paying £400 lol",
+  "ts": "2026-09-20T10:00:21.033Z"
+ },
+ {
+  "id": "dm_02f",
+  "uid": "u_003rv",
+  "handle": "freya.closet",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "grey-knit",
+  "text": "obsessed with the grey knit, where is it from",
+  "ts": "2026-09-20T10:42:39.509Z"
+ },
+ {
+  "id": "dm_016",
+  "uid": "u_0046f",
+  "handle": "juno_styles2",
+  "job": "TRUST",
+  "slug": "white-tee",
+  "text": "this is the first creator account where I actually save everything",
+  "ts": "2026-09-20T11:16:30.048Z"
+ },
+ {
+  "id": "dm_023",
+  "uid": "u_0046e",
+  "handle": "delphine_styles2",
+  "job": "BUDGET",
+  "slug": "black-blazer",
+  "text": "anything like the black blazer but under £120? I'm not paying £400 lol",
+  "ts": "2026-09-20T11:17:02.209Z"
+ },
+ {
+  "id": "dm_01r",
+  "uid": "u_003xk",
+  "handle": "jess_lookbook",
+  "job": "BUDGET",
+  "slug": "grey-knit",
+  "text": "love the grey knit but it's way out of my budget, any dupes?",
+  "ts": "2026-09-20T11:20:44.332Z"
+ },
+ {
+  "id": "dm_00s",
+  "uid": "u_003j5",
+  "handle": "niamhldn",
+  "job": "DECISION",
+  "slug": "white-tee",
+  "text": "ok but if you were me, which one would you actually buy?",
+  "ts": "2026-09-20T12:28:49.071Z"
+ },
+ {
+  "id": "dm_01u",
+  "uid": "u_003sj",
+  "handle": "georgia_closet",
+  "job": "DECISION",
+  "slug": "grey-knit",
+  "text": "ok but if you were me, which one would you actually buy?",
+  "ts": "2026-09-20T12:40:02.200Z"
+ },
+ {
+  "id": "dm_01w",
+  "uid": "u_003nt",
+  "handle": "saoirse_wardrobe",
+  "job": "CONSTRAINT",
+  "slug": "white-tee",
+  "text": "I'm trying not to buy more stuff. can you help me use what I own?",
+  "ts": "2026-09-20T12:42:34.768Z"
+ },
+ {
+  "id": "dm_00v",
+  "uid": "u_00442",
+  "handle": "hannahstyles2",
+  "job": "CONSTRAINT",
+  "slug": "wide-leg-denim",
+  "text": "can I make the wide-leg denim look work without buying it",
+  "ts": "2026-09-20T12:52:31.124Z"
+ },
+ {
+  "id": "dm_01o",
+  "uid": "u_0048d",
+  "handle": "georgia_wears2",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "red-slingback",
+  "text": "where's the red slingback from??",
+  "ts": "2026-09-20T12:55:53.468Z"
+ },
+ {
+  "id": "dm_01j",
+  "uid": "u_003vc",
+  "handle": "tilly_archive",
+  "job": "DECISION",
+  "slug": "wide-leg-denim",
+  "text": "the wide-leg denim or the other one? I can only get one",
+  "ts": "2026-09-20T13:02:59.212Z"
+ },
+ {
+  "id": "dm_02d",
+  "uid": "u_003ee",
+  "handle": "jessedit",
+  "job": "EXACT ITEM REQUEST",
+  "slug": "wide-leg-denim",
+  "text": "WHERE is the wide-leg denim I'm begging you",
+  "ts": "2026-09-20T14:01:19.746Z"
  }
 ]

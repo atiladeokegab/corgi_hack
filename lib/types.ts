@@ -35,6 +35,21 @@ export type Post = {
 
 export type Dm = { ref: string; handle: string; job: string; message: string }
 
+export type Purchase = {
+  slug: string
+  value: number
+  ts: string
+  daysAfterSeeing: number
+  paidOut: boolean          // did it land inside the affiliate click window
+}
+
+export type Customer = {
+  uid: string
+  orders: number
+  totalSpent: number
+  purchases: Purchase[]
+}
+
 export type PendingDm = {
   id: string
   uid: string

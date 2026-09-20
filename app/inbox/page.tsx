@@ -1,7 +1,7 @@
 import { headers } from 'next/headers'
 import Link from 'next/link'
 import { Triage } from './Triage'
-import { getEvents, getItems, getPendingDms } from '@/lib/data'
+import { getCustomers, getEvents, getItems, getPendingDms } from '@/lib/data'
 import { buildProfiles, SEGMENTS } from '@/lib/classify'
 import { buildPersonalLink } from '@/lib/links'
 import { cheaperThan, TEMPLATES } from '@/lib/templates'
@@ -22,6 +22,7 @@ export default async function InboxPage() {
   const bySlug = Object.fromEntries(items.map(i => [i.slug, i]))
   const profiles = buildProfiles(getEvents())
   const segmentByUid = new Map(profiles.map(p => [p.uid, p.segment]))
+  const spendByUid = new Map(getCustomers().map(c => [c.uid, c.totalSpent]))
 
   const cards = getPendingDms().map(dm => {
     const item = bySlug[dm.slug] ?? items[0]
@@ -46,6 +47,7 @@ export default async function InboxPage() {
       segmentLabel: SEGMENTS[segment].label,
       segmentColor: SEGMENTS[segment].color,
       itemName: item.name,
+      totalSpent: spendByUid.get(dm.uid) ?? 0,
       asking: template?.asking ?? dm.job,
       autoable: Boolean(template?.autoable && draft),
       needsHer: template?.needsHer ?? null,
@@ -64,20 +66,21 @@ export default async function InboxPage() {
             ← Lookbook
           </Link>
           <Link
-            href="/groups"
+            href="/links"
             className="text-xs rounded-lg border px-3 py-1.5 hover:bg-surface-2 transition-colors"
             style={{ borderColor: 'var(--border)' }}
           >
-            Who to reply to →
+            Make a link →
           </Link>
         </div>
         <h1 className="text-3xl sm:text-[2.4rem] font-semibold mt-3 tracking-tight leading-[1.1]">
-          {cards.length} waiting. {ready} of them you have answered a hundred times.
+          {cards.length} people are waiting.
+          <br className="hidden sm:block" /> {ready} of them asked something you answer every day.
         </h1>
         <p className="text-base text-ink-2 mt-4 max-w-2xl leading-relaxed">
-          The repeat questions come with the reply already written — her size, her
-          cheaper pick, her own words. Read it, send it, move on. The ones that
-          actually need her are marked and left alone.
+          Those ones already have a reply written for you, using your sizes and your
+          own words. Read it, hit send, move on. The ones that actually need you are
+          kept in a separate pile so you do not lose them.
         </p>
       </header>
 

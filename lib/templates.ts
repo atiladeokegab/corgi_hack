@@ -46,7 +46,7 @@ export const TEMPLATES: Record<string, Template> = {
     // Falls through to her when there is no honest cheaper answer. Offering
     // £120 shoes to someone who asked for a blazer under £120 is worse than
     // saying nothing, and it is exactly the kind of thing that loses her their trust.
-    needsHer: "No cheaper piece of the same kind in here — though only 8 of her 36 are loaded, so she may own one this cannot see.",
+    needsHer: "Nothing cheaper of the same kind in here. Only 8 of your 36 pieces are loaded, so you may own one this cannot see.",
     build: ({ cheaper, cheaperLink }) =>
       cheaper && cheaperLink
         ? `honestly? ${cheaper.name.toLowerCase()} for a lot less — ${cheaperLink}\n${cheaper.sofiaSays} x`
@@ -77,31 +77,31 @@ export const TEMPLATES: Record<string, Template> = {
   'DECISION': {
     autoable: false,
     asking: 'Choose for me',
-    needsHer: "They are asking you to pick. That is the thing they came for.",
+    needsHer: "They want you to choose. That is what they came for.",
     build: () => null,
   },
   'ADAPTATION': {
     autoable: false,
     asking: 'Restyle it for me',
-    needsHer: "Needs restyling for their life, not yours. No link answers this.",
+    needsHer: "They need it restyled for their life, not yours. No link answers this.",
     build: () => null,
   },
   'INTENT': {
     autoable: false,
     asking: 'Same feel, different occasion',
-    needsHer: "A different occasion — this needs your eye, not a link.",
+    needsHer: "Different occasion. Needs your eye, not a link.",
     build: () => null,
   },
   'POST-PURCHASE': {
     autoable: false,
     asking: 'What goes with it',
-    needsHer: "They already bought it. This is a styling question.",
+    needsHer: "They already bought it. They want styling, not a link.",
     build: () => null,
   },
   'CONSTRAINT': {
     autoable: false,
     asking: 'Use what I own',
-    needsHer: "They do not want to buy anything. There is nothing to link.",
+    needsHer: "They do not want to buy anything. Nothing to link here.",
     build: () => null,
   },
 }
