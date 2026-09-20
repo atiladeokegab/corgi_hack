@@ -1,0 +1,74 @@
+[
+ {
+  "ref": "E-03.1",
+  "title": "3 outfits I'd wear to London Fashion Week",
+  "views": 61000,
+  "saves": 4800,
+  "purchases": 218,
+  "organiserLabel": "Strong conversion",
+  "publishedAt": "2026-08-13",
+  "items": [
+   "red-slingback",
+   "wide-leg-denim",
+   "vintage-leather"
+  ],
+  "linkCount": 3
+ },
+ {
+  "ref": "E-03.2",
+  "title": "Everything I wore in Copenhagen",
+  "views": 184000,
+  "saves": 7100,
+  "purchases": 92,
+  "organiserLabel": "High reach, low intent",
+  "publishedAt": "2026-08-04",
+  "items": [
+   "silk-skirt",
+   "white-tee",
+   "grey-knit",
+   "wide-leg-denim",
+   "vintage-leather"
+  ],
+  "linkCount": 5
+ },
+ {
+  "ref": "E-03.3",
+  "title": "£100 outfit challenge",
+  "views": 42000,
+  "saves": 6900,
+  "purchases": 311,
+  "organiserLabel": "High intent",
+  "publishedAt": "2026-08-29",
+  "items": [
+   "white-tee",
+   "red-slingback"
+  ],
+  "linkCount": 2
+ },
+ {
+  "ref": "E-03.4",
+  "title": "The blazer I keep wearing",
+  "views": 28000,
+  "saves": 3800,
+  "purchases": 427,
+  "organiserLabel": "Quiet winner",
+  "publishedAt": "2026-09-05",
+  "items": [
+   "black-blazer"
+  ],
+  "linkCount": 1
+ },
+ {
+  "ref": "E-03.5",
+  "title": "Things I would never buy again",
+  "views": 39000,
+  "saves": 5300,
+  "purchases": 0,
+  "organiserLabel": "High trust, low direct revenue",
+  "publishedAt": "2026-08-22",
+  "items": [
+   "grey-knit"
+  ],
+  "linkCount": 1
+ }
+]

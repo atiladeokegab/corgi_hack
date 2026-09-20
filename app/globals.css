@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  --background:     #fcfcfb;
+  --foreground:     #0b0b0b;
+  --surface-2:      #ffffff;
+  --border:         #e4e3df;
+  --text-secondary: #52514e;
+  --text-muted:     #82817a;
+
+  /* viz roles — validated pair (see dataviz validator, light mode) */
+  --series-credited: #2a78d6;  /* what the affiliate network paid for */
+  --series-recovered:#1baf7a;  /* what her own redirect recovers */
+  --series-dark:     #b9b8b2;  /* still invisible to everyone */
+  --grid:            #eceae5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --background:     #121211;
+    --foreground:     #ffffff;
+    --surface-2:      #1a1a19;
+    --border:         #33322f;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #8c8b82;
+
+    --series-credited: #3987e5;
+    --series-recovered:#199e70;
+    --series-dark:     #4a4945;
+    --grid:            #2a2a27;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface-2: var(--surface-2);
+  --color-edge: var(--border);
+  --color-ink-2: var(--text-secondary);
+  --color-ink-3: var(--text-muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Numbers align in columns; tabular figures stop the jitter. */
+.tnum { font-variant-numeric: tabular-nums; }

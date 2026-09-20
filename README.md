@@ -124,3 +124,11 @@ We should find out!
 To do so, we could offer a form for the user to fill out. We could ask a set of questions to identify which customer group they belong to. At the end, we offer a custom promo code.
 Assuming the brand can supply the purchase information (which they likely would, as they would also be incentivised to find out the customer segment).
 From this, we can then figure out the customer segments that are most profitable and tailor our content to them.
+
+
+"What kind of post would you like next?" / "What has been you favourite post? Link it her:"
+
+## Demo
+1. Dashboard
+2. Working cookies + urls
+3. 

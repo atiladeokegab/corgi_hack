@@ -1,0 +1,98 @@
+[
+ {
+  "slug": "black-blazer",
+  "ref": "E-04.1",
+  "name": "Black blazer",
+  "category": "Jacket",
+  "price": 145,
+  "size": "UK 8",
+  "style": "Tailored",
+  "status": "In stock",
+  "sofiaSays": "buy once, wear forever",
+  "destination": "https://www.net-a-porter.com/en-gb/shop/search?q=Black%20blazer"
+ },
+ {
+  "slug": "vintage-leather",
+  "ref": "E-04.2",
+  "name": "Vintage leather",
+  "category": "Jacket",
+  "price": 180,
+  "size": "UK 8",
+  "style": "Vintage",
+  "status": "One-off",
+  "sofiaSays": "great, but warm",
+  "destination": "https://www.net-a-porter.com/en-gb/shop/search?q=Vintage%20leather"
+ },
+ {
+  "slug": "silk-skirt",
+  "ref": "E-04.3",
+  "name": "Silk skirt",
+  "category": "Skirt",
+  "price": 95,
+  "size": "UK 8",
+  "style": "Minimal",
+  "status": "In stock",
+  "sofiaSays": "best with trainers",
+  "destination": "https://www.net-a-porter.com/en-gb/shop/search?q=Silk%20skirt"
+ },
+ {
+  "slug": "white-tee",
+  "ref": "E-04.4",
+  "name": "White tee",
+  "category": "Top",
+  "price": 35,
+  "size": "UK 8",
+  "style": "Basic",
+  "status": "In stock",
+  "sofiaSays": "£35 is enough",
+  "destination": "https://www.net-a-porter.com/en-gb/shop/search?q=White%20tee"
+ },
+ {
+  "slug": "loafers",
+  "ref": "E-04.5",
+  "name": "Loafers",
+  "category": "Shoes",
+  "price": 120,
+  "size": "UK 5",
+  "style": "Classic",
+  "status": "In stock",
+  "sofiaSays": "expensive-ish, worth it",
+  "destination": "https://www.net-a-porter.com/en-gb/shop/search?q=Loafers"
+ },
+ {
+  "slug": "red-slingback",
+  "ref": "E-04.6",
+  "name": "Red slingback",
+  "category": "Shoes",
+  "price": 89,
+  "size": "UK 5",
+  "style": "Statement",
+  "status": "In stock",
+  "sofiaSays": "date-night shoe",
+  "destination": "https://www.net-a-porter.com/en-gb/shop/search?q=Red%20slingback"
+ },
+ {
+  "slug": "grey-knit",
+  "ref": "E-04.7",
+  "name": "Grey knit",
+  "category": "Top",
+  "price": 78,
+  "size": "UK S",
+  "style": "Minimal",
+  "status": "Low stock",
+  "sofiaSays": "soft but pills",
+  "destination": "https://www.net-a-porter.com/en-gb/shop/search?q=Grey%20knit"
+ },
+ {
+  "slug": "wide-leg-denim",
+  "ref": "E-04.8",
+  "name": "Wide-leg denim",
+  "category": "Trousers",
+  "price": 110,
+  "size": "UK 8",
+  "style": "Relaxed",
+  "status": "In stock",
+  "sofiaSays": "my actual uniform",
+  "destination": "https://www.net-a-porter.com/en-gb/shop/search?q=Wide-leg%20denim"
+ }
+]
