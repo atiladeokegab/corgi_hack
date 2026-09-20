@@ -137,6 +137,13 @@ export default function Page() {
               Build a link
             </Link>
             <Link
+              href="/inbox"
+              className="text-xs rounded-lg border px-3 py-1.5 hover:bg-surface-2 transition-colors"
+              style={{ borderColor: 'var(--border)' }}
+            >
+              Inbox
+            </Link>
+            <Link
               href="/groups"
               className="text-xs rounded-lg px-3 py-1.5 font-medium text-white transition-opacity hover:opacity-90"
               style={{ background: 'var(--accent)' }}

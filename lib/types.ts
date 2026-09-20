@@ -22,6 +22,7 @@ export type ClickEvent = {
 export type Item = {
   slug: string; ref: string; name: string; category: string
   price: number
+  size: string
   tier: 'entry' | 'mid' | 'premium'
   style: string; status: string; sofiaSays: string
   destination: string; realDestination: boolean
@@ -33,6 +34,16 @@ export type Post = {
 }
 
 export type Dm = { ref: string; handle: string; job: string; message: string }
+
+export type PendingDm = {
+  id: string
+  uid: string
+  handle: string
+  job: string
+  slug: string
+  text: string
+  ts: string
+}
 
 export type SegmentKey =
   | 'CONNECTOR'    // passes looks on to someone else

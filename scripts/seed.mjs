@@ -62,6 +62,7 @@ const items = ev('wardrobe.csv').map(r => ({
   category: r.category,
   price: Number(r.price_gbp),
   tier: tierOf(Number(r.price_gbp)),
+  size: r.size,
   style: r.style,
   status: r.status,
   sofiaSays: r.sofia_says,
@@ -112,6 +113,80 @@ const JOB_MODEL = {
   'SECOND-HAND DISCOVERY': { weight: 0.04, lean: 'CONNECTOR',  tier: null },
   'CONSIDERATION':         { weight: 0.05, lean: 'RESEARCHER', tier: null },
 }
+
+// ------------------------------------------------------- the unanswered inbox
+// E-02 has her ending the day with 90+ messages still unanswered, and E-05 lists
+// the four questions she keeps answering. These are the same twelve jobs as the
+// tracked DMs, written the way people actually type them.
+const PHRASINGS = {
+  'EXACT ITEM REQUEST': [
+    'WHERE is the {item} I\'m begging you',
+    'link for the {item} pls 🙏',
+    'where\'s the {item} from??',
+    'hiii where is the {item} from',
+    'obsessed with the {item}, where is it from',
+  ],
+  'FIT': [
+    'what size are you in the {item}? I\'m usually an 8 but brands are all over the place',
+    'does the {item} run small?',
+    'what size did you get in the {item}',
+    'is the {item} true to size? I\'m between sizes atm',
+  ],
+  'BUDGET': [
+    'anything like the {item} but under £120? I\'m not paying £400 lol',
+    'is there a cheaper version of the {item} anywhere',
+    'love the {item} but it\'s way out of my budget, any dupes?',
+    'cheaper alternative to the {item}?? 🥲',
+  ],
+  'SOCIAL SHARING': [
+    'sending the {item} to my sister because she needs this exact vibe',
+    'just sent this to my girlfriend, she\'ll love the {item}',
+    'showing my mum the {item} immediately',
+  ],
+  'TRUST': [
+    'this is the first creator account where I actually save everything',
+    'you\'re the only person whose links I actually click tbh',
+    'genuinely trust your taste more than any shop',
+  ],
+  'SECOND-HAND DISCOVERY': [
+    'my bf sent me your {item} video because he thinks I need it',
+    'my friend sent me this, do you have a link for the {item}',
+    'someone sent me your post about the {item}, where is it from',
+  ],
+  'CONSIDERATION': [
+    'I\'ve opened the {item} three times now. still deciding',
+    'been thinking about the {item} all week, talk me into it',
+    'still not sure about the {item}, is it worth it',
+  ],
+  'DECISION': [
+    'ok but if you were me, which one would you actually buy?',
+    'the {item} or the other one? I can only get one',
+    'genuinely cannot decide, what would you do',
+  ],
+  'ADAPTATION': [
+    'I love the outfit but I live in trainers. how would you change it?',
+    'how would you wear the {item} if you never wear heels',
+    'would the {item} work for someone who works from home',
+  ],
+  'INTENT': [
+    'can you find me a version of the {item} for a wedding? same energy, less corporate',
+    'need something like the {item} but for a work christmas do',
+    'something with the same feel as the {item} but for summer?',
+  ],
+  'POST-PURCHASE': [
+    'I bought the {item}. what should I wear with it?',
+    'the {item} came today!! how would you style it',
+    'got the {item} on your rec, what else do I need',
+  ],
+  'CONSTRAINT': [
+    'I\'m trying not to buy more stuff. can you help me use what I own?',
+    'on a no-buy this year, how do I get this look with what I have',
+    'can I make the {item} look work without buying it',
+  ],
+}
+
+// How many of yesterday's messages are still sitting there.
+const PENDING_DMS = 94
 
 // -------------------------------------------------------------- behaviour model
 // Five ways of behaving, each defined by what a redirect can actually observe.
@@ -367,6 +442,28 @@ for (const t of truth) {
   customers.push({ uid: t.uid, orders: bought.size, totalSpent: spent })
 }
 
+// ------------------------------------------------------------- pending inbox
+const nameable = truth.filter(t => t.handle)
+const pending = []
+for (let i = 0; i < PENDING_DMS; i++) {
+  const person = pick(nameable)
+  const job = weighted(jobTable)
+  const opened = [...(openedBy.get(person.uid) ?? [])]
+  const item = itemBySlug[opened.length ? pick(opened) : pick(items).slug] ?? items[0]
+  const phrasings = PHRASINGS[job] ?? PHRASINGS['EXACT ITEM REQUEST']
+  pending.push({
+    id: `dm_${i.toString(36).padStart(3, '0')}`,
+    uid: person.uid,
+    handle: person.handle,
+    job,
+    slug: item.slug,
+    text: pick(phrasings).replaceAll('{item}', item.name.toLowerCase()),
+    // Yesterday evening through this morning: the backlog she wakes up to.
+    ts: iso(NOW_MS - hours(between(0.5, 34))),
+  })
+}
+pending.sort((a, b) => a.ts.localeCompare(b.ts))
+
 // ------------------------------------------------------------------- reconcile
 const bySource = s => events.filter(e => e.source === s)
 const peopleIn = s => new Set(bySource(s).map(e => e.uid)).size
@@ -384,6 +481,7 @@ const report = {
   'kinds of question tracked': DM_JOBS.length,
   'wardrobe pieces linked (of 36)': items.length,
   'people she can actually name': `${new Set(events.filter(e => e.handle).map(e => e.uid)).size} of ${uidN}`,
+  'DMs waiting this morning': pending.length,
   'spend reported back by the retailer': `${customers.length} customers · £${customers.reduce((a, c) => a + c.totalSpent, 0).toLocaleString('en-GB')}`,
 }
 
@@ -395,6 +493,8 @@ w('dms.json', dms)
 w('click-log.json', events)
 w('ground-truth.json', truth)
 w('customers.json', customers)
+w('inbox-pending.json', pending)
+
 w('reconciliation.json', report)
 for (const stale of ['orders.json', 'redirect-log.json']) {
   fs.rmSync(path.join(ROOT, 'data', stale), { force: true })
