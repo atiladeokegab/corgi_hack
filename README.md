@@ -80,3 +80,29 @@ The WAY she communicates with her audience - page 8
 
 ## Plans of action
 We need to pick a team name
+
+
+
+## Problems
+### 1. Sofia forgetting about content in her notes
+e.g. She mentioned loafers she loved, but never made a post about it. Unlike her post about the blazer she loved.
+
+Causes:
+1. Notes are everywhere
+    a. Several note apps
+    b. Voice Notes
+    c. Physical
+
+Sofia operates in chaos. This is part of her process and should be respected. However, she is missing out on key information from lack of organisation.
+
+
+### 2. Sofia not responding to all her DMs
+At the end of each day, she still has 90+ unresponded to messages
+
+Causes:
+1. She hand responds to all messages
+WHY? Because she needs a tailored response.
+WHY? Because this is important to her brand and is not willing to trade quantity for quality.
+*How can we ensure quality at scale?*
+2. Responding to repeat messages
+3. Hand copying links
