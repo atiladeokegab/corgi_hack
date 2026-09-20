@@ -28,6 +28,7 @@ function classifyReferrer(referrer: string, src: string | null): RefClass {
  *   ?d=BUDGET   the DM job this reply was answering (E-01's labels)
  *   ?v=<uid>    whoever passed the link on
  *   ?s=<id>     ManyChat subscriber id, filled in by the flow
+ *   ?h=<handle> Instagram handle, if the flow passes it through
  *   ?src=       force the arrival channel, for demonstrating a share
  *   ?dry=1      record the open and show the row instead of leaving the site
  */
@@ -43,10 +44,14 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ slug: strin
   // ManyChat resolves {{subscriber_id}} inside the URL before it sends the message,
   // so an identified click costs nothing more than a longer link.
   const subscriberId = url.searchParams.get('s')
+  const handle = url.searchParams.get('h')?.replace(/^@/, '') ?? null
   const dry = url.searchParams.get('dry') === '1'
 
   const existing = req.cookies.get(COOKIE)?.value
-  const uid = existing ?? `u_live_${Math.random().toString(36).slice(2, 8)}`
+  // When ManyChat tells us who this is, identity keys on the subscriber rather than
+  // the cookie — which is what makes the same person merge across their phone and
+  // their laptop instead of counting as two strangers.
+  const uid = subscriberId ? `u_mc_${subscriberId}` : (existing ?? `u_live_${Math.random().toString(36).slice(2, 8)}`)
   const referrer = req.headers.get('referer') ?? ''
   const refClass = classifyReferrer(referrer, url.searchParams.get('src'))
   const source: Source = via || refClass === 'whatsapp' || refClass === 'messages'
@@ -63,6 +68,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ slug: strin
     dmJob,
     via,
     subscriberId,
+    handle,
     refClass,
     referrer,
     device: req.headers.get('user-agent')?.slice(0, 60) ?? 'unknown',

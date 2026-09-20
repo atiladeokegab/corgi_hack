@@ -192,6 +192,7 @@ function emitPerson({ uid, archetype, source, post, dmJob, anchorMs, refClass, v
       dmJob: dmJob ?? null,
       via: via ?? null,
       subscriberId: null,   // seeded history predates the ManyChat link format
+      handle: null,
       refClass,
       referrer: pick(REFERRERS[refClass]),
       device: pick(DEVICES),

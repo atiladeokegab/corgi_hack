@@ -11,6 +11,7 @@ export type ClickEvent = {
   dmJob: string | null      // which of E-01's twelve jobs the reply was answering
   via: string | null        // uid of whoever passed the link on, when recoverable
   subscriberId: string | null // ManyChat subscriber id, when the link came from a flow
+  handle: string | null       // Instagram handle, when ManyChat passes it through
   refClass: RefClass
   referrer: string
   device: string

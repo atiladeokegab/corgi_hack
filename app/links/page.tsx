@@ -13,7 +13,8 @@ export const metadata = {
 export default function LinksPage() {
   const items = getItems()
   const posts = getPosts()
-  const jobs = [...new Set(getDms().map(d => d.job))]
+  const dms = getDms()
+  const jobs = [...new Set(dms.map(d => d.job))]
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 sm:px-6 py-10 sm:py-14">
@@ -32,7 +33,7 @@ export default function LinksPage() {
         </p>
       </header>
 
-      <LinkBuilder items={items} posts={posts} jobs={jobs} />
+      <LinkBuilder items={items} posts={posts} jobs={jobs} dms={dms} />
 
       <section className="mt-14">
         <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium">Proof</p>

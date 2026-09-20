@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import type { ClickEvent } from '@/lib/types'
+import { londonTime } from '@/lib/time'
 
 /** Polls the redirect log so a click made on stage appears without a reload. */
 export function LiveFeed() {
@@ -42,8 +43,10 @@ export function LiveFeed() {
             className="size-1.5 rounded-full shrink-0 self-center"
             style={{ background: i === 0 && pulse ? 'var(--seg-3)' : 'var(--series-dark)' }}
           />
-          <code className="tnum text-xs text-ink-3 shrink-0">{e.ts.slice(11, 19)}</code>
-          <code className="text-xs shrink-0" style={{ color: 'var(--accent)' }}>{e.uid}</code>
+          <code className="tnum text-xs text-ink-3 shrink-0">{londonTime(e.ts)}</code>
+          <code className="text-xs shrink-0" style={{ color: 'var(--accent)' }}>
+            {e.handle ? `@${e.handle}` : e.uid}
+          </code>
           <span className="font-medium truncate">{e.slug}</span>
           <span className="text-ink-3 text-xs ml-auto shrink-0">
             {e.source}{e.dmJob ? ` · ${e.dmJob}` : ''} · {e.refClass}{e.via ? ` · via ${e.via}` : ''}

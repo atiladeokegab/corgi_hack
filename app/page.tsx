@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { LiveFeed } from './components/LiveFeed'
 import { getDms, getEvents, getItems, getPosts, getReconciliation, getTruth } from '@/lib/data'
 import { buildProfiles, SEGMENTS, SEGMENT_ORDER } from '@/lib/classify'
@@ -121,9 +122,18 @@ export default function Page() {
     <main className="mx-auto w-full max-w-5xl px-4 sm:px-6 py-10 sm:py-14">
 
       <header>
-        <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium">
-          Operation Lookbook · Case 002
-        </p>
+        <div className="flex items-baseline justify-between gap-4 flex-wrap">
+          <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium">
+            Operation Lookbook · Case 002
+          </p>
+          <Link
+            href="/links"
+            className="text-xs rounded-lg border px-3 py-1.5 hover:bg-surface-2 transition-colors"
+            style={{ borderColor: 'var(--border)' }}
+          >
+            Build a link →
+          </Link>
+        </div>
         <h1 className="text-3xl sm:text-[2.6rem] font-semibold mt-2 tracking-tight leading-[1.1]">
           Sofia has {num(profiles.length)} people in her audience.
           <br className="hidden sm:block" /> Here is who they are.

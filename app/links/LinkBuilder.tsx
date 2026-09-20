@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import type { Item, Post } from '@/lib/types'
+import type { Dm, Item, Post } from '@/lib/types'
 
 const MERGE_FIELD = '{{subscriber_id}}'
 const SAMPLE_SUBSCRIBER = 'mc_demo_8841'
@@ -19,13 +19,15 @@ function Field({ label, hint, children }: { label: string; hint: string; childre
 const selectClass =
   'w-full rounded-lg border px-3 py-2 text-sm bg-surface-2 text-foreground'
 
-export function LinkBuilder({ items, posts, jobs }: { items: Item[]; posts: Post[]; jobs: string[] }) {
+export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts: Post[]; jobs: string[]; dms: Dm[] }) {
   const [slug, setSlug] = useState('black-blazer')
   const [postRef, setPostRef] = useState('E-03.4')
   const [job, setJob] = useState('')
   const [manychat, setManychat] = useState(true)
   const [origin, setOrigin] = useState('https://your-site.example')
   const [copied, setCopied] = useState(false)
+  const [sender, setSender] = useState(dms[0]?.handle ?? '')
+  const [sent, setSent] = useState<string | null>(null)
 
   useEffect(() => { setOrigin(window.location.origin) }, [])
 
@@ -160,6 +162,63 @@ export function LinkBuilder({ items, posts, jobs }: { items: Item[]; posts: Post
               </li>
             ))}
           </ul>
+        </div>
+
+        {/* The fallback path: proves the identified click without a ManyChat account,
+            using the twelve real senders from E-01 as the cast. */}
+        <div className="rounded-xl border p-4" style={{ borderColor: 'var(--seg-4)' }}>
+          <p className="text-[11px] uppercase tracking-[0.12em] font-medium mb-1" style={{ color: 'var(--seg-4)' }}>
+            No ManyChat account yet
+          </p>
+          <p className="text-sm text-ink-2 leading-relaxed mb-3">
+            Send this link as if ManyChat had delivered it, to one of the twelve people
+            who actually DM&apos;d her in the evidence. The click that lands is real —
+            only the delivery is stood in for.
+          </p>
+          <div className="flex flex-wrap gap-2 items-center">
+            <select
+              className="rounded-lg border px-3 py-2 text-sm bg-surface-2 text-foreground max-w-full"
+              style={{ borderColor: 'var(--border)' }}
+              value={sender}
+              onChange={e => setSender(e.target.value)}
+            >
+              {dms.map(d => (
+                <option key={d.ref} value={d.handle}>{d.handle} — {d.job}</option>
+              ))}
+            </select>
+            <button
+              type="button"
+              className="text-xs rounded-lg px-3 py-2 font-medium text-white"
+              style={{ background: 'var(--seg-4)' }}
+              onClick={async () => {
+                const dm = dms.find(d => d.handle === sender)
+                if (!dm) return
+                const handle = dm.handle.replace(/^@/, '')
+                const params = new URLSearchParams({
+                  d: dm.job,
+                  s: `mc_sim_${handle}`,
+                  h: handle,
+                  src: 'instagram_dm',
+                  dry: '1',
+                })
+                if (postRef) params.set('p', postRef)
+                await fetch(`/r/${slug}?${params}`, { cache: 'no-store' })
+                setSent(`${dm.handle} opened the ${item?.name ?? slug} link`)
+                setTimeout(() => setSent(null), 6000)
+              }}
+            >
+              Send it
+            </button>
+            {sent && <span className="text-xs" style={{ color: 'var(--seg-3)' }}>✓ {sent}</span>}
+          </div>
+          {(() => {
+            const dm = dms.find(d => d.handle === sender)
+            return dm ? (
+              <p className="text-xs text-ink-3 mt-3 leading-snug">
+                Their DM: &ldquo;{dm.message}&rdquo; — logged as <strong>{dm.job}</strong>.
+              </p>
+            ) : null
+          })()}
         </div>
 
         <div className="rounded-xl border p-4" style={{ borderColor: 'var(--border)' }}>
