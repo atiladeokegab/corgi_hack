@@ -3,35 +3,35 @@ import type { ClickEvent, Profile, SegmentKey } from './types'
 export const SEGMENT_ORDER: SegmentKey[] = ['REGULAR', 'RESEARCHER', 'CONNECTOR', 'SENT_ON', 'QUICK', 'BROWSING']
 
 export const SEGMENTS: Record<SegmentKey, {
-  label: string; evidence: string; signature: string; blurb: string; color: string
+  label: string; signature: string; blurb: string; color: string
 }> = {
   REGULAR: {
-    label: 'The Regular', evidence: 'E-07.2 Jamie', color: 'var(--seg-1)',
+    label: 'The Regular', color: 'var(--seg-1)',
     signature: '3+ different posts, including old ones',
     blurb: 'Keeps coming back and ranges across her whole back catalogue.',
   },
   RESEARCHER: {
-    label: 'The Researcher', evidence: 'E-07.1 Clara · E-07.3 Priya', color: 'var(--seg-2)',
+    label: 'The Researcher', color: 'var(--seg-2)',
     signature: 'One item, reopened 3+ times',
     blurb: 'Fixates on a single piece and reopens it for days before deciding.',
   },
   CONNECTOR: {
-    label: 'The Connector', evidence: 'E-07.4 Ella', color: 'var(--seg-3)',
+    label: 'The Connector', color: 'var(--seg-3)',
     signature: 'Passed the link to someone else',
     blurb: 'Treats her links as things to send to other people.',
   },
   SENT_ON: {
-    label: 'Arrived from a friend', evidence: 'E-01.5 · E-01.11', color: 'var(--seg-4)',
+    label: 'Arrived from a friend', color: 'var(--seg-4)',
     signature: 'Came from off-platform, not Instagram',
     blurb: 'Not a follower yet. Someone they trust sent this to them.',
   },
   QUICK: {
-    label: 'The Quick Ask', evidence: 'E-01.1 exact item request', color: 'var(--seg-5)',
+    label: 'The Quick Ask', color: 'var(--seg-5)',
     signature: 'One open, no return',
     blurb: 'Wanted the link, took the link, left.',
   },
   BROWSING: {
-    label: 'Unclassified', evidence: '—', color: 'var(--series-dark)',
+    label: 'Unclassified', color: 'var(--series-dark)',
     signature: 'Too little to call',
     blurb: 'Two or three opens with no clear shape yet.',
   },

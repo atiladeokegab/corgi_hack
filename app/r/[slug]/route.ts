@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { appendLiveEvent, getItems } from '@/lib/data'
+import { appendLiveEvent, getItems, getPosts } from '@/lib/data'
 import type { RefClass, Source } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
@@ -24,7 +24,7 @@ function classifyReferrer(referrer: string, src: string | null): RefClass {
  * first. It sets a cookie, notes where the click came from, records the open and
  * bounces on. The audience does nothing different and sees nothing new.
  *
- *   ?p=E-03.4   the post whose caption carried this link
+ *   ?p=the-blazer  the post whose caption carried this link
  *   ?d=BUDGET   the DM job this reply was answering (E-01's labels)
  *   ?v=<uid>    whoever passed the link on
  *   ?s=<id>     ManyChat subscriber id, filled in by the flow
@@ -38,7 +38,9 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ slug: strin
   if (!item) return NextResponse.json({ error: `unknown item: ${slug}` }, { status: 404 })
 
   const url = new URL(req.url)
-  const postRef = url.searchParams.get('p')
+  // Links carry a readable post slug; internally everything joins on the post id.
+  const p = url.searchParams.get('p')
+  const postRef = p ? (getPosts().find(x => x.slug === p || x.ref === p)?.ref ?? p) : null
   const dmJob = url.searchParams.get('d')
   const via = url.searchParams.get('v')
   // ManyChat resolves {{subscriber_id}} inside the URL before it sends the message,

@@ -26,7 +26,7 @@ export type Item = {
 }
 
 export type Post = {
-  ref: string; title: string; views: number; saves: number
+  ref: string; slug: string; title: string; views: number; saves: number
   organiserLabel: string; publishedAt: string; items: string[]; linkCount: number
 }
 

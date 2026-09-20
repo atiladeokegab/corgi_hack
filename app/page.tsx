@@ -108,6 +108,8 @@ export default function Page() {
   const recovery = recoveryAccuracy(profiles, getTruth())
   const recon = getReconciliation()
 
+  const postTitle = (ref: string | null) => posts.find(p => p.ref === ref)?.title ?? null
+
   const presentKeys = SEGMENT_ORDER.filter(k => segs.some(s => s.key === k))
   const wholeMix = presentKeys.map(k => ({ key: k, n: segs.find(s => s.key === k)!.people }))
   const dmLead = dmRows.length
@@ -142,7 +144,7 @@ export default function Page() {
           Instagram tells her how many people saw a post. It never tells her which kind
           of person, or which of her posts and DM replies brought them. This reads the
           shape of how each person opens her links and sorts them into five groups —
-          so she can decide what to make next from evidence instead of instinct.
+          so she can decide what to make next from what they do, not from a guess.
         </p>
       </header>
 
@@ -214,7 +216,6 @@ export default function Page() {
                       {s.label}
                     </p>
                     <p className="text-xs text-ink-3 mt-0.5 max-w-[17rem] leading-snug">{s.blurb}</p>
-                    <p className="text-[11px] text-ink-3 mt-1">{s.evidence}</p>
                   </td>
                   <td className="py-3 pr-4 text-xs text-ink-2 max-w-[11rem] leading-snug">{s.signature}</td>
                   <td className="py-3 pr-4 text-right tnum font-medium">
@@ -247,7 +248,7 @@ export default function Page() {
       <Section
         kicker="Decision two"
         title="Which DM question brings which people"
-        sub="E-01 labels each DM with the job it is really asking for. When the link in her reply is one of these, the question she answered becomes a property of the person who clicked it — so the DMs stop being a queue to clear and start being a sorting mechanism."
+        sub="Every DM is really asking for one of a dozen things — where is it, what size, cheaper version, what goes with it. When the link in her reply is tagged with the question it answered, that question becomes a fact about whoever clicked it. The inbox stops being a queue to clear and starts sorting her audience for her."
       >
         <Legend keys={presentKeys} />
         <Breakdown rows={dmRows} max={Math.max(...dmRows.map(r => r.total))} />
@@ -264,7 +265,7 @@ export default function Page() {
       <Section
         kicker="Decision three"
         title="What each group actually opens"
-        sub="Her own verdict on each piece, from E-04, sat next to who opens it. The dataset intentionally mixes objective facts with her subjective judgement — the subjective layer is the product, so it is quoted rather than scored."
+        sub="Her own verdict on each piece, sat next to who opens it. Her judgement is the thing people come for, so it is quoted exactly as she wrote it and never turned into a score."
       >
         <Legend keys={presentKeys} />
         <Breakdown rows={itemRows} max={Math.max(...itemRows.map(r => r.total))} />
@@ -293,7 +294,7 @@ export default function Page() {
                     {c.sharedTo}
                   </td>
                   <td className="py-2.5 pr-4 text-xs text-ink-2">
-                    {c.source === 'dm' ? `DM · ${c.dmJob}` : c.source === 'share' ? 'a friend' : c.entryPost}
+                    {c.source === 'dm' ? `DM · ${c.dmJob}` : c.source === 'share' ? 'a friend' : (postTitle(c.entryPost) ?? 'a post')}
                   </td>
                   <td className="py-2.5 text-xs text-ink-2">{c.topSlug}</td>
                 </tr>
@@ -310,12 +311,12 @@ export default function Page() {
       >
         <div className="flex flex-wrap gap-2">
           <a
-            href="/r/black-blazer?p=E-03.4&dry=1"
+            href="/r/black-blazer?p=the-blazer&dry=1"
             target="_blank" rel="noreferrer"
             className="text-xs rounded-lg border px-3 py-2 hover:bg-surface-2 transition-colors"
             style={{ borderColor: 'var(--border)' }}
           >
-            <code>/r/black-blazer?p=E-03.4</code>
+            <code>/r/black-blazer?p=the-blazer</code>
             <span className="text-ink-3 ml-2">from a caption</span>
           </a>
           <a
@@ -328,7 +329,7 @@ export default function Page() {
             <span className="ml-2">from a DM reply</span>
           </a>
           <a
-            href="/r/black-blazer?p=E-03.4&src=whatsapp&v=u_00001&dry=1"
+            href="/r/black-blazer?p=the-blazer&src=whatsapp&v=u_00001&dry=1"
             target="_blank" rel="noreferrer"
             className="text-xs rounded-lg border px-3 py-2 hover:bg-surface-2 transition-colors"
             style={{ borderColor: 'var(--seg-3)', color: 'var(--seg-3)' }}
@@ -345,7 +346,7 @@ export default function Page() {
       <Section
         kicker="Provenance"
         title="What is measured, assumed, and simply not knowable"
-        sub="The click history is synthetic — no such dataset was provided, and Instagram does not expose per-person saves or shares to anyone. Volumes are pinned to the evidence: per-post traffic is proportional to E-03's save counts, the DM mix uses E-01's twelve labelled jobs, and the items are E-04's."
+        sub="The click history here is made up — Instagram does not hand out per-person saves or shares to anybody, so no such record exists to import. The volumes are not arbitrary though: traffic per post is proportional to how many people actually saved it, the DM mix uses her twelve real question types, and the pieces are her real wardrobe."
       >
         <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-sm">
           {Object.entries(recon).map(([k, v]) => (
@@ -364,13 +365,12 @@ export default function Page() {
           </div>
         </dl>
         <p className="text-xs text-ink-3 mt-5 max-w-2xl leading-relaxed">
-          Known gaps, stated rather than papered over: wardrobe.csv is 8 of 36 items.
-          E-04 names a numeric &ldquo;Sofia rating&rdquo; that does not exist in the
-          printed evidence, so nothing here invents one. Which items each post links to
-          is read off the E-03 titles and E-05.6, not given. Share attribution is partial
-          by construction — the group is always sizeable, the individual is identifiable
-          about half the time. {dms.length} DMs in E-01 supply the job labels; their
-          relative frequency is an assumption.
+          Gaps worth saying out loud: only 8 of her 36 wardrobe pieces are covered.
+          She has no star rating on her pieces and this does not invent one — her
+          words are quoted, never scored. Which pieces each post linked to has been
+          read off the post titles rather than recorded. And share tracking is partial
+          by nature: the group is always countable, the individual behind a forward
+          is identifiable about half the time.
         </p>
       </Section>
 

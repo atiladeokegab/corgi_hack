@@ -21,7 +21,7 @@ const selectClass =
 
 export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts: Post[]; jobs: string[]; dms: Dm[] }) {
   const [slug, setSlug] = useState('black-blazer')
-  const [postRef, setPostRef] = useState('E-03.4')
+  const [postSlug, setPostSlug] = useState('the-blazer')
   const [job, setJob] = useState('')
   const [manychat, setManychat] = useState(true)
   const [origin, setOrigin] = useState('https://your-site.example')
@@ -35,18 +35,18 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
 
   const url = useMemo(() => {
     const parts: string[] = []
-    if (postRef) parts.push(`p=${postRef}`)
+    if (postSlug) parts.push(`p=${postSlug}`)
     if (job) parts.push(`d=${encodeURIComponent(job)}`)
     // Never URL-encode the merge field — ManyChat has to recognise it to swap it out.
     if (manychat) parts.push(`s=${MERGE_FIELD}`)
     return `${origin}/r/${slug}${parts.length ? '?' + parts.join('&') : ''}`
-  }, [origin, slug, postRef, job, manychat])
+  }, [origin, slug, postSlug, job, manychat])
 
   const testUrl = url.replace(MERGE_FIELD, SAMPLE_SUBSCRIBER) + (url.includes('?') ? '&' : '?') + 'dry=1'
 
   const captures = [
     { on: true, label: 'That someone opened this link at all', detail: 'a cookie that lasts a year, so we recognise them if they come back' },
-    { on: Boolean(postRef), label: 'Which post it came from', detail: postRef ? `tagged ${postRef}` : 'pick a post to turn this on' },
+    { on: Boolean(postSlug), label: 'Which post it came from', detail: postSlug ? `tagged “${posts.find(p => p.slug === postSlug)?.title ?? postSlug}”` : 'pick a post to turn this on' },
     { on: Boolean(job), label: 'Which question she was answering', detail: job ? `tagged ${job}` : 'pick a DM question to turn this on' },
     { on: manychat, label: 'Who the person is', detail: manychat ? 'ManyChat fills in their subscriber id — @handle instead of an anonymous id' : 'off: the click stays anonymous' },
     { on: true, label: 'If they forward it to a friend', detail: 'the friend arrives from WhatsApp or Messages rather than Instagram' },
@@ -69,9 +69,9 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
 
         <Field label="The post" hint="If this link lives in a caption or a comment reply, say which post.">
           <select className={selectClass} style={{ borderColor: 'var(--border)' }}
-                  value={postRef} onChange={e => setPostRef(e.target.value)}>
+                  value={postSlug} onChange={e => setPostSlug(e.target.value)}>
             <option value="">— not from a post —</option>
-            {posts.map(p => <option key={p.ref} value={p.ref}>{p.ref} · {p.title}</option>)}
+            {posts.map(p => <option key={p.ref} value={p.slug}>{p.title}</option>)}
           </select>
         </Field>
 
@@ -165,14 +165,14 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
         </div>
 
         {/* The fallback path: proves the identified click without a ManyChat account,
-            using the twelve real senders from E-01 as the cast. */}
+            using her twelve real DM senders as the cast. */}
         <div className="rounded-xl border p-4" style={{ borderColor: 'var(--seg-4)' }}>
           <p className="text-[11px] uppercase tracking-[0.12em] font-medium mb-1" style={{ color: 'var(--seg-4)' }}>
             No ManyChat account yet
           </p>
           <p className="text-sm text-ink-2 leading-relaxed mb-3">
             Send this link as if ManyChat had delivered it, to one of the twelve people
-            who actually DM&apos;d her in the evidence. The click that lands is real —
+            who actually DM&apos;d her. The click that lands is real —
             only the delivery is stood in for.
           </p>
           <div className="flex flex-wrap gap-2 items-center">
@@ -201,7 +201,7 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
                   src: 'instagram_dm',
                   dry: '1',
                 })
-                if (postRef) params.set('p', postRef)
+                if (postSlug) params.set('p', postSlug)
                 await fetch(`/r/${slug}?${params}`, { cache: 'no-store' })
                 setSent(`${dm.handle} opened the ${item?.name ?? slug} link`)
                 setTimeout(() => setSent(null), 6000)

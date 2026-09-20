@@ -67,7 +67,7 @@ export function postBreakdown(posts: Post[], profiles: Profile[]): Row[] {
     return {
       key: post.ref,
       label: post.title,
-      sub: `${post.ref} · ${post.linkCount} link${post.linkCount === 1 ? '' : 's'} · ${post.organiserLabel}`,
+      sub: `${post.linkCount} link${post.linkCount === 1 ? '' : 's'}`,
       total: g.length,
       mix: mixOf(g),
     }
@@ -91,7 +91,7 @@ export function itemBreakdown(items: Item[], profiles: Profile[]): Row[] {
     return {
       key: item.slug,
       label: item.name,
-      sub: `${item.tier} · ${item.style} · “${item.sofiaSays}”`,
+      sub: `“${item.sofiaSays}”`,
       total: g.length,
       mix: mixOf(g),
     }

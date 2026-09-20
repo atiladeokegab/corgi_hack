@@ -73,11 +73,11 @@ const itemBySlug = Object.fromEntries(items.map(i => [i.slug, i]))
 // Which items each post links to is not in the CSVs; it is read off the E-03
 // titles and E-05.6 (her most curated post carries one link, her widest carries five).
 const POST_META = {
-  'E-03.1': { publishedAt: '2026-08-13', items: ['red-slingback', 'wide-leg-denim', 'vintage-leather'] },
-  'E-03.2': { publishedAt: '2026-08-04', items: ['silk-skirt', 'white-tee', 'grey-knit', 'wide-leg-denim', 'vintage-leather'] },
-  'E-03.3': { publishedAt: '2026-08-29', items: ['white-tee', 'red-slingback'] },
-  'E-03.4': { publishedAt: '2026-09-05', items: ['black-blazer'] },
-  'E-03.5': { publishedAt: '2026-08-22', items: ['grey-knit'] },
+  'E-03.1': { slug: 'fashion-week', publishedAt: '2026-08-13', items: ['red-slingback', 'wide-leg-denim', 'vintage-leather'] },
+  'E-03.2': { slug: 'copenhagen', publishedAt: '2026-08-04', items: ['silk-skirt', 'white-tee', 'grey-knit', 'wide-leg-denim', 'vintage-leather'] },
+  'E-03.3': { slug: 'outfit-challenge', publishedAt: '2026-08-29', items: ['white-tee', 'red-slingback'] },
+  'E-03.4': { slug: 'the-blazer', publishedAt: '2026-09-05', items: ['black-blazer'] },
+  'E-03.5': { slug: 'never-buy-again', publishedAt: '2026-08-22', items: ['grey-knit'] },
 }
 
 const posts = ev('broadcast-log.csv').map(r => ({
@@ -280,11 +280,11 @@ const report = {
   'from a caption link': `${peopleIn('post')} people`,
   'from a DM reply': `${peopleIn('dm')} people`,
   'from a friend passing it on': `${peopleIn('share')} people`,
-  'assumed click rate among savers (E-03)': `${(100 * CLICK_RATE_OF_SAVERS).toFixed(0)}% of ${totalSaves.toLocaleString()} saves`,
-  'DM replies carrying a link (E-01 / E-02)': DM_REPLIES_WITH_A_LINK.toLocaleString(),
+  'assumed: savers who open a link': `${(100 * CLICK_RATE_OF_SAVERS).toFixed(0)}% of ${totalSaves.toLocaleString()} saves`,
+  'assumed: DM replies carrying a link': DM_REPLIES_WITH_A_LINK.toLocaleString(),
   'shares where the sender is identifiable': `${(100 * SHARER_ATTRIBUTION_RATE).toFixed(0)}%`,
-  'DM jobs tracked (E-01)': DM_JOBS.length,
-  'items linked (E-04, of 36 total)': items.length,
+  'kinds of question tracked': DM_JOBS.length,
+  'wardrobe pieces linked (of 36)': items.length,
 }
 
 fs.mkdirSync(path.join(ROOT, 'data'), { recursive: true })

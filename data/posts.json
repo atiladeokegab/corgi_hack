@@ -5,6 +5,7 @@
   "views": 61000,
   "saves": 4800,
   "organiserLabel": "Strong conversion",
+  "slug": "fashion-week",
   "publishedAt": "2026-08-13",
   "items": [
    "red-slingback",
@@ -19,6 +20,7 @@
   "views": 184000,
   "saves": 7100,
   "organiserLabel": "High reach, low intent",
+  "slug": "copenhagen",
   "publishedAt": "2026-08-04",
   "items": [
    "silk-skirt",
@@ -35,6 +37,7 @@
   "views": 42000,
   "saves": 6900,
   "organiserLabel": "High intent",
+  "slug": "outfit-challenge",
   "publishedAt": "2026-08-29",
   "items": [
    "white-tee",
@@ -48,6 +51,7 @@
   "views": 28000,
   "saves": 3800,
   "organiserLabel": "Quiet winner",
+  "slug": "the-blazer",
   "publishedAt": "2026-09-05",
   "items": [
    "black-blazer"
@@ -60,6 +64,7 @@
   "views": 39000,
   "saves": 5300,
   "organiserLabel": "High trust, low direct revenue",
+  "slug": "never-buy-again",
   "publishedAt": "2026-08-22",
   "items": [
    "grey-knit"
