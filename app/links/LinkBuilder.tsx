@@ -51,11 +51,11 @@ export function LinkBuilder({ items, posts, jobs, dms }: {
       {/* What ManyChat is, shown rather than explained. */}
       <section className="rounded-2xl border p-5 sm:p-6 bg-surface-2" style={{ borderColor: 'var(--border)' }}>
         <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium">
-          What the robot does for you
+          What the automation does
         </p>
         <p className="text-sm text-ink-2 mt-2 max-w-2xl leading-relaxed">
-          You put a word in your caption. Anyone who comments that word gets your link
-          sent to them instantly, all day, while you are asleep. You do not touch it.
+          Put a keyword in your caption. Anyone who comments it gets your link
+          automatically, at any hour, without you touching it.
         </p>
 
         <div className="grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-5 items-center mt-6">
@@ -131,10 +131,10 @@ export function LinkBuilder({ items, posts, jobs, dms }: {
             <input type="checkbox" className="mt-0.5" checked={autoReply}
                    onChange={e => setAutoReply(e.target.checked)} />
             <span>
-              <span className="text-sm font-medium block">The robot is sending this one</span>
+              <span className="text-sm font-medium block">Sent by the automation</span>
               <span className="text-xs text-ink-2 block mt-0.5 leading-snug">
-                Adds a tag that gets swapped for the person&apos;s name as it sends. That is
-                how you find out who clicked instead of just how many.
+                Adds a tag swapped for the person&apos;s name on send. Turns a click count
+                into a list of names.
               </span>
             </span>
           </label>
@@ -181,8 +181,8 @@ export function LinkBuilder({ items, posts, jobs, dms }: {
             </div>
             {item && !item.realDestination && (
               <p className="text-xs text-ink-3 mt-2">
-                {item.name} does not have a real shop link yet, so this one goes to a
-                search page. Only the black blazer is wired up properly.
+                {item.name} has no shop link yet, so this points at a search page.
+                Only the black blazer is wired up.
               </p>
             )}
           </div>
@@ -192,8 +192,8 @@ export function LinkBuilder({ items, posts, jobs, dms }: {
               Try it without setting anything up
             </p>
             <p className="text-sm text-ink-2 leading-relaxed mb-3">
-              Pretend one of your people just commented, and the robot sent them this.
-              The click is real — only the sending is pretend.
+              Simulate someone commenting and receiving this link. The click recorded is
+              real; only the sending is simulated.
             </p>
             <div className="flex flex-wrap gap-2 items-center">
               <select

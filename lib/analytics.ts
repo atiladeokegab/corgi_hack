@@ -45,9 +45,9 @@ export function segmentSummary(profiles: Profile[]): SegmentRow[] {
 export function sourceMix(profiles: Profile[]) {
   const total = profiles.length
   const labels: Record<Source, string> = {
-    post: 'A caption link',
+    post: 'A caption',
     dm: 'A DM reply',
-    share: 'A friend passing it on',
+    share: 'A friend',
   }
   return (['post', 'dm', 'share'] as Source[]).map(s => {
     const g = profiles.filter(p => p.source === s)

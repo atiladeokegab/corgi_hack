@@ -48,7 +48,7 @@ export function OwedList({ rows, total, estimate }: { rows: Row[]; total: number
         </button>
       </div>
       <p className="text-sm text-ink-2 mb-4 max-w-2xl leading-relaxed">
-        Real people, real timestamps, straight from your own links. Whether each one
+        Real people and real timestamps, from your own affiliate links. Whether each one
         bought is the part nobody can see.
       </p>
 

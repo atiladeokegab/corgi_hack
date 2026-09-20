@@ -10,8 +10,8 @@ import type { SegmentKey } from '@/lib/types'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Inbox — Lookbook',
-  description: 'The questions she has answered a thousand times, answered.',
+  title: 'Inbox — Edna',
+  description: 'The questions you answer every day, already answered.',
 }
 
 export default async function InboxPage() {
@@ -71,17 +71,15 @@ export default async function InboxPage() {
             className="text-xs rounded-lg border px-3 py-1.5 hover:bg-surface-2 transition-colors"
             style={{ borderColor: 'var(--border)' }}
           >
-            Make a link →
+Make a link →
           </Link>
         </div>
         <h1 className="text-3xl sm:text-[2.4rem] font-semibold mt-3 tracking-tight leading-[1.1]">
-          {cards.length} people are waiting.
-          <br className="hidden sm:block" /> {ready} of them asked something you answer every day.
+          {cards.length} waiting. {ready} already written.
         </h1>
         <p className="text-base text-ink-2 mt-4 max-w-2xl leading-relaxed">
-          Those ones already have a reply written for you, using your sizes and your
-          own words. Read it, hit send, move on. The ones that actually need you are
-          kept in a separate pile so you do not lose them.
+          Repeat questions come with a reply drafted from your sizes and your own words.
+          Read, send, next. The ones needing your judgement are kept separate.
         </p>
       </header>
 

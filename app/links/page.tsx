@@ -6,8 +6,8 @@ import { getDms, getItems, getPosts } from '@/lib/data'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Make a link — Lookbook',
-  description: 'A link that tells you who opened it and what brought them.',
+  title: 'Make an affiliate link — Edna',
+  description: 'An affiliate link that tells you who opened it and what brought them.',
 }
 
 export default function LinksPage() {
@@ -32,12 +32,11 @@ export default function LinksPage() {
           </Link>
         </div>
         <h1 className="text-3xl sm:text-[2.4rem] font-semibold mt-3 tracking-tight leading-[1.1]">
-          Make a link
+          Make an affiliate link
         </h1>
         <p className="text-base text-ink-2 mt-4 max-w-2xl leading-relaxed">
-          Same link you always send, with a few extra letters on the end. Those letters
-          tell you who opened it and what brought them to it. Whoever taps it just lands
-          on the shop, exactly like before.
+          The same affiliate link, with a few extra characters. They record who opened it
+          and what brought them. Whoever taps it lands on the shop as normal.
         </p>
       </header>
 
@@ -46,7 +45,7 @@ export default function LinksPage() {
       <section className="mt-14">
         <h2 className="text-xl font-semibold tracking-tight">Clicks landing right now</h2>
         <p className="text-sm text-ink-2 mt-2 max-w-2xl leading-relaxed">
-          Open one of your links and it shows up here straight away.
+          Open one of your affiliate links. It appears here within two seconds.
         </p>
         <div className="mt-5 rounded-xl border px-4 bg-surface-2" style={{ borderColor: 'var(--border)' }}>
           <LiveFeed />

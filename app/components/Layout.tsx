@@ -10,8 +10,8 @@ export function PageHeader({ title, sub }: { title: string; sub: string }) {
   return (
     <header className="mb-8">
       <div className="flex items-baseline justify-between gap-4 flex-wrap">
-        <Link href="/" className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium hover:text-foreground transition-colors">
-          ← Back to your dashboard
+        <Link href="/" className="text-base font-semibold tracking-[0.2em] hover:opacity-70 transition-opacity">
+          EDNA
         </Link>
         <Link
           href="/inbox"

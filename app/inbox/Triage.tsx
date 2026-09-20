@@ -72,8 +72,8 @@ export function Triage({ cards }: { cards: Card[] }) {
       {!visible.length && (
         <p className="text-sm text-ink-3 py-10">
           {tab === 'ready'
-            ? 'All the easy ones are done. What is left needs you.'
-            : tab === 'needs' ? 'Nothing is waiting on you.' : 'You have not sent anything yet.'}
+            ? 'Done. What is left needs you.'
+            : tab === 'needs' ? 'Nothing waiting on you.' : 'Nothing sent yet.'}
         </p>
       )}
 
@@ -92,7 +92,7 @@ export function Triage({ cards }: { cards: Card[] }) {
                 <p className="text-[11px] text-ink-3">{c.segmentLabel}</p>
                 {c.opens > 1 && (
                   <p className="text-[11px] text-ink-3">
-                    · opened your links {c.opens} times{c.distinctPosts > 1 ? ` across ${c.distinctPosts} posts` : ''}
+                    · opened your affiliate links {c.opens} times{c.distinctPosts > 1 ? ` across ${c.distinctPosts} posts` : ''}
                   </p>
                 )}
                 <p className="text-[11px] text-ink-3 ml-auto">{ago(c.ts)} · {londonTime(c.ts)}</p>
@@ -126,7 +126,7 @@ export function Triage({ cards }: { cards: Card[] }) {
                   {c.needsHer && (
                     <p className="text-xs mt-3 rounded-lg px-3 py-2 leading-relaxed"
                        style={{ background: 'var(--background)', color: 'var(--text-secondary)' }}>
-                      {c.needsHer} Their link is ready below if you want it.
+                      {c.needsHer}
                     </p>
                   )}
                   <textarea
@@ -134,7 +134,7 @@ export function Triage({ cards }: { cards: Card[] }) {
                     onChange={e => setEdits(v => ({ ...v, [c.id]: e.target.value }))}
                     onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') send(c) }}
                     rows={c.autoable ? 3 : 2}
-                    placeholder={c.autoable ? '' : 'Your words. Nobody can write this one for you.'}
+                    placeholder={c.autoable ? '' : 'Your words.'}
                     className="w-full rounded-lg border p-3 text-sm mt-3 leading-relaxed bg-background text-foreground"
                     style={{ borderColor: 'var(--border)' }}
                   />
@@ -175,7 +175,7 @@ export function Triage({ cards }: { cards: Card[] }) {
 
       {visible.length > 25 && (
         <p className="text-xs text-ink-3 mt-5">
-          Showing 25 of {visible.length}. Send these and the next lot appear.
+          Showing 25 of {visible.length}.
         </p>
       )}
     </div>

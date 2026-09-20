@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lookbook — your audience",
-  description: "Who clicks your links, what brought them, and which messages answer themselves.",
+  title: "Edna",
+  description: "Who clicks your affiliate links, what brought them, and which messages answer themselves.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

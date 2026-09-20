@@ -7,8 +7,8 @@ import { AFFILIATE_WINDOW_HOURS, CHASEABLE_DAYS, COMMISSION_RATE, owedToHer } fr
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'The pay window — Lookbook',
-  description: 'Your links keep working long after you stop getting paid for them.',
+  title: 'The pay window — Edna',
+  description: 'Your affiliate links keep working long after you stop getting paid for them.',
 }
 
 const gbp = (n: number) => '£' + Math.round(n).toLocaleString('en-GB')
@@ -42,15 +42,12 @@ export default function OwedPage() {
 
         <div className="mt-6 rounded-2xl border p-5 bg-surface-2 max-w-2xl" style={{ borderColor: 'var(--border)' }}>
           <p className="text-sm leading-relaxed text-ink-2">
-            <strong className="text-foreground font-medium">Here is what keeps happening.</strong>{' '}
-            Someone sees your post. They save it. They think about it for a few days.
-            Then they buy.
+            Someone sees your post, saves it, thinks for a few days, then buys.
           </p>
           <p className="text-sm leading-relaxed text-ink-2 mt-3">
-            Your affiliate link only pays you if they buy{' '}
+            Your affiliate link only pays if they buy{' '}
             <strong className="text-foreground font-medium">within {AFFILIATE_WINDOW_HOURS} hours</strong>.
-            Three days is too late, so you get nothing — even though they only bought
-            it because of you.
+            Three days is too late. You get nothing.
           </p>
         </div>
       </header>
@@ -65,7 +62,7 @@ export default function OwedPage() {
           <div className="rounded-xl border p-4 bg-surface-2" style={{ borderColor: 'var(--seg-3)' }}>
             <p className="text-2xl font-semibold tnum">{num(o.lateReturners)}</p>
             <p className="text-xs text-ink-2 mt-1 leading-snug">
-              came back to a link more than a day after the first time
+              came back to an affiliate link more than a day after the first time
             </p>
           </div>
           <div className="rounded-xl border p-4 bg-surface-2" style={{ borderColor: 'var(--border)' }}>
@@ -82,8 +79,8 @@ export default function OwedPage() {
           </div>
         </div>
         <p className="text-xs text-ink-3 mt-3 max-w-2xl leading-relaxed">
-          Every click is timestamped by your own link, so the first two are simply
-          counted. The third comes from your affiliate statement.
+          The first two are counted from your own affiliate links. The third is from your
+          affiliate statement.
         </p>
       </section>
 
@@ -116,20 +113,16 @@ export default function OwedPage() {
                 {Math.round(COMMISSION_RATE * 100)}%.
               </li>
               <li>
-                This is the cautious version. People who come back to something a few
-                times buy <em>more</em> often than people who glance once, so the real
-                figure is probably higher — but low is the right way to be wrong when
-                you are about to show it to a brand.
+                Deliberately cautious. Repeat visitors buy more often than one-time
+                clickers, so the real figure is likely higher.
               </li>
             </ol>
           </div>
 
           <p className="text-xs text-ink-3 mt-4 max-w-2xl leading-relaxed">
-            <strong className="text-foreground font-medium">Be straight about this one.</strong>{' '}
-            Nobody can see that a particular person bought something — that happens on the
-            shop&apos;s website, not yours. This is the click data you own, multiplied by the
-            rate your own affiliate statement already shows. It is a good estimate, not a
-            list of names.
+            No one can see that a specific person bought something — that happens on the
+            shop&apos;s site. This is your click data multiplied by the rate your affiliate
+            statement already shows. An estimate, not a list of names.
           </p>
         </div>
       </section>
@@ -140,14 +133,11 @@ export default function OwedPage() {
         </p>
         <div className="mt-3 rounded-2xl border p-5 bg-surface-2 max-w-2xl" style={{ borderColor: 'var(--border)' }}>
           <p className="text-sm text-ink-2 leading-relaxed">
-            Ask the brand for a discount code of your own. A code sits on the order
-            forever — it does not expire after a day the way a link does. So when
-            someone uses it three days later, the sale has your name on it and nobody
-            can argue.
+            Ask the brand for your own discount code. A code stays on the order and never
+            expires, so a purchase three days later still carries your name.
           </p>
           <p className="text-sm text-ink-2 leading-relaxed mt-3">
-            The brand wants this too. Right now they cannot tell which creator earned
-            which sale either.
+            The brand benefits too. They cannot currently tell which creator earned which sale.
           </p>
         </div>
       </section>
