@@ -81,8 +81,10 @@ export function TemplateEditor({ templates, placeholders, counts, hints }: {
           <p className="text-xs text-ink-2 mb-2 rounded-lg px-3 py-2 leading-relaxed"
              style={{ background: 'var(--background)' }}>
             <strong className="text-foreground font-medium">Left blank on purpose.</strong>{' '}
-            {hints[job]} Write something here and these {counts[job] ?? 0} messages move
-            over to the sendable pile — your call, not ours.
+            {hints[job]} Write something and these {counts[job] ?? 0} messages move over —
+            your call, not ours. It does not have to contain a link: “give me a day and
+            I&apos;ll put something together for you x” clears the message, keeps them
+            warm, and buys you the time to answer properly.
           </p>
         )}
 
@@ -91,7 +93,7 @@ export function TemplateEditor({ templates, placeholders, counts, hints }: {
           value={drafts[job] ?? ''}
           onChange={e => setDrafts(d => ({ ...d, [job]: e.target.value }))}
           rows={4}
-          placeholder="Empty — these messages come to you instead."
+          placeholder="Empty — these come to you instead. A reply with no link is still a reply."
           className="w-full rounded-lg border p-3 text-sm leading-relaxed bg-background text-foreground"
           style={{ borderColor: 'var(--border)' }}
         />
