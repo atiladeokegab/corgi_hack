@@ -8,11 +8,15 @@
   --text-secondary: #52514e;
   --text-muted:     #82817a;
 
-  /* viz roles — validated pair (see dataviz validator, light mode) */
-  --series-credited: #2a78d6;  /* what the affiliate network paid for */
-  --series-recovered:#1baf7a;  /* what her own redirect recovers */
-  --series-dark:     #b9b8b2;  /* still invisible to everyone */
-  --grid:            #eceae5;
+  /* Segment hues, fixed order — validated light+dark (dataviz validator). */
+  --seg-1: #2a78d6;  /* The Regular    */
+  --seg-2: #eb6834;  /* The Researcher */
+  --seg-3: #1baf7a;  /* The Connector  */
+  --seg-4: #eda100;  /* Arrived from a friend */
+  --seg-5: #e87ba4;  /* The Quick Ask  */
+  --series-dark: #b9b8b2;  /* unclassified */
+  --accent: #2a78d6;
+  --grid: #eceae5;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,10 +28,14 @@
     --text-secondary: #c3c2b7;
     --text-muted:     #8c8b82;
 
-    --series-credited: #3987e5;
-    --series-recovered:#199e70;
-    --series-dark:     #4a4945;
-    --grid:            #2a2a27;
+    --seg-1: #3987e5;
+    --seg-2: #d95926;
+    --seg-3: #199e70;
+    --seg-4: #c98500;
+    --seg-5: #d55181;
+    --series-dark: #4a4945;
+    --accent: #3987e5;
+    --grid: #2a2a27;
   }
 }
 

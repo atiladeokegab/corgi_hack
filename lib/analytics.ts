@@ -1,144 +1,158 @@
-import type { Order, Post, Profile, SegmentKey } from './types'
-import { SEGMENTS } from './classify'
+import type { ClickEvent, Item, Post, Profile, SegmentKey, Source } from './types'
+import { SEGMENTS, SEGMENT_ORDER } from './classify'
 
-const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0)
-const median = (xs: number[]) => {
-  if (!xs.length) return null
-  const s = [...xs].sort((a, b) => a - b)
-  return s[Math.floor(s.length / 2)]
+const countBy = <T, K extends string>(xs: T[], key: (x: T) => K) => {
+  const m = new Map<K, number>()
+  for (const x of xs) { const k = key(x); m.set(k, (m.get(k) ?? 0) + 1) }
+  return m
+}
+const topOf = <K extends string>(m: Map<K, number>) =>
+  [...m.entries()].sort((a, b) => b[1] - a[1])[0] ?? null
+
+export type SegmentRow = {
+  key: SegmentKey
+  label: string; evidence: string; signature: string; blurb: string; color: string
+  people: number; share: number
+  avgOpens: number; avgReturnDays: number; avgSpanDays: number
+  topSource: Source | null; topJob: string | null; topItem: string | null
 }
 
-/** The headline: what she is paid for, versus what actually happened. */
-export function headline(orders: Order[]) {
-  const total = sum(orders.map(o => o.value))
-  const affiliate = sum(orders.filter(o => o.affiliateCredited).map(o => o.value))
-  const ownRedirect = sum(orders.filter(o => o.subid).map(o => o.value))
-  const untouched = sum(orders.filter(o => !o.subid).map(o => o.value))
-  return {
-    total,
-    affiliate,
-    ownRedirect,
-    untouched,
-    blindSpot: total - affiliate,
-    blindSpotPct: total ? (total - affiliate) / total : 0,
-    recoveredPct: total ? (ownRedirect - affiliate) / total : 0,
-    orders: orders.length,
-    creditedOrders: orders.filter(o => o.affiliateCredited).length,
-  }
-}
-
-export function bySegment(profiles: Profile[], orders: Order[]) {
-  const profByUid = new Map(profiles.map(p => [p.uid, p]))
-  const total = sum(orders.map(o => o.value))
-
-  // A Connector's own spend understates her: credit her with what her recipients spent.
-  const downstream = new Map<string, number>()
-  for (const p of profiles) {
-    if (!p.sharerUid) continue
-    downstream.set(p.sharerUid, (downstream.get(p.sharerUid) ?? 0) + p.revenue)
-  }
-
-  const keys = Object.keys(SEGMENTS) as SegmentKey[]
-  return keys.map(key => {
-    const group = profiles.filter(p => p.segment === key)
-    const buyers = group.filter(p => p.purchased)
-    const revenue = sum(group.map(p => p.revenue))
-    const influenced = sum(group.map(p => downstream.get(p.uid) ?? 0))
+/** Segment mix — how her clicking audience actually divides up. */
+export function segmentSummary(profiles: Profile[]): SegmentRow[] {
+  const total = profiles.length
+  return SEGMENT_ORDER.map(key => {
+    const g = profiles.filter(p => p.segment === key)
+    if (!g.length) return null
+    const sources = countBy(g, p => p.source)
+    const jobs = countBy(g.filter(p => p.dmJob), p => p.dmJob!)
+    const slugs = countBy(g, p => p.topSlug)
     return {
       key,
       ...SEGMENTS[key],
-      people: group.length,
-      buyers: buyers.length,
-      conversion: group.length ? buyers.length / group.length : 0,
-      revenue,
-      influenced,
-      totalValue: revenue + influenced,
-      shareOfRevenue: total ? (revenue + influenced) / total : 0,
-      avgOrder: buyers.length ? revenue / buyers.length : 0,
-      medianDaysToBuy: median(buyers.map(b => b.daysToBuy!).filter(d => d != null)),
-      pctAffiliateCredited: buyers.length ? buyers.filter(b => b.affiliateCredited).length / buyers.length : 0,
+      people: g.length,
+      share: total ? g.length / total : 0,
+      avgOpens: g.reduce((a, p) => a + p.touches, 0) / g.length,
+      avgReturnDays: g.reduce((a, p) => a + p.returnDays, 0) / g.length,
+      avgSpanDays: g.reduce((a, p) => a + p.spanDays, 0) / g.length,
+      topSource: topOf(sources)?.[0] ?? null,
+      topJob: topOf(jobs)?.[0] ?? null,
+      topItem: topOf(slugs)?.[0] ?? null,
     }
-  }).filter(s => s.people > 0).sort((a, b) => b.totalValue - a.totalValue)
+  }).filter(Boolean) as SegmentRow[]
 }
 
-/** Instagram's ranking of her posts, next to the one that pays her. */
-export function byPost(posts: Post[], orders: Order[], profiles: Profile[]) {
-  const profByUid = new Map(profiles.map(p => [p.uid, p]))
-  const rows = posts.map(post => {
-    const os = orders.filter(o => o.postRef === post.ref)
-    const revenue = sum(os.map(o => o.value))
-    const credited = sum(os.filter(o => o.affiliateCredited).map(o => o.value))
-    const segs = new Map<SegmentKey, number>()
-    for (const o of os) {
-      const seg = o.subid ? profByUid.get(o.subid)?.segment : undefined
-      const k = (seg ?? 'BROWSING') as SegmentKey
-      segs.set(k, (segs.get(k) ?? 0) + o.value)
-    }
-    const topSegment = [...segs.entries()].sort((a, b) => b[1] - a[1])[0]
-    return {
-      ...post,
-      revenue,
-      credited,
-      hidden: revenue - credited,
-      revenuePer1kViews: post.views ? (revenue / post.views) * 1000 : 0,
-      saveRate: post.views ? post.saves / post.views : 0,
-      topSegment: topSegment?.[0] ?? null,
-      topSegmentRevenue: topSegment?.[1] ?? 0,
-    }
+/** Where her audience comes from at all: caption link, DM reply, or a friend. */
+export function sourceMix(profiles: Profile[]) {
+  const total = profiles.length
+  const labels: Record<Source, string> = {
+    post: 'A caption link',
+    dm: 'A DM reply',
+    share: 'A friend passing it on',
+  }
+  return (['post', 'dm', 'share'] as Source[]).map(s => {
+    const g = profiles.filter(p => p.source === s)
+    return { source: s, label: labels[s], people: g.length, share: total ? g.length / total : 0 }
   })
-  const byViews = [...rows].sort((a, b) => b.views - a.views).map(r => r.ref)
-  const byRevenue = [...rows].sort((a, b) => b.revenue - a.revenue).map(r => r.ref)
-  return rows.map(r => ({
-    ...r,
-    rankByViews: byViews.indexOf(r.ref) + 1,
-    rankByRevenue: byRevenue.indexOf(r.ref) + 1,
-  })).sort((a, b) => b.revenue - a.revenue)
 }
 
-/** The named answer to "who is important": individual Connectors, ranked. */
+type Row = { key: string; label: string; sub: string; total: number; mix: { key: SegmentKey; n: number }[] }
+
+const mixOf = (g: Profile[]): Row['mix'] =>
+  SEGMENT_ORDER.map(k => ({ key: k, n: g.filter(p => p.segment === k).length })).filter(m => m.n > 0)
+
+/** Which post brings which kind of person. */
+export function postBreakdown(posts: Post[], profiles: Profile[]): Row[] {
+  return posts.map(post => {
+    const g = profiles.filter(p => p.source === 'post' && p.entryPost === post.ref)
+    return {
+      key: post.ref,
+      label: post.title,
+      sub: `${post.ref} · ${post.linkCount} link${post.linkCount === 1 ? '' : 's'} · ${post.organiserLabel}`,
+      total: g.length,
+      mix: mixOf(g),
+    }
+  }).sort((a, b) => b.total - a.total)
+}
+
+/** Which DM question brings which kind of person — E-01's twelve jobs. */
+export function dmBreakdown(profiles: Profile[]): Row[] {
+  const dmPeople = profiles.filter(p => p.source === 'dm' && p.dmJob)
+  const jobs = [...new Set(dmPeople.map(p => p.dmJob!))]
+  return jobs.map(job => {
+    const g = dmPeople.filter(p => p.dmJob === job)
+    return { key: job, label: job, sub: '', total: g.length, mix: mixOf(g) }
+  }).sort((a, b) => b.total - a.total)
+}
+
+/** Which pieces each group actually opens. */
+export function itemBreakdown(items: Item[], profiles: Profile[]): Row[] {
+  return items.map(item => {
+    const g = profiles.filter(p => p.topSlug === item.slug)
+    return {
+      key: item.slug,
+      label: item.name,
+      sub: `${item.tier} · ${item.style} · “${item.sofiaSays}”`,
+      total: g.length,
+      mix: mixOf(g),
+    }
+  }).filter(r => r.total > 0).sort((a, b) => b.total - a.total)
+}
+
+/** Named Connectors — the answer to "who is worth replying to first". */
 export function topConnectors(profiles: Profile[], limit = 8) {
-  const downstream = new Map<string, { revenue: number; buyers: number; people: number }>()
+  const reach = new Map<string, number>()
   for (const p of profiles) {
     if (!p.sharerUid) continue
-    const cur = downstream.get(p.sharerUid) ?? { revenue: 0, buyers: 0, people: 0 }
-    cur.revenue += p.revenue
-    cur.buyers += p.purchased ? 1 : 0
-    cur.people += 1
-    downstream.set(p.sharerUid, cur)
+    reach.set(p.sharerUid, (reach.get(p.sharerUid) ?? 0) + 1)
   }
   return profiles
     .filter(p => p.sharedToCount > 0)
     .map(p => ({
       uid: p.uid,
-      ownRevenue: p.revenue,
       sharedTo: p.sharedToCount,
-      ...(downstream.get(p.uid) ?? { revenue: 0, buyers: 0, people: 0 }),
+      reached: reach.get(p.uid) ?? 0,
+      source: p.source,
+      dmJob: p.dmJob,
+      entryPost: p.entryPost,
+      topSlug: p.topSlug,
     }))
-    .sort((a, b) => (b.revenue + b.ownRevenue) - (a.revenue + a.ownRevenue))
+    .sort((a, b) => b.sharedTo - a.sharedTo)
     .slice(0, limit)
 }
 
 /**
- * Three separate days on the same link is the threshold that best recovers a saver.
- * Two is too loose (a single late return trips it); four buys precision at the cost
- * of a quarter of the recall. Scored against held-out truth, not asserted.
+ * Anonymous shares prove Connectors exist that the log cannot name. Size the gap
+ * rather than quietly ignore it.
  */
-export const SAVER_RETURN_DAYS = 3
+export function connectorCoverage(profiles: Profile[], events: ClickEvent[]) {
+  const shareArrivals = profiles.filter(p => p.segment === 'SENT_ON')
+  const named = shareArrivals.filter(p => p.sharerUid).length
+  const anonymous = shareArrivals.length - named
+  const identified = profiles.filter(p => p.segment === 'CONNECTOR').length
+  const fanOut = identified ? named / identified : 0
+  return {
+    identified,
+    anonymous,
+    shareArrivals: shareArrivals.length,
+    estimatedUnnamed: fanOut > 0 ? Math.round(anonymous / fanOut) : 0,
+  }
+}
 
-export function saveProxyAccuracy(profiles: Profile[], truth: { uid: string; saves: number }[]) {
-  const savesByUid = new Map(truth.map(t => [t.uid, t.saves]))
-  let tp = 0, fp = 0, fn = 0
+/** Does the classifier actually recover behaviour? Scored against held-out truth. */
+export function recoveryAccuracy(profiles: Profile[], truth: { uid: string; archetype: string }[]) {
+  const byUid = new Map(truth.map(t => [t.uid, t.archetype === 'SAME_DAY' ? 'QUICK' : t.archetype]))
+  let hit = 0, seen = 0
+  const confusion = new Map<string, number>()
   for (const p of profiles) {
-    const actual = savesByUid.get(p.uid)
-    if (actual == null) continue
-    const predicted = p.returnDays >= SAVER_RETURN_DAYS
-    const isSaver = actual >= 3
-    if (predicted && isSaver) tp++
-    else if (predicted && !isSaver) fp++
-    else if (!predicted && isSaver) fn++
+    const actual = byUid.get(p.uid)
+    if (!actual) continue
+    seen++
+    if (actual === p.segment) hit++
+    else confusion.set(`${actual}->${p.segment}`, (confusion.get(`${actual}->${p.segment}`) ?? 0) + 1)
   }
   return {
-    precision: tp + fp ? tp / (tp + fp) : 0,
-    recall: tp + fn ? tp / (tp + fn) : 0,
+    accuracy: seen ? hit / seen : 0,
+    scored: seen,
+    worst: [...confusion.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3),
   }
 }

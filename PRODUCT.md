@@ -8,35 +8,56 @@ Kept separate from `README.md` because that file is being edited live. This is t
 > If you cannot name the person and the decision, you do not have a product yet.
 
 **Person:** Sofia. Not an audience member — a deliberate call, taken with the judges,
-on the grounds that the audience should not have to absorb any new friction for this
-to work. Nobody signs up, fills in a form, or visits a page.
+on the grounds that the audience should absorb no new friction for this to work.
+Nobody signs up, fills in a form, or visits a page.
 
-**Decision:** *Which kind of follower should I make my next post for?* Today she
-answers it from an affiliate dashboard that reports roughly a third of her sales, and
-that third is her cheapest customer.
+**Decision:** *What should I make next, and which DMs are worth answering first?*
+
+**Scope, explicitly:** visibility into her customer base. Who is clicking, and which
+post or which DM brought them. There is no revenue, attribution or money anywhere in
+this system. The job is to give her better information, not to measure her earnings.
 
 **Constraint she set:** instrumentation is a redirect and nothing else.
 
-## The thesis
+## What it does
 
-Affiliate networks credit a sale only if it lands inside the click window — typically
-24 hours. E-09 says the median purchase arrives **3.4 days** after she posts. So the
-majority of her revenue is not "unclicked"; much of it *was* clicked, days before the
-purchase, and the credit window had already closed.
+The links Sofia already pastes point at her own redirect first. It bounces on
+instantly. From the shape of how someone opens those links it sorts her audience
+into five groups, and cross-references them against the post or the DM that brought
+each person in.
 
-A redirect she owns sets its own cookie with a one-year life. It outlives the
-affiliate window, which is the entire mechanism:
+Five groups, each defined by something a redirect can observe on its own:
 
-| | Affiliate network | Her own redirect |
+| Group | How you spot them | Evidence |
 |---|---|---|
-| Cookie window | ~24h | 1 year |
-| Sees a 3.4-day purchase | no | yes |
-| Sees a share to a friend | no | yes, via the Referer header |
-| Sees repeat consideration | no | yes, return visits |
-| Costs the audience anything | — | nothing |
+| The Regular | 3+ different posts, including old ones | E-07.2 Jamie |
+| The Researcher | one item, reopened 3+ times | E-07.1 Clara · E-07.3 Priya |
+| The Connector | passed the link to someone else | E-07.4 Ella |
+| Arrived from a friend | came from off-platform, not Instagram | E-01.5 · E-01.11 |
+| The Quick Ask | one open, no return | E-01.1 exact item request |
 
-**Sofia no longer needs to guess who her audience is, because the people who never
-click are now the ones she can see.**
+**Sofia no longer needs to guess who she is talking to, because the links she already
+sends now tell her which kind of person opened them, and which post or question
+brought them in.**
+
+## The finding the demo turns on
+
+E-01 labels each DM with the job it is really asking for. Once her reply link carries
+that label, the question she answered becomes a property of the person who clicked —
+and the DM queue stops being a queue and starts being a sorting mechanism:
+
+| DM job | Volume | Who it brings |
+|---|---|---|
+| EXACT ITEM REQUEST | highest | 76% The Quick Ask |
+| FIT / DECISION / BUDGET / INTENT | high | ~70% The Researcher |
+| ADAPTATION / POST-PURCHASE / CONSTRAINT / TRUST | medium | 54–73% The Regular |
+| SOCIAL SHARING | low | 44% The Connector |
+| SECOND-HAND DISCOVERY | lowest | 57% The Connector |
+
+Her loudest DM — *"WHERE is this blazer I'm begging you"* — brings people who open
+the link once and never come back. Her quietest two bring the people who pass her
+taste on to someone else. That is a priority order she cannot currently see, and it
+is the opposite of the one volume would suggest.
 
 ## What the redirect can and cannot see
 
@@ -44,41 +65,40 @@ Observable, with zero audience friction:
 
 | Signal | Mechanism |
 |---|---|
-| Return visits | same cookie, separate days |
-| Days to buy | first touch → order timestamp |
+| Repeat consideration | same cookie, separate days |
+| Breadth across her catalogue | which posts the opens belong to |
+| Fixation on one piece | repeated opens of a single item |
 | Shares | `Referer` is WhatsApp/iMessage/nothing rather than Instagram |
-| Who shared | `?v=<uid>` survives when the link that travelled was still hers (~55% of shares) |
+| Who shared | `?v=<uid>` survives when the link that travelled was still hers |
 | Which post earned it | `?p=<postRef>` on the caption link |
-| Purchase + value | `subid` handed to the brand, returned on the order |
+| Which DM earned it | `?d=<job>` on the reply link, using E-01's labels |
 
 **Not observable, and not faked here:** who saved a post. Instagram does not expose
-per-person saves or shares to anyone, at any price. Return visits are used as a proxy
-and the dashboard reports its measured accuracy (97% recall, 72% precision at a
-three-day threshold) rather than asserting it works.
+per-person saves or shares to anyone, at any price. That is why the model reads the
+shape of returns instead — and the dashboard reports how well the classifier recovers
+real behaviour (96% against held-out truth) rather than asserting that it works.
 
-Sized but never named: people who saw a post and went to the retailer directly. Their
-orders arrive with no subid, so the segment is real and measurable by subtraction —
-the individuals are not.
+Partial by construction: a forwarded link only names its sender about half the time.
+Anonymous share arrivals are counted and used to estimate how many Connectors the log
+cannot name, rather than quietly dropped.
 
 ## Real vs synthetic
 
 **Real and running:** the redirect (`app/r/[slug]/route.ts`), cookie issuance,
-Referer classification, share attribution, subid passthrough, the live feed.
+Referer classification, DM-job tagging, share attribution, the live feed.
 
-**Synthetic:** the behavioural history. No such dataset was provided and none can be
-obtained from Instagram. It is generated by `scripts/seed.mjs`, which is constrained
-so it cannot contradict the evidence — post totals from E-03, prices from E-04, and
-tuned until it reproduces all four E-09 statistics:
+**Synthetic:** the click history. No such dataset was provided and none can be
+obtained from Instagram. `scripts/seed.mjs` generates it, pinned to the evidence:
+per-post traffic proportional to E-03's save counts, the DM mix built on E-01's
+twelve labelled jobs, items from E-04. The three assumptions that are *not* in the
+evidence are named as constants at the top of that file so they can be argued with:
 
-| E-09 | Target | Generated |
-|---|---|---|
-| High-value purchasers not credited | 62% | 64.1% |
-| Median days to buy | 3.4 | 3.48 |
-| Purchases following a share | 41% | 42.6% |
-| Purchase rate at 3+ saves | 2.2x | 2.17x |
+- `CLICK_RATE_OF_SAVERS` — E-03 gives views and saves but no click counts
+- `DM_REPLIES_WITH_A_LINK` — derived from 3.1k DMs/month and E-02
+- `SHARER_ATTRIBUTION_RATE` — how often a forwarded link still carries its sender
 
-`data/reconciliation.json` is regenerated on every seed run and rendered at the bottom
-of the dashboard, so drift is visible rather than buried.
+`data/reconciliation.json` regenerates on every seed run and renders at the bottom of
+the dashboard, so drift is visible rather than buried.
 
 ## Running it
 
@@ -91,9 +111,10 @@ npm run dev               # http://localhost:3000
 Live endpoints:
 
 ```
-/r/black-blazer?p=E-03.4              # 302 to the retailer, cookie + subid attached
-/r/black-blazer?p=E-03.4&dry=1        # records the hit, shows the row, stays on site
-/r/black-blazer?src=whatsapp&v=<uid>  # arrive as a friend rather than a follower
+/r/black-blazer?p=E-03.4                    # from a caption link
+/r/white-tee?d=BUDGET                       # from a DM reply, tagged with E-01's job
+/r/black-blazer?src=whatsapp&v=<uid>        # passed on by a friend
+...&dry=1                                   # record it, show the row, stay on site
 ```
 
 Use `?dry=1` on stage — it proves the mechanism without leaving the app or needing
@@ -101,24 +122,21 @@ the room's wifi to reach a retailer.
 
 ## The 90 seconds
 
-1. **What we took.** Her judgement is the asset, and her own dashboard can only see
-   the third of her audience that behaves least like her.
-2. **The product.** Open the dashboard. One number: £74,863 of £116,118 never reported.
-   Then the segment table — the one segment the affiliate dashboard reports in full,
-   The Impulse, has the lowest average order.
-3. **It runs.** Click a `/r/` link, the row lands in the live feed in two seconds.
+1. **What we took.** Her judgement is the asset, but she cannot see who is receiving
+   it. Instagram reports how many people saw a post, never which kind of person.
+2. **The product.** Open the dashboard. Her audience splits five ways. Then the post
+   breakdown, then the DM breakdown.
+3. **It runs.** Click a `/r/` link — the row lands in the live feed in two seconds.
    Click it again with `&src=whatsapp` — same link, now classified as a share.
-4. **Impact.** The Regular: hundreds of people who return repeatedly and have never
-   bought. That is a content brief, not a metric.
+4. **Impact.** The DM she gets most of brings people who never come back. The two she
+   gets least of bring the people who pass her taste on. That is a content brief.
 
 ## Known limits, stated rather than papered over
 
 - `wardrobe.csv` is 8 of 36 items.
 - E-04 names a numeric "Sofia rating"; it does not exist in the printed evidence, so
-  nothing here invents one.
-- `intent.csv`'s `link_click` column is deliberately incomplete. That is the puzzle
-  this instruments, not a data-quality bug to clean.
-- Which items each post links to is inferred from the E-03 titles and E-05.6, not
-  given. It is the one structural assumption in the seed.
-- Share attribution is partial by construction. The segment is always sizeable; the
-  individual sharer is identifiable about half the time.
+  nothing here invents one. Her verdicts are quoted, never scored.
+- Which items each post links to is inferred from the E-03 titles and E-05.6.
+- The relative frequency of E-01's twelve DM jobs is an assumption.
+- Share attribution is partial: the group is always sizeable, the individual is
+  identifiable about half the time.

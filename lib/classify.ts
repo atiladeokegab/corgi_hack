@@ -1,37 +1,63 @@
-import type { Order, Post, Profile, RedirectEvent, SegmentKey } from './types'
+import type { ClickEvent, Profile, SegmentKey } from './types'
 
-export const SEGMENTS: Record<SegmentKey, { label: string; evidence: string; blurb: string }> = {
-  CONNECTOR:   { label: 'The Connector',   evidence: 'E-07.4 Ella',  blurb: 'Sends looks on. Someone else completes the purchase.' },
-  SENT_ON:     { label: 'Sent by a friend', evidence: 'E-01.5 / E-01.11', blurb: 'Arrived off-platform, on a personal recommendation.' },
-  DELIBERATOR: { label: 'The Deliberator', evidence: 'E-07.3 Priya', blurb: 'Sits on it for days, then buys the expensive one.' },
-  REGULAR:     { label: 'The Regular',     evidence: 'E-07.2 Jamie', blurb: 'Returns again and again and has never bought. Her highest-intent unconverted group.' },
-  IMPULSE:     { label: 'The Impulse',     evidence: 'E-10 link_click', blurb: 'Clicks and buys same day. The only one the affiliate dashboard sees.' },
-  BROWSING:    { label: 'Browsing',        evidence: '—',             blurb: 'Not enough signal yet.' },
+export const SEGMENT_ORDER: SegmentKey[] = ['REGULAR', 'RESEARCHER', 'CONNECTOR', 'SENT_ON', 'QUICK', 'BROWSING']
+
+export const SEGMENTS: Record<SegmentKey, {
+  label: string; evidence: string; signature: string; blurb: string; color: string
+}> = {
+  REGULAR: {
+    label: 'The Regular', evidence: 'E-07.2 Jamie', color: 'var(--seg-1)',
+    signature: '3+ different posts, including old ones',
+    blurb: 'Keeps coming back and ranges across her whole back catalogue.',
+  },
+  RESEARCHER: {
+    label: 'The Researcher', evidence: 'E-07.1 Clara · E-07.3 Priya', color: 'var(--seg-2)',
+    signature: 'One item, reopened 3+ times',
+    blurb: 'Fixates on a single piece and reopens it for days before deciding.',
+  },
+  CONNECTOR: {
+    label: 'The Connector', evidence: 'E-07.4 Ella', color: 'var(--seg-3)',
+    signature: 'Passed the link to someone else',
+    blurb: 'Treats her links as things to send to other people.',
+  },
+  SENT_ON: {
+    label: 'Arrived from a friend', evidence: 'E-01.5 · E-01.11', color: 'var(--seg-4)',
+    signature: 'Came from off-platform, not Instagram',
+    blurb: 'Not a follower yet. Someone they trust sent this to them.',
+  },
+  QUICK: {
+    label: 'The Quick Ask', evidence: 'E-01.1 exact item request', color: 'var(--seg-5)',
+    signature: 'One open, no return',
+    blurb: 'Wanted the link, took the link, left.',
+  },
+  BROWSING: {
+    label: 'Unclassified', evidence: '—', color: 'var(--series-dark)',
+    signature: 'Too little to call',
+    blurb: 'Two or three opens with no clear shape yet.',
+  },
 }
 
-const dayKey = (ts: string) => ts.slice(0, 10)
 const DAY_MS = 86_400_000
+const dayKey = (ts: string) => ts.slice(0, 10)
 
 /**
  * Builds a behavioural profile per anonymous id using ONLY what a redirect can
- * observe: its own cookie, the timestamp, the Referer header and the link it was
- * asked for. No Instagram data, no form, nothing the audience has to opt into.
+ * observe: its own cookie, the timestamp, the Referer header, and which link was
+ * asked for. Nothing the audience fills in, no page for them to visit, no extra
+ * step anywhere in their day.
  *
- * `returnDays` is the load-bearing inference. Instagram will never tell you who
- * saved a post, and a first click says little — almost everyone clicks the day they
- * see it. But coming back to the same link on a separate day is reconsideration,
- * and reconsideration is what a save actually is. That is the save signal,
- * recovered indirectly and measured against held-out truth on the dashboard.
+ * Instagram will never say who saved a post. What it cannot hide is the shape of
+ * someone's returns — and the shape is what distinguishes a person weighing one
+ * purchase from a person browsing her whole back catalogue.
  */
-export function buildProfiles(events: RedirectEvent[], orders: Order[], posts: Post[]): Profile[] {
-  const postByRef = new Map(posts.map(p => [p.ref, p]))
-  const byUid = new Map<string, RedirectEvent[]>()
+export function buildProfiles(events: ClickEvent[]): Profile[] {
+  const byUid = new Map<string, ClickEvent[]>()
   for (const e of events) {
     if (!byUid.has(e.uid)) byUid.set(e.uid, [])
     byUid.get(e.uid)!.push(e)
   }
 
-  // How many people each uid demonstrably passed a link on to.
+  // Who each person demonstrably passed a link on to.
   const sharedTo = new Map<string, Set<string>>()
   for (const e of events) {
     if (!e.via) continue
@@ -39,62 +65,48 @@ export function buildProfiles(events: RedirectEvent[], orders: Order[], posts: P
     sharedTo.get(e.via)!.add(e.uid)
   }
 
-  const ordersBySubid = new Map<string, Order[]>()
-  for (const o of orders) {
-    if (!o.subid) continue
-    if (!ordersBySubid.has(o.subid)) ordersBySubid.set(o.subid, [])
-    ordersBySubid.get(o.subid)!.push(o)
-  }
-
   const profiles: Profile[] = []
   for (const [uid, evs] of byUid) {
     evs.sort((a, b) => a.ts.localeCompare(b.ts))
     const first = evs[0]
     const last = evs[evs.length - 1]
-    const post = first.postRef ? postByRef.get(first.postRef) : undefined
-    const lagDays = post
-      ? +((Date.parse(first.ts) - Date.parse(post.publishedAt + 'T09:00:00Z')) / DAY_MS).toFixed(2)
-      : null
 
     const returnDays = new Set(evs.map(e => dayKey(e.ts))).size
     const distinctPosts = new Set(evs.map(e => e.postRef).filter(Boolean)).size
+    const slugCounts = new Map<string, number>()
+    for (const e of evs) slugCounts.set(e.slug, (slugCounts.get(e.slug) ?? 0) + 1)
+    const distinctSlugs = slugCounts.size
+    const topSlug = [...slugCounts.entries()].sort((a, b) => b[1] - a[1])[0][0]
     const sharerUid = evs.find(e => e.via)?.via ?? null
     const sharedToCount = sharedTo.get(uid)?.size ?? 0
-
-    const myOrders = ordersBySubid.get(uid) ?? []
-    const revenue = myOrders.reduce((a, o) => a + o.value, 0)
-    const purchased = myOrders.length > 0
-    const daysToBuy = purchased
-      ? +((Date.parse(myOrders[0].ts) - Date.parse(first.ts)) / DAY_MS).toFixed(2)
-      : null
+    const spanDays = +((Date.parse(last.ts) - Date.parse(first.ts)) / DAY_MS).toFixed(1)
 
     let segment: SegmentKey = 'BROWSING'
-    let reason = 'One touch, no return, no share'
+    let reason = `${evs.length} opens, no clear shape yet`
     if (sharedToCount >= 1) {
       segment = 'CONNECTOR'
       reason = `Passed a link to ${sharedToCount} ${sharedToCount === 1 ? 'person' : 'people'}`
     } else if (sharerUid || first.refClass === 'whatsapp' || first.refClass === 'messages') {
       segment = 'SENT_ON'
-      reason = sharerUid ? `Arrived via ${sharerUid}` : `Arrived from ${first.refClass}, not Instagram`
-    } else if (purchased && returnDays >= 3 && (daysToBuy ?? 0) >= 2) {
-      segment = 'DELIBERATOR'
-      reason = `Came back on ${returnDays} days, bought after ${daysToBuy!.toFixed(1)}d`
-    } else if (returnDays >= 3) {
+      reason = sharerUid ? `Sent by ${sharerUid}` : `Arrived from ${first.refClass}, not Instagram`
+    } else if (distinctPosts >= 3) {
       segment = 'REGULAR'
-      reason = `${returnDays} separate days, ${distinctPosts} post${distinctPosts === 1 ? '' : 's'}, no purchase yet`
-    } else if (purchased && (daysToBuy ?? 99) < 1) {
-      segment = 'IMPULSE'
-      reason = 'Clicked and bought the same day'
+      reason = `${distinctPosts} different posts over ${returnDays} days`
+    } else if (distinctSlugs === 1 && evs.length >= 3) {
+      segment = 'RESEARCHER'
+      reason = `Reopened ${topSlug} ${evs.length} times over ${spanDays}d`
+    } else if (evs.length === 1) {
+      segment = 'QUICK'
+      reason = 'One open, never came back'
     }
 
     profiles.push({
       uid, segment, reason,
-      touches: evs.length, returnDays, distinctPosts, lagDays,
-      firstTs: first.ts, lastTs: last.ts, arrivedFrom: first.refClass,
+      touches: evs.length, returnDays, distinctPosts, distinctSlugs, spanDays,
+      firstTs: first.ts, lastTs: last.ts,
+      arrivedFrom: first.refClass, source: first.source, dmJob: first.dmJob,
+      entryPost: first.postRef, topSlug,
       sharerUid, sharedToCount,
-      purchased, revenue,
-      affiliateCredited: myOrders.some(o => o.affiliateCredited),
-      daysToBuy,
     })
   }
   return profiles

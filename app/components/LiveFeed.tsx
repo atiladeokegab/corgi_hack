@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import type { RedirectEvent } from '@/lib/types'
+import type { ClickEvent } from '@/lib/types'
 
 /** Polls the redirect log so a click made on stage appears without a reload. */
 export function LiveFeed() {
-  const [events, setEvents] = useState<RedirectEvent[]>([])
+  const [events, setEvents] = useState<ClickEvent[]>([])
   const [pulse, setPulse] = useState(0)
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export function LiveFeed() {
     const tick = async () => {
       try {
         const r = await fetch('/api/live', { cache: 'no-store' })
-        const next: RedirectEvent[] = await r.json()
+        const next: ClickEvent[] = await r.json()
         if (!alive) return
         setEvents(prev => {
           if (next.length !== prev.length) setPulse(p => p + 1)
@@ -40,13 +40,13 @@ export function LiveFeed() {
         <li key={e.id} className="py-2.5 flex items-baseline gap-3 text-sm">
           <span
             className="size-1.5 rounded-full shrink-0 self-center"
-            style={{ background: i === 0 && pulse ? 'var(--series-recovered)' : 'var(--series-dark)' }}
+            style={{ background: i === 0 && pulse ? 'var(--seg-3)' : 'var(--series-dark)' }}
           />
           <code className="tnum text-xs text-ink-3 shrink-0">{e.ts.slice(11, 19)}</code>
-          <code className="text-xs shrink-0" style={{ color: 'var(--series-credited)' }}>{e.uid}</code>
+          <code className="text-xs shrink-0" style={{ color: 'var(--accent)' }}>{e.uid}</code>
           <span className="font-medium truncate">{e.slug}</span>
           <span className="text-ink-3 text-xs ml-auto shrink-0">
-            {e.refClass}{e.via ? ` · via ${e.via}` : ''}
+            {e.source}{e.dmJob ? ` · ${e.dmJob}` : ''} · {e.refClass}{e.via ? ` · via ${e.via}` : ''}
           </span>
         </li>
       ))}

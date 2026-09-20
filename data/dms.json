@@ -1,0 +1,74 @@
+[
+ {
+  "ref": "E-01.1",
+  "handle": "@jessicam",
+  "job": "EXACT ITEM REQUEST",
+  "message": "WHERE is this blazer I'm begging you"
+ },
+ {
+  "ref": "E-01.2",
+  "handle": "@amelie.paris",
+  "job": "DECISION",
+  "message": "Ok but if you were me, which one would you actually buy?"
+ },
+ {
+  "ref": "E-01.3",
+  "handle": "@niamhh",
+  "job": "ADAPTATION",
+  "message": "I love the outfit but I live in trainers. How would you change it?"
+ },
+ {
+  "ref": "E-01.4",
+  "handle": "@roisin",
+  "job": "BUDGET",
+  "message": "Anything like this but under £120? I'm not paying £400 lol"
+ },
+ {
+  "ref": "E-01.5",
+  "handle": "@sarahk",
+  "job": "SOCIAL SHARING",
+  "message": "Sending this to my sister because she needs this exact vibe"
+ },
+ {
+  "ref": "E-01.6",
+  "handle": "@hannah",
+  "job": "FIT",
+  "message": "What size are you in this? I'm usually an 8 but brands are all over the place."
+ },
+ {
+  "ref": "E-01.7",
+  "handle": "@sophiaa",
+  "job": "INTENT",
+  "message": "Can you find me a version of this for a wedding? Same energy, less corporate."
+ },
+ {
+  "ref": "E-01.8",
+  "handle": "@maya_m",
+  "job": "POST-PURCHASE",
+  "message": "I bought the shoes. What should I wear with them?"
+ },
+ {
+  "ref": "E-01.9",
+  "handle": "@laura",
+  "job": "CONSTRAINT",
+  "message": "I'm trying not to buy more stuff. Can you help me use what I own?"
+ },
+ {
+  "ref": "E-01.10",
+  "handle": "@rachel",
+  "job": "TRUST",
+  "message": "This is the first creator account where I actually save everything."
+ },
+ {
+  "ref": "E-01.11",
+  "handle": "@georgia",
+  "job": "SECOND-HAND DISCOVERY",
+  "message": "My bf sent me your coat video because he thinks I need it"
+ },
+ {
+  "ref": "E-01.12",
+  "handle": "@ameliax",
+  "job": "CONSIDERATION",
+  "message": "I've opened this three times. Still deciding."
+ }
+]
