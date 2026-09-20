@@ -1,7 +1,7 @@
 import { headers } from 'next/headers'
 import Link from 'next/link'
 import { Triage } from './Triage'
-import { getCustomers, getEvents, getItems, getPendingDms } from '@/lib/data'
+import { getEvents, getItems, getPendingDms } from '@/lib/data'
 import { buildProfiles, SEGMENTS } from '@/lib/classify'
 import { buildPersonalLink } from '@/lib/links'
 import { cheaperThan, TEMPLATES } from '@/lib/templates'
@@ -22,7 +22,7 @@ export default async function InboxPage() {
   const bySlug = Object.fromEntries(items.map(i => [i.slug, i]))
   const profiles = buildProfiles(getEvents())
   const segmentByUid = new Map(profiles.map(p => [p.uid, p.segment]))
-  const spendByUid = new Map(getCustomers().map(c => [c.uid, c.totalSpent]))
+  const profileByUid = new Map(profiles.map(p => [p.uid, p]))
 
   const cards = getPendingDms().map(dm => {
     const item = bySlug[dm.slug] ?? items[0]
@@ -47,7 +47,8 @@ export default async function InboxPage() {
       segmentLabel: SEGMENTS[segment].label,
       segmentColor: SEGMENTS[segment].color,
       itemName: item.name,
-      totalSpent: spendByUid.get(dm.uid) ?? 0,
+      opens: profileByUid.get(dm.uid)?.touches ?? 0,
+      distinctPosts: profileByUid.get(dm.uid)?.distinctPosts ?? 0,
       asking: template?.asking ?? dm.job,
       autoable: Boolean(template?.autoable && draft),
       needsHer: template?.needsHer ?? null,

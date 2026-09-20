@@ -7,7 +7,7 @@ import { DmPreview } from '../components/DmPreview'
 type Card = {
   id: string; handle: string; job: string; text: string; ts: string
   segment: string; segmentLabel: string; segmentColor: string
-  itemName: string; asking: string; totalSpent: number
+  itemName: string; asking: string; opens: number; distinctPosts: number
   autoable: boolean; needsHer: string | null
   draft: string | null; link: string
 }
@@ -90,8 +90,10 @@ export function Triage({ cards }: { cards: Card[] }) {
                 <span className="size-2 rounded-full shrink-0" style={{ background: c.segmentColor }} />
                 <p className="font-medium text-sm">@{c.handle}</p>
                 <p className="text-[11px] text-ink-3">{c.segmentLabel}</p>
-                {c.totalSpent > 0 && (
-                  <p className="text-[11px] text-ink-3">· spent £{Math.round(c.totalSpent)} with you</p>
+                {c.opens > 1 && (
+                  <p className="text-[11px] text-ink-3">
+                    · opened your links {c.opens} times{c.distinctPosts > 1 ? ` across ${c.distinctPosts} posts` : ''}
+                  </p>
                 )}
                 <p className="text-[11px] text-ink-3 ml-auto">{ago(c.ts)} · {londonTime(c.ts)}</p>
               </div>

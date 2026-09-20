@@ -1,62 +1,86 @@
 import type { Customer, Item, Profile } from './types'
 
 /**
- * Money she earned and was not paid.
+ * The gap between how long an affiliate link pays for and how long people
+ * actually take to decide.
  *
- * Affiliate networks only pay when the purchase happens inside the click window —
- * usually 24 hours. People take about three days to decide. So a sale she plainly
- * caused, from someone who saw her post on Monday and bought on Thursday, pays her
- * nothing, because the clock ran out.
+ * Careful about what is knowable here, because it is easy to overclaim:
  *
- * Five days is the cut-off used here: close enough that the link clearly caused
- * the sale, so she can point at it and ask for the commission.
+ *   PROVABLE — every click and its timestamp. Our redirect, our cookie, our
+ *   server. Someone whose last click is three days after their first is a fact.
+ *
+ *   REAL BUT PARTIAL — the affiliate network's conversion report. It gives
+ *   genuine sales with timestamps, but only the ones it ATTRIBUTED. A purchase
+ *   outside the click window is never attributed, so it never appears. The sales
+ *   we care about are precisely the ones missing from that report.
+ *
+ *   NOT KNOWABLE — that a specific late returner bought something. The purchase
+ *   happens on the retailer's site and nothing here observes it.
+ *
+ * So the headline is the provable number, and the money is an estimate built
+ * from two real inputs: our click log, and the conversion rate the affiliate
+ * report does give us. The fix that would make it exact is a per-person discount
+ * code, which lands on the order regardless of any cookie window.
  */
+export const AFFILIATE_WINDOW_HOURS = 24
 export const CHASEABLE_DAYS = 5
 export const COMMISSION_RATE = 0.10
 
-export type OwedRow = {
+const DAY = 86_400_000
+
+export type LateReturner = {
   uid: string
   handle: string | null
   item: string
-  value: number
-  commission: number
-  daysAfterSeeing: number
-  ts: string
+  firstTs: string
+  lastTs: string
+  daysApart: number
+  opens: number
 }
 
 export function owedToHer(customers: Customer[], profiles: Profile[], items: Item[]) {
   const nameOf = Object.fromEntries(items.map(i => [i.slug, i.name]))
-  const byUid = new Map(profiles.map(p => [p.uid, p]))
 
-  const rows: OwedRow[] = []
-  let paidTotal = 0
-  let allTotal = 0
+  // --- provable, straight off our own log
+  const late = profiles.filter(p => p.spanDays > AFFILIATE_WINDOW_HOURS / 24)
+  const rows: LateReturner[] = late
+    .map(p => ({
+      uid: p.uid,
+      handle: p.handle,
+      item: nameOf[p.topSlug] ?? p.topSlug,
+      firstTs: p.firstTs,
+      lastTs: p.lastTs,
+      daysApart: p.spanDays,
+      opens: p.touches,
+    }))
+    .sort((a, b) => b.lastTs.localeCompare(a.lastTs))
 
-  for (const c of customers) {
-    for (const p of c.purchases ?? []) {
-      allTotal += p.value
-      if (p.paidOut) { paidTotal += p.value; continue }
-      if (p.daysAfterSeeing > CHASEABLE_DAYS) continue
-      rows.push({
-        uid: c.uid,
-        handle: byUid.get(c.uid)?.handle ?? null,
-        item: nameOf[p.slug] ?? p.slug,
-        value: p.value,
-        commission: p.value * COMMISSION_RATE,
-        daysAfterSeeing: p.daysAfterSeeing,
-        ts: p.ts,
-      })
-    }
-  }
+  const withinChaseable = late.filter(p => p.spanDays <= CHASEABLE_DAYS).length
 
-  rows.sort((a, b) => b.ts.localeCompare(a.ts))
-  const owedValue = rows.reduce((a, r) => a + r.value, 0)
+  // --- real, from the affiliate report: the sales it did pay out on
+  const paid = customers.flatMap(c => c.purchases ?? []).filter(p => p.paidOut)
+  const paidValue = paid.reduce((a, p) => a + p.value, 0)
+  const averageOrderValue = paid.length ? paidValue / paid.length : 0
+  const conversionRate = profiles.length ? paid.length / profiles.length : 0
+
+  // --- the estimate, and every input to it is one of the two above
+  const estimatedSales = Math.round(late.length * conversionRate)
+  const estimatedValue = estimatedSales * averageOrderValue
+
   return {
+    lateReturners: late.length,
+    withinChaseable,
+    totalClickers: profiles.length,
     rows,
-    count: rows.length,
-    owedValue,
-    owedCommission: owedValue * COMMISSION_RATE,
-    paidCommission: paidTotal * COMMISSION_RATE,
-    shareUnpaid: allTotal ? owedValue / allTotal : 0,
+
+    paidSales: paid.length,
+    paidValue,
+    paidCommission: paidValue * COMMISSION_RATE,
+    averageOrderValue,
+    conversionRate,
+
+    estimatedSales,
+    estimatedValue,
+    estimatedCommission: estimatedValue * COMMISSION_RATE,
   }
 }

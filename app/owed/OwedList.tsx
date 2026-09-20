@@ -5,71 +5,83 @@ import { londonTime } from '@/lib/time'
 
 type Row = {
   uid: string; handle: string | null; item: string
-  value: number; commission: number; daysAfterSeeing: number; ts: string
+  firstTs: string; lastTs: string; daysApart: number; opens: number
 }
 
 const gbp = (n: number) => '£' + Math.round(n).toLocaleString('en-GB')
 const day = (iso: string) =>
   new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', day: 'numeric', month: 'short' }).format(new Date(iso))
 
-export function OwedList({ rows, total }: { rows: Row[]; total: number }) {
+export function OwedList({ rows, total, estimate }: { rows: Row[]; total: number; estimate: number }) {
   const [copied, setCopied] = useState(false)
 
   const copyForBrand = () => {
-    const lines = rows.map(r =>
-      `${day(r.ts)}  ${r.item}  ${gbp(r.value)}  bought ${r.daysAfterSeeing.toFixed(1)} days after seeing the post`)
     const text = [
-      `Sales from my posts that fell outside the 24-hour window:`,
-      '',
-      ...lines,
-      '',
-      `${total} sales in total. Commission owed at 10%: ${gbp(rows.reduce((a, r) => a + r.commission, 0))} (from this sample).`,
+      `Hi — a note on attribution.`,
+      ``,
+      `${total.toLocaleString('en-GB')} people who clicked my links came back to them more than`,
+      `24 hours after the first visit. The affiliate window closes at 24 hours, so any of`,
+      `those who went on to buy were not credited to me.`,
+      ``,
+      `Based on the conversion rate my own affiliate statement shows, that is roughly`,
+      `${gbp(estimate)} in commission that went uncredited.`,
+      ``,
+      `Could we set up a discount code in my name? A code stays on the order regardless`,
+      `of when they buy, so we would both be able to see which sales came from my posts.`,
     ].join('\n')
     navigator.clipboard?.writeText(text).then(
-      () => { setCopied(true); setTimeout(() => setCopied(false), 2000) },
+      () => { setCopied(true); setTimeout(() => setCopied(false), 2200) },
       () => setCopied(false),
     )
   }
 
   return (
-    <div>
-      <div className="flex items-center gap-3 flex-wrap mb-4">
-        <h2 className="text-lg font-semibold tracking-tight">The sales themselves</h2>
+    <div className="mt-12">
+      <div className="flex items-center gap-3 flex-wrap mb-2">
+        <h2 className="text-lg font-semibold tracking-tight">The people themselves</h2>
         <button
           type="button" onClick={copyForBrand}
           className="text-xs rounded-lg px-3 py-2 font-medium text-white ml-auto"
           style={{ background: 'var(--seg-4)' }}
         >
-          {copied ? '✓ Copied — paste it to the brand' : 'Copy this list for the brand'}
+          {copied ? '✓ Copied — send it to the brand' : 'Write the brand a message about this'}
         </button>
       </div>
+      <p className="text-sm text-ink-2 mb-4 max-w-2xl leading-relaxed">
+        Real people, real timestamps, straight from your own links. Whether each one
+        bought is the part nobody can see.
+      </p>
 
       <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
-        <table className="w-full text-sm border-collapse min-w-[600px]">
+        <table className="w-full text-sm border-collapse min-w-[620px]">
           <thead>
             <tr className="text-left text-[11px] uppercase tracking-[0.1em] text-ink-3">
               <th className="font-medium pb-2 pr-4">Who</th>
-              <th className="font-medium pb-2 pr-4">Bought</th>
-              <th className="font-medium pb-2 pr-4 text-right">Days after seeing it</th>
-              <th className="font-medium pb-2 pr-4 text-right">They spent</th>
-              <th className="font-medium pb-2 text-right">Your cut</th>
+              <th className="font-medium pb-2 pr-4">Kept looking at</th>
+              <th className="font-medium pb-2 pr-4 text-right">First click</th>
+              <th className="font-medium pb-2 pr-4 text-right">Came back</th>
+              <th className="font-medium pb-2 text-right">Days apart</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((r, i) => (
-              <tr key={r.uid + i} className="border-t" style={{ borderColor: 'var(--border)' }}>
+            {rows.map(r => (
+              <tr key={r.uid} className="border-t" style={{ borderColor: 'var(--border)' }}>
                 <td className="py-2.5 pr-4">
                   {r.handle
                     ? <span className="font-medium">@{r.handle}</span>
-                    : <code className="text-xs text-ink-3">someone who didn&apos;t DM you</code>}
-                  <span className="block text-[11px] text-ink-3">{day(r.ts)} · {londonTime(r.ts)}</span>
+                    : <span className="text-xs text-ink-3">someone who never messaged you</span>}
+                  <span className="block text-[11px] text-ink-3">{r.opens} opens</span>
                 </td>
                 <td className="py-2.5 pr-4 text-ink-2">{r.item}</td>
-                <td className="py-2.5 pr-4 text-right tnum">
-                  <span style={{ color: 'var(--seg-4)' }}>{r.daysAfterSeeing.toFixed(1)}</span>
+                <td className="py-2.5 pr-4 text-right text-xs text-ink-3 whitespace-nowrap">
+                  {day(r.firstTs)} · {londonTime(r.firstTs)}
                 </td>
-                <td className="py-2.5 pr-4 text-right tnum text-ink-2">{gbp(r.value)}</td>
-                <td className="py-2.5 text-right tnum font-semibold">{gbp(r.commission)}</td>
+                <td className="py-2.5 pr-4 text-right text-xs text-ink-3 whitespace-nowrap">
+                  {day(r.lastTs)} · {londonTime(r.lastTs)}
+                </td>
+                <td className="py-2.5 text-right tnum font-semibold" style={{ color: 'var(--seg-4)' }}>
+                  {r.daysApart.toFixed(1)}
+                </td>
               </tr>
             ))}
           </tbody>

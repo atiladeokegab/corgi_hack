@@ -508,11 +508,17 @@ const report = {
   'your pieces in here (of 36)': items.length,
   'people you can actually name': `${new Set(events.filter(e => e.handle).map(e => e.uid)).size} of ${uidN}`,
   'DMs waiting this morning': pending.length,
-  'what the shop says people spent': `${customers.length} customers · £${customers.reduce((a, c) => a + c.totalSpent, 0).toLocaleString('en-GB')}`,
-  'sales you were never paid for': (() => {
-    const all = customers.flatMap(c => c.purchases)
-    const unpaid = all.filter(p => !p.paidOut && p.daysAfterSeeing <= CHASEABLE_DAYS)
-    return `${unpaid.length} of ${all.length} · £${Math.round(unpaid.reduce((a, p) => a + p.value, 0) * COMMISSION_RATE).toLocaleString('en-GB')} in commission`
+  'sales your affiliate statement paid for': `${customers.flatMap(c => c.purchases).filter(p => p.paidOut).length}`,
+  'people who came back after the pay window': (() => {
+    const first = new Map(), last = new Map()
+    for (const e of events) {
+      const t = Date.parse(e.ts)
+      if (!first.has(e.uid) || t < first.get(e.uid)) first.set(e.uid, t)
+      if (!last.has(e.uid) || t > last.get(e.uid)) last.set(e.uid, t)
+    }
+    let n = 0
+    for (const [uid, f] of first) if ((last.get(uid) - f) / DAY > AFFILIATE_WINDOW_HOURS / 24) n++
+    return n
   })(),
   'days people take to decide (middle)': (() => {
     const d = customers.flatMap(c => c.purchases).map(p => p.daysAfterSeeing).sort((a, b) => a - b)

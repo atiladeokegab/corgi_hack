@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lookbook — who is actually buying",
-  description: "Segment attribution for a creator whose revenue is invisible to her affiliate dashboard.",
+  title: "Lookbook — your audience",
+  description: "Who clicks your links, what brought them, and which messages answer themselves.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
