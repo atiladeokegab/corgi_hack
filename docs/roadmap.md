@@ -157,7 +157,7 @@ reaching a retailer.
 
 ---
 
-## Shipped — status at 15:30
+## Shipped — status at 15:40
 
 The human authorised the whole roadmap and asked that none of the existing team's work
 be touched. So everything below is **new files and new pages only**: no existing file in
@@ -166,11 +166,24 @@ the repo has been modified, and no new npm dependency has been added.
 | Page | What it is | Status |
 |---|---|---|
 | `/desk` | Triage queue, delegation matrix, drafts in her words, one-to-many broadcaster, context scanner | **live** (`3b27714`) |
-| `/inbox` | Unified multi-platform DM ingestion behind one adapter interface | **live**, Prometheus |
-| `/board` | Drag-and-drop whiteboard workspace | in build, Prometheus |
-| `/revenue` | Stripe monetisation mapping, reported against E-09's caveat | in build, Prometheus |
+| `/inbox` | Unified multi-platform DM ingestion behind one adapter interface | **live** (`9f945f5`, Prometheus) |
+| `/board` | Drag-and-drop whiteboard workspace | **live** (`54ec81e`) |
+| `/revenue` | Stripe monetisation mapping, reported against E-09's caveat | **live** (`54ec81e`) |
 
-Nothing is wired into the site nav, by request. Each page is reached by URL.
+Nothing is wired into the site nav, by request. The four pages cross-link to each other
+through their own header strip and are reached by URL.
+
+Verified against the team's last commit `cc7c448`: **zero existing files modified**, 28 added,
+`package.json` and `package-lock.json` untouched. `npx next build` green across all eleven routes.
+
+### Revenue, and the objection that was overruled
+
+The Stripe item was built over the documented objection above, at the human's instruction.
+It is built to argue with itself: `/revenue` leads with the **65% of takings that cannot be
+traced to a click**, states that E-09 predicts exactly that, and labels per-segment
+conversion a floor rather than a rate. What it shows, from the E-09-pinned fixture joined
+to the real classifier: Researchers convert at 1.5%, Regulars 1.1%, Quick Asks 0.4%. The
+ordering is emergent, not asserted.
 
 ### What `/desk` does, and what is real in it
 
