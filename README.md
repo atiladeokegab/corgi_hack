@@ -78,11 +78,6 @@ More about carrying her context
 
 The WAY she communicates with her audience - page 8
 
-## Plans of action
-We need to pick a team name
-
-
-
 ## Problems
 ### 1. Sofia forgetting about content in her notes
 e.g. She mentioned loafers she loved, but never made a post about it. Unlike her post about the blazer she loved.
@@ -111,4 +106,12 @@ She's not focusing on a specific customer segment because she doesn't know which
 
 This is an information problem. Therefore, we need to find more information from customers.
 
+## Solutions
+### 1. Organised Notes
+AI organiser that combines all her notes
+She can take photos of physical notes and it reads them
+### 2. Data 
+Finds the highest ROI DMs or comments for her so it's manageable. What about if each day she only had to respond to 50 messages a day. It would then be more manageable and valuable.
+Respond to word-for-word repeat questions with a bot
+### 3. Customer fill-out forms
 A solution to this could be an additional promo code that is applied if customers fill out a form.
