@@ -106,3 +106,9 @@ WHY? Because this is important to her brand and is not willing to trade quantity
 *How can we ensure quality at scale?*
 2. Responding to repeat messages
 3. Hand copying links
+### 3. Lack of visibility
+She's not focusing on a specific customer segment because she doesn't know which customers are best. It is possible that the most profitable posts are due to the Ellas sharing it with their friends who are then more inclined to buy it. It could alternatively be the Priyas save the "worth it posts" and then find out
+
+This is an information problem. Therefore, we need to find more information from customers.
+
+A solution to this could be an additional promo code that is applied if customers fill out a form.
