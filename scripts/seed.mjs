@@ -60,6 +60,7 @@ const items = ev('wardrobe.csv').map(r => ({
   ref: r.ref,
   name: r.item,
   category: r.category,
+  price: Number(r.price_gbp),
   tier: tierOf(Number(r.price_gbp)),
   style: r.style,
   status: r.status,
@@ -135,6 +136,42 @@ const REFERRERS = {
 }
 const DEVICES = ['ios-safari', 'ios-instagram', 'android-chrome', 'desktop-chrome']
 
+// She can only message someone she can name. A click from a caption link is
+// anonymous — there is nobody to DM. A DM or a comment reply carries a handle,
+// which is why the priority list can only ever contain those people.
+const NAMES = ['amelie', 'niamh', 'roisin', 'sarah', 'hannah', 'sophia', 'maya', 'laura', 'rachel',
+  'georgia', 'jess', 'clara', 'priya', 'ella', 'jamie', 'freya', 'nina', 'imogen', 'lottie', 'saoirse',
+  'tilly', 'beth', 'esme', 'ayla', 'mira', 'orla', 'kara', 'yara', 'delphine', 'juno']
+const HANDLE_WORDS = ['styles', 'wears', 'edit', 'daily', 'ldn', 'wardrobe', 'fits',
+  'closet', 'archive', 'lookbook', 'thrifts', 'rewears']
+const HANDLE_SEPS = ['', '.', '_']
+
+// Enumerate every name/separator/word combination before repeating anything, so
+// the list reads like real handles rather than a counter with a name in front.
+const HANDLE_POOL = (() => {
+  const out = NAMES.slice()
+  for (const w of HANDLE_WORDS) for (const sep of HANDLE_SEPS) for (const n of NAMES) out.push(`${n}${sep}${w}`)
+  return out
+})()
+let handleN = 0
+function nextHandle() {
+  const i = handleN++
+  const base = HANDLE_POOL[i % HANDLE_POOL.length]
+  const lap = Math.floor(i / HANDLE_POOL.length)
+  return lap ? `${base}${lap + 1}` : base
+}
+
+// What the retailer reports back against a link. A redirect cannot see a purchase
+// on its own — this stands in for the feed an affiliate network or a brand sends.
+const PURCHASE_MODEL = {
+  QUICK:      { rate: 0.12, orders: [1, 1], bias: 'low'  },
+  SENT_ON:    { rate: 0.34, orders: [1, 1], bias: 'mid'  },
+  CONNECTOR:  { rate: 0.30, orders: [1, 2], bias: 'mid'  },
+  REGULAR:    { rate: 0.38, orders: [1, 3], bias: 'mid'  },
+  RESEARCHER: { rate: 0.46, orders: [1, 1], bias: 'high' },
+  SAME_DAY:   { rate: 0.12, orders: [1, 1], bias: 'low'  },
+}
+
 const hours = h => h * 3600 * 1000
 const iso = ms => new Date(ms).toISOString()
 
@@ -150,7 +187,7 @@ const nextUid = () => `u_${(++uidN).toString(36).padStart(5, '0')}`
 const events = []
 const truth = []
 
-function emitPerson({ uid, archetype, source, post, dmJob, anchorMs, refClass, via, tierPref }) {
+function emitPerson({ uid, archetype, source, post, dmJob, anchorMs, refClass, via, tierPref, handle }) {
   const spec = ARCHETYPES[archetype]
   const touches = int(spec.touches[0], spec.touches[1])
   const dayCount = Math.min(touches, int(spec.days[0], spec.days[1]))
@@ -205,14 +242,14 @@ function emitPerson({ uid, archetype, source, post, dmJob, anchorMs, refClass, v
       dmJob: dmJob ?? null,
       via: via ?? null,
       subscriberId: null,   // seeded history predates the ManyChat link format
-      handle: null,
+      handle: handle ?? null,
       group: null,
       refClass,
       referrer: pick(REFERRERS[refClass]),
       device: pick(DEVICES),
     })
   }
-  truth.push({ uid, archetype, source, dmJob: dmJob ?? null, touches })
+  truth.push({ uid, archetype, source, dmJob: dmJob ?? null, touches, handle: handle ?? null })
   return chosen[0]
 }
 
@@ -253,6 +290,7 @@ for (let i = 0; i < DM_REPLIES_WITH_A_LINK; i++) {
   emitPerson({
     uid, archetype, source: 'dm', post, dmJob: job, anchorMs,
     refClass: 'instagram_dm', via: null, tierPref: model.tier,
+    handle: nextHandle(),
   })
   if (archetype === 'CONNECTOR') {
     const list = connectorsByPost.get(post.ref) ?? []
@@ -291,6 +329,44 @@ for (const post of posts) {
 
 events.sort((a, b) => a.ts.localeCompare(b.ts))
 
+// ---------------------------------------------------------- what they spent
+// Reported back by the retailer against the link, not observed by the redirect.
+// Each purchase is drawn from what that person actually opened, so spend and
+// behaviour cannot drift apart.
+const openedBy = new Map()
+for (const e of events) {
+  if (!openedBy.has(e.uid)) openedBy.set(e.uid, new Set())
+  openedBy.get(e.uid).add(e.slug)
+}
+
+const customers = []
+for (const t of truth) {
+  const model = PURCHASE_MODEL[t.archetype]
+  if (!model || rnd() > model.rate) continue
+  const pool = [...(openedBy.get(t.uid) ?? [])].map(sl => itemBySlug[sl]).filter(Boolean)
+  if (!pool.length) continue
+  const sorted = pool.sort((a, b) => a.price - b.price)
+  // Someone who buys twice buys two different things; repeat-buying the same
+  // £145 blazer is not a thing a person does.
+  const orders = Math.min(sorted.length, int(model.orders[0], model.orders[1]))
+  const bought = new Set()
+  let spent = 0
+  for (let o = 0; o < orders && bought.size < sorted.length; o++) {
+    let idx = -1
+    for (let attempt = 0; attempt < 8 && (idx < 0 || bought.has(idx)); attempt++) {
+      const u = rnd()
+      const k = model.bias === 'low' ? Math.pow(u, 1.8) : model.bias === 'high' ? 1 - Math.pow(u, 1.8) : u
+      idx = Math.min(sorted.length - 1, Math.floor(k * sorted.length))
+    }
+    if (bought.has(idx)) idx = sorted.findIndex((_, n) => !bought.has(n))
+    if (idx < 0) break
+    bought.add(idx)
+    spent += sorted[idx].price
+  }
+  if (!bought.size) continue
+  customers.push({ uid: t.uid, orders: bought.size, totalSpent: spent })
+}
+
 // ------------------------------------------------------------------- reconcile
 const bySource = s => events.filter(e => e.source === s)
 const peopleIn = s => new Set(bySource(s).map(e => e.uid)).size
@@ -307,6 +383,8 @@ const report = {
   'shares where the sender is identifiable': `${(100 * SHARER_ATTRIBUTION_RATE).toFixed(0)}%`,
   'kinds of question tracked': DM_JOBS.length,
   'wardrobe pieces linked (of 36)': items.length,
+  'people she can actually name': `${new Set(events.filter(e => e.handle).map(e => e.uid)).size} of ${uidN}`,
+  'spend reported back by the retailer': `${customers.length} customers · £${customers.reduce((a, c) => a + c.totalSpent, 0).toLocaleString('en-GB')}`,
 }
 
 fs.mkdirSync(path.join(ROOT, 'data'), { recursive: true })
@@ -316,6 +394,7 @@ w('posts.json', posts)
 w('dms.json', dms)
 w('click-log.json', events)
 w('ground-truth.json', truth)
+w('customers.json', customers)
 w('reconciliation.json', report)
 for (const stale of ['orders.json', 'redirect-log.json']) {
   fs.rmSync(path.join(ROOT, 'data', stale), { force: true })

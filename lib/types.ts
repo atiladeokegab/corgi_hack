@@ -21,6 +21,7 @@ export type ClickEvent = {
 
 export type Item = {
   slug: string; ref: string; name: string; category: string
+  price: number
   tier: 'entry' | 'mid' | 'premium'
   style: string; status: string; sofiaSays: string
   destination: string; realDestination: boolean

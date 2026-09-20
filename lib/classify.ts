@@ -3,34 +3,40 @@ import type { ClickEvent, Profile, SegmentKey } from './types'
 export const SEGMENT_ORDER: SegmentKey[] = ['REGULAR', 'RESEARCHER', 'CONNECTOR', 'SENT_ON', 'QUICK', 'BROWSING']
 
 export const SEGMENTS: Record<SegmentKey, {
-  label: string; signature: string; blurb: string; color: string
+  label: string; signature: string; blurb: string; angle: string; color: string
 }> = {
   REGULAR: {
+    angle: "They know the back catalogue. Reference something older they looked at.",
     label: 'The Regular', color: 'var(--seg-1)',
     signature: '3+ different posts, including old ones',
     blurb: 'Keeps coming back and ranges across her whole back catalogue.',
   },
   RESEARCHER: {
+    angle: "They are weighing one thing. Answer the sizing and fit before they ask.",
     label: 'The Researcher', color: 'var(--seg-2)',
     signature: 'One item, reopened 3+ times',
     blurb: 'Fixates on a single piece and reopens it for days before deciding.',
   },
   CONNECTOR: {
+    angle: "They pass things on. Say it in a way they can forward without editing.",
     label: 'The Connector', color: 'var(--seg-3)',
     signature: 'Passed the link to someone else',
     blurb: 'Treats her links as things to send to other people.',
   },
   SENT_ON: {
+    angle: "Not a follower yet. Assume no context — say what the piece is.",
     label: 'Arrived from a friend', color: 'var(--seg-4)',
     signature: 'Came from off-platform, not Instagram',
     blurb: 'Not a follower yet. Someone they trust sent this to them.',
   },
   QUICK: {
+    angle: "They wanted a link. Give them the link and nothing else.",
     label: 'The Quick Ask', color: 'var(--seg-5)',
     signature: 'One open, no return',
     blurb: 'Wanted the link, took the link, left.',
   },
   BROWSING: {
+    angle: "Too early to tell. A plain answer is fine.",
     label: 'Unclassified', color: 'var(--series-dark)',
     signature: 'Too little to call',
     blurb: 'Two or three opens with no clear shape yet.',

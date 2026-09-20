@@ -29,7 +29,9 @@ export default function LinksPage() {
           Sofia already pastes links into her replies. This makes the same link carry a
           few extra characters, so that when someone opens it she learns which post or
           question brought them — and, if it went out through ManyChat, who they are.
-          The person clicking sees no difference at all.
+          The person clicking sees no difference at all. ManyChat handles the
+          comment auto-replies; her DMs stay hers to answer, using the link
+          beside each name on the replies list.
         </p>
       </header>
 

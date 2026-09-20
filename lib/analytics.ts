@@ -11,7 +11,7 @@ const topOf = <K extends string>(m: Map<K, number>) =>
 
 export type SegmentRow = {
   key: SegmentKey
-  label: string; evidence: string; signature: string; blurb: string; color: string
+  label: string; signature: string; blurb: string; angle: string; color: string
   people: number; share: number
   avgOpens: number; avgReturnDays: number; avgSpanDays: number
   topSource: Source | null; topJob: string | null; topItem: string | null
@@ -136,6 +136,51 @@ export function connectorCoverage(profiles: Profile[], events: ClickEvent[]) {
     shareArrivals: shareArrivals.length,
     estimatedUnnamed: fanOut > 0 ? Math.round(anonymous / fanOut) : 0,
   }
+}
+
+export type QueueRow = {
+  uid: string
+  handle: string
+  segment: SegmentKey
+  reason: string
+  totalSpent: number
+  orders: number
+  lastTs: string
+  topSlug: string
+  subscriberId: string
+}
+
+/**
+ * Who she should reply to next.
+ *
+ * Two filters do the work. First, she can only message someone she can name —
+ * an anonymous click from a caption link has nobody behind it to DM. Second,
+ * within that, the order is what they have actually spent, which the retailer
+ * reports back against the link; a redirect cannot see a purchase by itself.
+ */
+export function dmPriority(
+  profiles: Profile[],
+  customers: { uid: string; orders: number; totalSpent: number }[],
+  opts: { group?: SegmentKey | 'ALL'; limit?: number } = {},
+): QueueRow[] {
+  const spend = new Map(customers.map(c => [c.uid, c]))
+  const { group = 'ALL', limit = 40 } = opts
+  return profiles
+    .filter(p => p.handle)
+    .filter(p => group === 'ALL' || p.segment === group)
+    .map(p => ({
+      uid: p.uid,
+      handle: p.handle!,
+      segment: p.segment,
+      reason: p.reason,
+      totalSpent: spend.get(p.uid)?.totalSpent ?? 0,
+      orders: spend.get(p.uid)?.orders ?? 0,
+      lastTs: p.lastTs,
+      topSlug: p.topSlug,
+      subscriberId: p.subscriberId ?? p.uid,
+    }))
+    .sort((a, b) => b.totalSpent - a.totalSpent || Date.parse(b.lastTs) - Date.parse(a.lastTs))
+    .slice(0, limit)
 }
 
 /** Does the classifier actually recover behaviour? Scored against held-out truth. */

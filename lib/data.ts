@@ -11,6 +11,8 @@ const read = <T,>(f: string, fallback: T): T => {
 export const getItems = (): Item[] => read<Item[]>('items.json', [])
 export const getPosts = (): Post[] => read<Post[]>('posts.json', [])
 export const getDms = (): Dm[] => read<Dm[]>('dms.json', [])
+export const getCustomers = (): { uid: string; orders: number; totalSpent: number }[] =>
+  read<{ uid: string; orders: number; totalSpent: number }[]>('customers.json', [])
 export const getTruth = () => read<{ uid: string; archetype: string }[]>('ground-truth.json', [])
 export const getReconciliation = () => read<Record<string, string | number>>('reconciliation.json', {})
 

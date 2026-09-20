@@ -48,7 +48,7 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
     { on: true, label: 'That someone opened this link at all', detail: 'a cookie that lasts a year, so we recognise them if they come back' },
     { on: Boolean(postSlug), label: 'Which post it came from', detail: postSlug ? `tagged “${posts.find(p => p.slug === postSlug)?.title ?? postSlug}”` : 'pick a post to turn this on' },
     { on: Boolean(job), label: 'Which question she was answering', detail: job ? `tagged ${job}` : 'pick a DM question to turn this on' },
-    { on: manychat, label: 'Who the person is', detail: manychat ? 'ManyChat fills in their subscriber id — @handle instead of an anonymous id' : 'off: the click stays anonymous' },
+    { on: manychat, label: 'Who the person is', detail: manychat ? 'ManyChat fills in the commenter’s id — a handle instead of an anonymous click' : 'off: the click stays anonymous' },
     { on: true, label: 'If they forward it to a friend', detail: 'the friend arrives from WhatsApp or Messages rather than Instagram' },
   ]
 
@@ -75,7 +75,7 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
           </select>
         </Field>
 
-        <Field label="The question" hint="If this link is an answer to a DM, which kind of question was it?">
+        <Field label="The question" hint="Replying to a DM by hand? Tag which question you're answering.">
           <select className={selectClass} style={{ borderColor: 'var(--border)' }}
                   value={job} onChange={e => setJob(e.target.value)}>
             <option value="">— not from a DM —</option>
@@ -88,10 +88,12 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
           <input type="checkbox" className="mt-0.5" checked={manychat}
                  onChange={e => setManychat(e.target.checked)} />
           <span>
-            <span className="text-sm font-medium block">This link goes in a ManyChat reply</span>
+            <span className="text-sm font-medium block">This link goes in a comment auto-reply</span>
             <span className="text-xs text-ink-2 block mt-0.5 leading-snug">
-              Adds a placeholder ManyChat swaps for the person&apos;s id before it sends.
-              That is the whole trick — it turns an anonymous click into a named one.
+              For &ldquo;comment BLAZER and I&apos;ll send you the link&rdquo;. ManyChat swaps
+              the placeholder for the commenter&apos;s id before it sends, so an anonymous
+              click becomes a named one. DMs she answers herself &mdash; those links come
+              from the list on the replies page.
             </span>
           </span>
         </label>
@@ -171,9 +173,9 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
             No ManyChat account yet
           </p>
           <p className="text-sm text-ink-2 leading-relaxed mb-3">
-            Send this link as if ManyChat had delivered it, to one of the twelve people
-            who actually DM&apos;d her. The click that lands is real —
-            only the delivery is stood in for.
+            Stand in for the auto-reply: pretend someone commented on the post and
+            ManyChat sent them this link. The click that lands is real — only the
+            delivery is simulated.
           </p>
           <div className="flex flex-wrap gap-2 items-center">
             <select
@@ -215,7 +217,7 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
             const dm = dms.find(d => d.handle === sender)
             return dm ? (
               <p className="text-xs text-ink-3 mt-3 leading-snug">
-                Their DM: &ldquo;{dm.message}&rdquo; — logged as <strong>{dm.job}</strong>.
+                What they asked: &ldquo;{dm.message}&rdquo; — logged as <strong>{dm.job}</strong>.
               </p>
             ) : null
           })()}
@@ -226,13 +228,14 @@ export function LinkBuilder({ items, posts, jobs, dms }: { items: Item[]; posts:
             Where it goes in ManyChat
           </p>
           <ol className="text-sm text-ink-2 space-y-2 list-decimal pl-4 leading-relaxed">
-            <li>Open the Instagram flow that answers this question — or make one with a keyword trigger.</li>
-            <li>In the message that sends the link, paste the URL above instead of the retailer link.</li>
+            <li>Make an Instagram flow with a <strong>comment</strong> trigger — the keyword you put in the caption.</li>
+            <li>In the message it sends back, paste the URL above instead of the retailer link.</li>
             <li>Send it. ManyChat swaps <code className="text-xs">{MERGE_FIELD}</code> for that person&apos;s id as it goes out.</li>
           </ol>
           <p className="text-xs text-ink-3 mt-3 leading-relaxed">
             Nothing changes for the person receiving it — they tap a link and land on the
-            retailer, same as always. No account needed on her side beyond the free plan.
+            retailer, same as always. Comments only: her DMs stay hers to answer, with the
+            link copied from the replies list.
           </p>
         </div>
       </div>
