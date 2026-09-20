@@ -115,3 +115,12 @@ Finds the highest ROI DMs or comments for her so it's manageable. What about if 
 Respond to word-for-word repeat questions with a bot
 ### 3. Customer fill-out forms
 A solution to this could be an additional promo code that is applied if customers fill out a form.
+
+
+Problem: We don't know which customer segment is buying. Is it the Claras, Jamies, Priyas or the friends of Ellas?
+
+We should find out!
+
+To do so, we could offer a form for the user to fill out. We could ask a set of questions to identify which customer group they belong to. At the end, we offer a custom promo code.
+Assuming the brand can supply the purchase information (which they likely would, as they would also be incentivised to find out the customer segment).
+From this, we can then figure out the customer segments that are most profitable and tailor our content to them.
