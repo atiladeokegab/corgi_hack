@@ -12,6 +12,7 @@ export type ClickEvent = {
   via: string | null        // uid of whoever passed the link on, when recoverable
   subscriberId: string | null // ManyChat subscriber id, when the link came from a flow
   handle: string | null       // Instagram handle, when ManyChat passes it through
+  group: string | null        // which group's message this link was sent with
   refClass: RefClass
   referrer: string
   device: string
@@ -59,4 +60,5 @@ export type Profile = {
   sharerUid: string | null
   sharedToCount: number
   subscriberId: string | null
+  handle: string | null
 }

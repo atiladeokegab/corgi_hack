@@ -138,6 +138,12 @@ const DEVICES = ['ios-safari', 'ios-instagram', 'android-chrome', 'desktop-chrom
 const hours = h => h * 3600 * 1000
 const iso = ms => new Date(ms).toISOString()
 
+// Nothing may be dated after the moment the data was generated. Without this,
+// long-running behaviour (a Regular ranging over four months) spills into the
+// future, and every recency calculation downstream quietly goes wrong.
+const NOW_MS = Date.now()
+const DAY = hours(24)
+
 let uidN = 0
 const nextUid = () => `u_${(++uidN).toString(36).padStart(5, '0')}`
 
@@ -171,8 +177,12 @@ function emitPerson({ uid, archetype, source, post, dmJob, anchorMs, refClass, v
   }
   if (!chosenPosts.length) chosenPosts.push(post ?? pick(posts))
 
+  // How long this person can plausibly have been active: their own window, but
+  // never longer than the time that has actually elapsed since they arrived.
+  const elapsedDays = Math.max(1, Math.floor((NOW_MS - anchorMs) / DAY))
+  const spanMax = Math.max(1, Math.min(spec.window[1] || 20, elapsedDays))
   const dayOffsets = [0]
-  for (let d = 1; d < dayCount; d++) dayOffsets.push(int(1, spec.window[1] || 20))
+  for (let d = 1; d < dayCount; d++) dayOffsets.push(int(1, spanMax))
   dayOffsets.sort((a, b) => a - b)
 
   for (let t = 0; t < touches; t++) {
@@ -181,7 +191,10 @@ function emitPerson({ uid, archetype, source, post, dmJob, anchorMs, refClass, v
     const itemSlug = chosen[t % chosen.length]
     // Never place an open before the post that carried the link existed.
     const postLive = Date.parse(p.publishedAt + 'T09:00:00Z') + hours(between(2, 40))
-    const at = Math.max(anchorMs + hours(dayOffset * 24 + between(0.2, 15)), postLive)
+    const at = Math.min(
+      Math.max(anchorMs + hours(dayOffset * 24 + between(0.2, 15)), postLive),
+      NOW_MS - hours(between(0.05, 3)),
+    )
     events.push({
       id: `e_${events.length.toString(36)}`,
       ts: iso(at),
@@ -193,6 +206,7 @@ function emitPerson({ uid, archetype, source, post, dmJob, anchorMs, refClass, v
       via: via ?? null,
       subscriberId: null,   // seeded history predates the ManyChat link format
       handle: null,
+      group: null,
       refClass,
       referrer: pick(REFERRERS[refClass]),
       device: pick(DEVICES),
@@ -231,7 +245,10 @@ for (let i = 0; i < DM_REPLIES_WITH_A_LINK; i++) {
   // The lean holds most of the time; the rest is ordinary variation.
   const archetype = rnd() < 0.62 ? model.lean : weighted(POST_MIX)
   const post = pick(posts)
-  const anchorMs = Date.parse(post.publishedAt + 'T09:00:00Z') + hours(between(2, 300))
+  const anchorMs = Math.min(
+    Date.parse(post.publishedAt + 'T09:00:00Z') + hours(between(2, 300)),
+    NOW_MS - hours(between(1, 72)),
+  )
   const uid = nextUid()
   emitPerson({
     uid, archetype, source: 'dm', post, dmJob: job, anchorMs,

@@ -128,13 +128,22 @@ export default function Page() {
           <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium">
             Operation Lookbook · Case 002
           </p>
-          <Link
-            href="/links"
-            className="text-xs rounded-lg border px-3 py-1.5 hover:bg-surface-2 transition-colors"
-            style={{ borderColor: 'var(--border)' }}
-          >
-            Build a link →
-          </Link>
+          <span className="flex gap-2">
+            <Link
+              href="/links"
+              className="text-xs rounded-lg border px-3 py-1.5 hover:bg-surface-2 transition-colors"
+              style={{ borderColor: 'var(--border)' }}
+            >
+              Build a link
+            </Link>
+            <Link
+              href="/groups"
+              className="text-xs rounded-lg px-3 py-1.5 font-medium text-white transition-opacity hover:opacity-90"
+              style={{ background: 'var(--accent)' }}
+            >
+              Message a group →
+            </Link>
+          </span>
         </div>
         <h1 className="text-3xl sm:text-[2.6rem] font-semibold mt-2 tracking-tight leading-[1.1]">
           Sofia has {num(profiles.length)} people in her audience.

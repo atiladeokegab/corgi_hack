@@ -47,6 +47,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ slug: strin
   // so an identified click costs nothing more than a longer link.
   const subscriberId = url.searchParams.get('s')
   const handle = url.searchParams.get('h')?.replace(/^@/, '') ?? null
+  const group = url.searchParams.get('g')
   const dry = url.searchParams.get('dry') === '1'
 
   const existing = req.cookies.get(COOKIE)?.value
@@ -71,6 +72,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ slug: strin
     via,
     subscriberId,
     handle,
+    group,
     refClass,
     referrer,
     device: req.headers.get('user-agent')?.slice(0, 60) ?? 'unknown',

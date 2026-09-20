@@ -108,6 +108,7 @@ export function buildProfiles(events: ClickEvent[]): Profile[] {
       entryPost: first.postRef, topSlug,
       sharerUid, sharedToCount,
       subscriberId: evs.find(e => e.subscriberId)?.subscriberId ?? null,
+      handle: evs.find(e => e.handle)?.handle ?? null,
     })
   }
   return profiles
