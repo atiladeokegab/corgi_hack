@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PageNav } from '@/app/components/PageNav'
 import { getDms, getEvents, getItems, getPosts } from '@/lib/data'
 import { buildProfiles } from '@/lib/classify'
 import { triageQueue, delegationLoad, jobValues } from '@/lib/triage'
@@ -50,6 +51,7 @@ export default function DeskPage() {
         <Link href="/" className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium hover:text-foreground transition-colors">
           ← Lookbook
         </Link>
+        <PageNav current="/desk" />
         <h1 className="text-3xl sm:text-[2.4rem] font-semibold mt-2 tracking-tight leading-[1.1]">
           The desk
         </h1>

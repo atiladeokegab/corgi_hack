@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PageNav } from '@/app/components/PageNav'
 import { getEvents } from '@/lib/data'
 import { buildProfiles } from '@/lib/classify'
 import { getCharges } from '@/lib/stripe'
@@ -26,6 +27,7 @@ export default async function RevenuePage() {
         <Link href="/" className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium hover:text-foreground transition-colors">
           ← Lookbook
         </Link>
+        <PageNav current="/revenue" />
         <h1 className="text-3xl sm:text-[2.4rem] font-semibold mt-2 tracking-tight leading-[1.1]">
           Revenue
         </h1>
