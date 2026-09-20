@@ -1,0 +1,6 @@
+.DS_Store
+*.swp
+.env
+.env.local
+__pycache__/
+node_modules/
