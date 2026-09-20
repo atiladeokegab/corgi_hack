@@ -1,7 +1,7 @@
 import { headers } from 'next/headers'
 import Link from 'next/link'
 import { Triage } from './Triage'
-import { getEvents, getItems, getPendingDms } from '@/lib/data'
+import { getCustomers, getEvents, getItems, getPendingDms } from '@/lib/data'
 import { buildProfiles, SEGMENTS } from '@/lib/classify'
 import { buildPersonalLink } from '@/lib/links'
 import {
@@ -28,7 +28,15 @@ export default async function InboxPage() {
   const profileByUid = new Map(profiles.map(p => [p.uid, p]))
 
   const templates = getTemplates()
-  const pending = getPendingDms()
+
+  // Ordered by what each person has already spent, highest first. Not shown —
+  // a number beside someone's name would change how you talk to them — but it
+  // decides who you see at the top of the pile. Ties go to the most recent.
+  const spendByUid = new Map(getCustomers().map(c => [c.uid, c.totalSpent]))
+  const pending = [...getPendingDms()].sort((a, b) => {
+    const diff = (spendByUid.get(b.uid) ?? 0) - (spendByUid.get(a.uid) ?? 0)
+    return diff !== 0 ? diff : b.ts.localeCompare(a.ts)
+  })
   const counts: Record<string, number> = {}
   for (const d of pending) if (templates[d.job]) counts[d.job] = (counts[d.job] ?? 0) + 1
 

@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { gbp, num, pct } from './components/Layout'
-import { getCustomers, getEvents, getItems, getPendingDms, getPosts, getTruth } from '@/lib/data'
+import { getCustomers, getEvents, getItems, getPendingDms } from '@/lib/data'
 import { buildProfiles, SEGMENTS, SEGMENT_ORDER } from '@/lib/classify'
-import { dmBreakdown, itemBreakdown, postBreakdown, recoveryAccuracy, segmentSummary, sourceMix } from '@/lib/analytics'
+import { segmentSummary, sourceMix } from '@/lib/analytics'
 import { owedToHer } from '@/lib/owed'
 import { cheaperThan, getTemplates, renderTemplate } from '@/lib/templates'
 
@@ -35,7 +35,6 @@ export default function Page() {
   const sources = sourceMix(profiles)
   const items = getItems()
   const owed = owedToHer(getCustomers(), profiles, items)
-  const recovery = recoveryAccuracy(profiles, getTruth())
 
   const pending = getPendingDms()
   const bySlug = Object.fromEntries(items.map(i => [i.slug, i]))
@@ -50,13 +49,9 @@ export default function Page() {
     return Boolean(renderTemplate(tpl, { item, link: 'x', cheaper, cheaperLink: cheaper ? 'x' : null }))
   }).length
 
-  const postRows = postBreakdown(getPosts(), profiles)
-  const dmRows = dmBreakdown(profiles)
-  const itemRows = itemBreakdown(items, profiles)
 
   const present = SEGMENT_ORDER.filter(k => segs.some(s => s.key === k))
   const mix = present.map(k => ({ key: k, n: segs.find(s => s.key === k)!.people }))
-  const topSource = [...sources].sort((a, b) => b.people - a.people)[0]
 
   return (
     <main className="mx-auto w-full max-w-4xl px-4 sm:px-6 py-10 sm:py-14">
@@ -121,36 +116,9 @@ export default function Page() {
         />
       </div>
 
-      <div className="mt-3 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <Tile
-          href="/posts"
-          label="Posts"
-          value={`${postRows.length}`}
-          note={postRows[0] ? `“${postRows[0].label}” brought the most people.` : 'Who each post brings.'}
-        />
-        <Tile
-          href="/questions"
-          label="Questions"
-          value={`${dmRows.length}`}
-          note={dmRows[0] ? `“${dmRows[0].label.toLowerCase()}” is asked most.` : 'Who each question brings.'}
-        />
-        <Tile
-          href="/pieces"
-          label="Pieces"
-          value={`${itemRows.length}`}
-          note={itemRows[0] ? `${itemRows[0].label} is opened most.` : 'What each crowd opens.'}
-        />
-        <Tile
-          href="/numbers"
-          label="Sorting"
-          value={pct(recovery.accuracy)}
-          note="People sorted into the right group."
-        />
-      </div>
-
       <section className="mt-10">
         <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium mb-3">
-          Where they come from
+          Where your audience comes from
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {sources.map(s => (
@@ -161,9 +129,29 @@ export default function Page() {
             </div>
           ))}
         </div>
-        <p className="text-sm text-ink-2 mt-3">
-          Most come from {topSource.label.toLowerCase()}.
+      </section>
+
+      <section className="mt-10">
+        <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium mb-3">
+          Look deeper
         </p>
+        <ul className="rounded-2xl border overflow-hidden bg-surface-2" style={{ borderColor: 'var(--border)' }}>
+          {[
+            { href: '/posts', title: 'What to post next', line: 'Which posts bring which kind of person.' },
+            { href: '/questions', title: 'Who to answer first', line: 'Which questions bring which kind of person.' },
+            { href: '/pieces', title: 'What they want', line: 'Which pieces each group keeps opening.' },
+            { href: '/links', title: 'Make an affiliate link', line: 'The link you paste into a caption or a reply.' },
+            { href: '/how', title: 'How Edna works', line: 'What is counted, what is estimated, what cannot be seen.' },
+          ].map((r, i) => (
+            <li key={r.href} className={i ? 'border-t' : ''} style={{ borderColor: 'var(--border)' }}>
+              <Link href={r.href} className="flex items-baseline gap-4 p-4 hover:bg-background transition-colors">
+                <span className="font-medium text-sm">{r.title}</span>
+                <span className="text-sm text-ink-2 hidden sm:inline">{r.line}</span>
+                <span className="ml-auto text-ink-3 shrink-0">→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   )
