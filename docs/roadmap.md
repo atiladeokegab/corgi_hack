@@ -157,6 +157,50 @@ reaching a retailer.
 
 ---
 
+## Shipped — status at 15:30
+
+The human authorised the whole roadmap and asked that none of the existing team's work
+be touched. So everything below is **new files and new pages only**: no existing file in
+the repo has been modified, and no new npm dependency has been added.
+
+| Page | What it is | Status |
+|---|---|---|
+| `/desk` | Triage queue, delegation matrix, drafts in her words, one-to-many broadcaster, context scanner | **live** (`3b27714`) |
+| `/inbox` | Unified multi-platform DM ingestion behind one adapter interface | **live**, Prometheus |
+| `/board` | Drag-and-drop whiteboard workspace | in build, Prometheus |
+| `/revenue` | Stripe monetisation mapping, reported against E-09's caveat | in build, Prometheus |
+
+Nothing is wired into the site nav, by request. Each page is reached by URL.
+
+### What `/desk` does, and what is real in it
+
+| Module | What it does | What is real |
+|---|---|---|
+| `lib/jobs.ts` | Re-derives E-01's twelve job labels from message text alone | **12/12** agreement with the printed labels; returns `null` rather than guessing |
+| `lib/triage.ts` | Value per reply from measured onward shares and return days, plus the delegation matrix | Ordering is measured; the one modelling choice is named in the file |
+| `lib/reply.ts` | Drafts that quote `sofia_says` verbatim and stop where her eye is needed | Her words, unchanged; no score, no paraphrase |
+| `lib/broadcast.ts` | Cohorts by question tag — one send, many people | Observed mix; monthly figures are estimates scaled onto the 3.1K |
+| `lib/recommend.ts` | Retrieves her own posts, neighbouring pieces and the cohort stat | Retrieval only, no generation |
+| `lib/link.ts` | Shared tracked-link assembly | The format the existing redirect already reads |
+
+The headline the page computes from the seeded log, rather than asserts:
+
+- Her loudest DM, **EXACT ITEM REQUEST** (270 people), is 76% Quick Asks who never return.
+- Her most valuable, **SOCIAL SHARING** (109 people), returns 50% of the time and carries
+  0.60 onward shares each. **SECOND-HAND DISCOVERY** climbs ten places against volume.
+- **4 of 12** questions leave her desk entirely — one to the VA, three auto-replied.
+- Those four cohorts cover an estimated **1,093 replies a month in 4 sends**.
+
+### Known, and not papered over
+
+- `app/links/LinkBuilder.tsx:32` has a pre-existing lint error (`react-hooks/set-state-in-effect`)
+  from the team's own commit `cc7c448`. It is not ours to touch, so it stands.
+- Two pre-existing unused-variable warnings in `lib/analytics.ts` and `scripts/seed.mjs`,
+  same reason.
+- `npx next build` is green across every page, ours and theirs.
+
+---
+
 ## Roadmap — said out loud, not built today
 
 Ordered by value, not by phase number.

@@ -53,7 +53,7 @@ const TEMPLATES: Record<Job, Template> = {
   'POST-PURCHASE': (i, l) =>
     `[needs your line] They already bought. This is the styling answer only you can give. ${l}`,
 
-  'CONSTRAINT': (i, l) =>
+  'CONSTRAINT': () =>
     `[needs your line] They are asking you to help them NOT buy. Worth answering properly — it is the trust play.`,
 
   'TRUST': () =>
