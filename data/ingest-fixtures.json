@@ -1,0 +1,44 @@
+{
+  "synthetic": [
+    {
+      "id": "tiktok:fixture-1",
+      "platform": "tiktok",
+      "externalId": "fixture-1",
+      "handle": "@mila.moves",
+      "receivedAt": "2026-09-20T09:30:00.000Z",
+      "text": "Could you do this same look for a rainy commute?",
+      "subscriberId": null,
+      "raw": {
+        "synthetic": true,
+        "fixture": "tiktok"
+      }
+    },
+    {
+      "id": "youtube:fixture-1",
+      "platform": "youtube",
+      "externalId": "fixture-1",
+      "handle": "@anika_watches",
+      "receivedAt": "2026-09-20T09:20:00.000Z",
+      "text": "Stand-in message: which jacket would last more than one season?",
+      "subscriberId": null,
+      "raw": {
+        "synthetic": true,
+        "fixture": "youtube"
+      }
+    },
+    {
+      "id": "email:fixture-1",
+      "platform": "email",
+      "externalId": "fixture-1",
+      "handle": "reader@example.test",
+      "receivedAt": "2026-09-20T09:10:00.000Z",
+      "text": "I own the silk skirt already. What would you wear with it in autumn?",
+      "subscriberId": null,
+      "raw": {
+        "synthetic": true,
+        "fixture": "email"
+      }
+    }
+  ],
+  "received": []
+}
