@@ -129,7 +129,7 @@ const REFERRERS = {
   instagram:    ['https://l.instagram.com/', 'https://www.instagram.com/'],
   instagram_dm: ['https://l.instagram.com/?dm=1'],
   whatsapp:     ['https://web.whatsapp.com/', 'android-app://com.whatsapp'],
-  messages:     [''],   // iMessage and most native share sheets strip the referrer
+  messages:     ['https://www.messenger.com/'],  // Messenger web does send a referrer
   direct:       [''],
   other:        ['https://www.pinterest.co.uk/'],
 }
@@ -276,7 +276,12 @@ for (const post of posts) {
         post,
         dmJob: null,
         anchorMs: c.pubMs + hours(between(4, 96)),
-        refClass: weighted([['whatsapp', 0.46], ['messages', 0.40], ['instagram_dm', 0.09], ['other', 0.05]]),
+        // iMessage and the native share sheets send NO referrer at all, so those
+        // arrivals are indistinguishable from someone typing the address in. They
+        // are generated as 'direct' on purpose: anything else would flatter the
+        // classifier with a signal it will never have in production. Such a person
+        // is only recoverable when the forwarded link still carried its sender id.
+        refClass: weighted([['whatsapp', 0.46], ['direct', 0.40], ['instagram_dm', 0.09], ['other', 0.05]]),
         via: rnd() < SHARER_ATTRIBUTION_RATE ? c.uid : null,
         tierPref: null,
       })

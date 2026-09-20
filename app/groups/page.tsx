@@ -46,7 +46,8 @@ export default function GroupsPage() {
         <p className="text-base text-ink-2 mt-4 max-w-2xl leading-relaxed">
           She writes the reply once for each kind of person, not once for each person.
           Everyone in the group gets their own link, so she finds out afterwards which
-          version of the message actually worked.
+          version of the message actually worked. Delivery here goes to a single
+          nominated account — enough to show the whole path end to end.
         </p>
       </header>
 

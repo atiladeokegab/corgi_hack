@@ -24,7 +24,7 @@ if (!group) {
 const res = await fetch(`${host}/api/send`, {
   method: 'POST',
   headers: { 'content-type': 'application/json' },
-  body: JSON.stringify({ group, item, preview: Boolean(args.preview) }),
+  body: JSON.stringify({ group, item, deliverTo: args.to ?? null, preview: Boolean(args.preview) }),
 }).catch(e => { console.error(`\n  Could not reach ${host} — is npm run dev running?\n`, e.message); process.exit(1) })
 
 if (!res.ok) { console.error('  ' + (await res.text())); process.exit(1) }
@@ -32,12 +32,10 @@ const r = await res.json()
 
 console.log(`\n  ${r.group} · ${r.item}`)
 console.log('  ' + '-'.repeat(58))
-console.log(`  ${r.total} people in this group`)
-console.log(`  ${r.sending} can be messaged now (contacted her in the last 24h)`)
-console.log(`  ${r.queued} queued — delivered the next time they get in touch`)
-console.log('\n  first few:')
+console.log(`  ${r.total} messages prepared, each with its own link`)
+if (r.delivery) console.log(`  delivered to @${r.delivery.handle} — one account only`)
+console.log('\n  first few prepared:')
 for (const p of r.recipients.slice(0, 5)) {
-  const who = p.handle ? '@' + p.handle : p.uid
-  console.log(`   ${p.status === 'sending' ? '→' : '·'} ${who.padEnd(22)} ${p.status.padEnd(8)} last seen ${p.hoursSinceContact}h ago`)
+  console.log(`   · ${(p.handle ? '@' + p.handle : p.uid).padEnd(22)} ${p.link.slice(0, 64)}`)
 }
 console.log(`\n  ${args.preview ? 'Preview only — nothing logged.' : 'Run recorded.'}\n`)

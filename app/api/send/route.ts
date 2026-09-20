@@ -17,9 +17,9 @@ export async function POST(req: NextRequest) {
   const origin = new URL(req.url).origin
   const profiles = buildProfiles(getEvents())
 
-  const result = planSend({ origin, group, item, message, profiles })
+  const result = planSend({ origin, group, item, message, profiles, deliverTo: body.deliverTo })
   if (!body.preview) logSend(result)
 
   // The full recipient list can run to thousands; send back a workable sample.
-  return NextResponse.json({ ...result, recipients: result.recipients.slice(0, 40) })
+  return NextResponse.json({ ...result, recipients: result.recipients.slice(0, 12) })
 }

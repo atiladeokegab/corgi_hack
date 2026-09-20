@@ -3,21 +3,18 @@ import path from 'node:path'
 import type { Profile, SegmentKey } from './types'
 
 /**
- * Instagram only permits a message to someone who contacted the account within the
- * last 24 hours. So a group send is not a blast — it is a queue. Everyone in the
- * group is walked one at a time and sorted: the open window goes now, everyone else
- * is armed and delivered automatically the next time they comment or DM.
+ * Preparing a group send: every member of the group gets their own tagged link,
+ * with the message their behaviour earned them.
  *
- * Nobody is dropped, nothing is sent unsolicited, and the account does not get
- * flagged for spam — which matters more than speed, because the account is the business.
+ * DELIVERY IS DELIBERATELY LIMITED TO ONE ACCOUNT. Instagram does not carry an
+ * unsolicited group DM — it only permits a message to someone who made contact in
+ * the last 24 hours — and there is no ManyChat connection wired up here anyway.
+ * So the group is built for real and one nominated account is actually delivered
+ * to. The page says which account that is.
  */
-export const WINDOW_HOURS = 24
-
 export type Recipient = {
   uid: string
   handle: string | null
-  status: 'sending' | 'queued'
-  hoursSinceContact: number
   link: string
   message: string
 }
@@ -26,22 +23,22 @@ export type SendResult = {
   group: SegmentKey
   item: string
   total: number
-  sending: number
-  queued: number
-  recipients: Recipient[]
+  recipients: Recipient[]   // a sample of the prepared group
+  delivery: Recipient | null // the one that actually goes out
   ranAt: string
 }
 
 export function buildRecipientLink(opts: {
-  origin: string; item: string; group: SegmentKey; profile: Profile
+  origin: string; item: string; group: SegmentKey
+  subscriberId: string; handle: string | null
 }) {
-  const { origin, item, group, profile } = opts
-  const params = new URLSearchParams({ g: group, src: 'instagram_dm' })
-  // Prefer the ManyChat subscriber id when we have one; fall back to our own id.
-  params.set('s', profile.subscriberId ?? profile.uid)
-  if (profile.handle) params.set('h', profile.handle)
+  const { origin, item, group, subscriberId, handle } = opts
+  const params = new URLSearchParams({ g: group, src: 'instagram_dm', s: subscriberId })
+  if (handle) params.set('h', handle)
   return `${origin}/r/${item}?${params}`
 }
+
+const render = (message: string, link: string) => message.replaceAll('{link}', link)
 
 export function planSend(opts: {
   origin: string
@@ -49,43 +46,43 @@ export function planSend(opts: {
   item: string
   message: string
   profiles: Profile[]
+  deliverTo?: string | null
   now?: Date
 }): SendResult {
-  const { origin, group, item, message, profiles } = opts
+  const { origin, group, item, message, profiles, deliverTo } = opts
   const now = opts.now ?? new Date()
 
   const members = profiles.filter(p => p.segment === group)
   const recipients: Recipient[] = members.map(p => {
-    const hours = (now.getTime() - Date.parse(p.lastTs)) / 3_600_000
-    const link = buildRecipientLink({ origin, item, group, profile: p })
-    return {
-      uid: p.uid,
+    const link = buildRecipientLink({
+      origin, item, group,
+      subscriberId: p.subscriberId ?? p.uid,
       handle: p.handle,
-      status: (hours <= WINDOW_HOURS ? 'sending' : 'queued') as Recipient['status'],
-      hoursSinceContact: Math.max(0, Math.round(hours)),
-      link,
-      message: message.replaceAll('{link}', link),
-    }
-  }).sort((a, b) => a.hoursSinceContact - b.hoursSinceContact)
+    })
+    return { uid: p.uid, handle: p.handle, link, message: render(message, link) }
+  })
 
-  return {
-    group,
-    item,
-    total: recipients.length,
-    sending: recipients.filter(r => r.status === 'sending').length,
-    queued: recipients.filter(r => r.status === 'queued').length,
-    recipients,
-    ranAt: now.toISOString(),
-  }
+  // The single real delivery, addressed to whoever is running the demo.
+  const handle = deliverTo?.replace(/^@/, '').trim() || null
+  const delivery = handle
+    ? (() => {
+        const link = buildRecipientLink({
+          origin, item, group, subscriberId: `mc_demo_${handle}`, handle,
+        })
+        return { uid: `u_mc_mc_demo_${handle}`, handle, link, message: render(message, link) }
+      })()
+    : null
+
+  return { group, item, total: recipients.length, recipients, delivery, ranAt: now.toISOString() }
 }
 
-/** Append a record of the run, so the page can show what was armed and when. */
+/** Append a record of the run, so there is a trail of what was prepared and when. */
 export function logSend(result: SendResult) {
   const file = path.join(process.cwd(), 'data', 'send-log.local.json')
-  let all: Omit<SendResult, 'recipients'>[] = []
+  let all: unknown[] = []
   try { all = JSON.parse(fs.readFileSync(file, 'utf8')) } catch { /* first run */ }
-  const { recipients, ...summary } = result
-  all.push(summary)
+  const { recipients, delivery, ...summary } = result
+  all.push({ ...summary, deliveredTo: delivery?.handle ?? null })
   fs.mkdirSync(path.dirname(file), { recursive: true })
   fs.writeFileSync(file, JSON.stringify(all.slice(-50), null, 1))
 }
