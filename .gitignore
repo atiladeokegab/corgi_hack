@@ -46,3 +46,5 @@ next-env.d.ts
 *.swp
 __pycache__/
 data/*.local.json
+
+data/templates.json

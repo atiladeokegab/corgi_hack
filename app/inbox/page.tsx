@@ -4,7 +4,10 @@ import { Triage } from './Triage'
 import { getEvents, getItems, getPendingDms } from '@/lib/data'
 import { buildProfiles, SEGMENTS } from '@/lib/classify'
 import { buildPersonalLink } from '@/lib/links'
-import { cheaperThan, TEMPLATES } from '@/lib/templates'
+import {
+  ASKING, cheaperThan, getTemplates, NEEDS_YOU, PLACEHOLDERS, renderTemplate,
+} from '@/lib/templates'
+import { TemplateEditor } from './TemplateEditor'
 import type { SegmentKey } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
@@ -24,10 +27,15 @@ export default async function InboxPage() {
   const segmentByUid = new Map(profiles.map(p => [p.uid, p.segment]))
   const profileByUid = new Map(profiles.map(p => [p.uid, p]))
 
-  const cards = getPendingDms().map(dm => {
+  const templates = getTemplates()
+  const pending = getPendingDms()
+  const counts: Record<string, number> = {}
+  for (const d of pending) if (templates[d.job]) counts[d.job] = (counts[d.job] ?? 0) + 1
+
+  const cards = pending.map(dm => {
     const item = bySlug[dm.slug] ?? items[0]
     const segment = (segmentByUid.get(dm.uid) ?? 'BROWSING') as SegmentKey
-    const template = TEMPLATES[dm.job]
+    const template = templates[dm.job]
     const link = buildPersonalLink({
       origin, item: item.slug, group: segment,
       subscriberId: `mc_${dm.handle}`, handle: dm.handle,
@@ -40,7 +48,7 @@ export default async function InboxPage() {
         })
       : null
 
-    const draft = template?.build({ item, link, cheaper, cheaperLink }) ?? null
+    const draft = template ? renderTemplate(template, { item, link, cheaper, cheaperLink }) : null
     return {
       ...dm,
       segment,
@@ -49,9 +57,11 @@ export default async function InboxPage() {
       itemName: item.name,
       opens: profileByUid.get(dm.uid)?.touches ?? 0,
       distinctPosts: profileByUid.get(dm.uid)?.distinctPosts ?? 0,
-      asking: template?.asking ?? dm.job,
-      autoable: Boolean(template?.autoable && draft),
-      needsHer: template?.needsHer ?? null,
+      asking: ASKING[dm.job] ?? dm.job,
+      autoable: Boolean(draft),
+      // Either this question always needs her, or the template could not be filled in.
+      needsHer: NEEDS_YOU[dm.job]
+        ?? (template && !draft ? 'No cheaper piece of the same kind, so this one is yours.' : null),
       draft,
       link,
     }
@@ -63,8 +73,8 @@ export default async function InboxPage() {
     <main className="mx-auto w-full max-w-4xl px-4 sm:px-6 py-10 sm:py-14">
       <header className="mb-9">
         <div className="flex items-baseline justify-between gap-4 flex-wrap">
-          <Link href="/" className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium hover:text-foreground transition-colors">
-            ← Lookbook
+          <Link href="/" className="text-base font-semibold tracking-[0.2em] hover:opacity-70 transition-opacity">
+            EDNA
           </Link>
           <Link
             href="/links"
@@ -82,6 +92,8 @@ Make a link →
           Read, send, next. The ones needing your judgement are kept separate.
         </p>
       </header>
+
+      <TemplateEditor templates={templates} placeholders={PLACEHOLDERS} counts={counts} />
 
       <Triage cards={cards} />
     </main>

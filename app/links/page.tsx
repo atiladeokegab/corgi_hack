@@ -20,8 +20,8 @@ export default function LinksPage() {
     <main className="mx-auto w-full max-w-5xl px-4 sm:px-6 py-10 sm:py-14">
       <header className="mb-9">
         <div className="flex items-baseline justify-between gap-4 flex-wrap">
-          <Link href="/" className="text-[11px] uppercase tracking-[0.14em] text-ink-3 font-medium hover:text-foreground transition-colors">
-            ← Lookbook
+          <Link href="/" className="text-base font-semibold tracking-[0.2em] hover:opacity-70 transition-opacity">
+            EDNA
           </Link>
           <Link
             href="/inbox"

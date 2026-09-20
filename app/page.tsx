@@ -4,7 +4,7 @@ import { getCustomers, getEvents, getItems, getPendingDms, getPosts, getTruth } 
 import { buildProfiles, SEGMENTS, SEGMENT_ORDER } from '@/lib/classify'
 import { dmBreakdown, itemBreakdown, postBreakdown, recoveryAccuracy, segmentSummary, sourceMix } from '@/lib/analytics'
 import { owedToHer } from '@/lib/owed'
-import { cheaperThan, TEMPLATES } from '@/lib/templates'
+import { cheaperThan, getTemplates, renderTemplate } from '@/lib/templates'
 
 export const dynamic = 'force-dynamic'
 
@@ -39,12 +39,15 @@ export default function Page() {
 
   const pending = getPendingDms()
   const bySlug = Object.fromEntries(items.map(i => [i.slug, i]))
+  // Same test the inbox applies, so the two pages cannot disagree: a template
+  // only counts if every placeholder in it can actually be filled in.
+  const templates = getTemplates()
   const easy = pending.filter(d => {
-    const tpl = TEMPLATES[d.job]
-    if (!tpl?.autoable) return false
+    const tpl = templates[d.job]
+    if (!tpl) return false
     const item = bySlug[d.slug] ?? items[0]
     const cheaper = cheaperThan(item, items)
-    return Boolean(tpl.build({ item, link: 'x', cheaper, cheaperLink: cheaper ? 'x' : null }))
+    return Boolean(renderTemplate(tpl, { item, link: 'x', cheaper, cheaperLink: cheaper ? 'x' : null }))
   }).length
 
   const postRows = postBreakdown(getPosts(), profiles)
@@ -123,13 +126,13 @@ export default function Page() {
           href="/posts"
           label="Posts"
           value={`${postRows.length}`}
-          note={postRows[0] ? `“${postRows[0].label}” pulled the most.` : 'Who each post brings.'}
+          note={postRows[0] ? `“${postRows[0].label}” brought the most people.` : 'Who each post brings.'}
         />
         <Tile
           href="/questions"
           label="Questions"
           value={`${dmRows.length}`}
-          note={dmRows[0] ? `“${dmRows[0].label.toLowerCase()}” is the loudest.` : 'Who each question brings.'}
+          note={dmRows[0] ? `“${dmRows[0].label.toLowerCase()}” is asked most.` : 'Who each question brings.'}
         />
         <Tile
           href="/pieces"
