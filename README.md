@@ -1,4 +1,4 @@
-# Won Most Technical Solution 🏅
+# Won Most Innovative Solution 🏅
 # TEAM EDNA
 ## Demographic Data
 - 50k creator
