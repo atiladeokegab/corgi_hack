@@ -1,135 +1,88 @@
-# Won Most Innovative Solution 🏅
-# TEAM EDNA
-## Demographic Data
-- 50k creator
-- Highly trusted audience
-- Bottlenecked by her judgement
-- Fashion creator
-## Task
-Uses Sofia's judgement to help 1 real audience member make a better decision
+![Edna, creator inbox and link analytics](docs/assets/banner.png)
 
-Turn Sofia's taste into something her audience can actually use -- without turning her into a catalogue
+# Edna
 
-1. Choose a person from the evidence
-2. Pick the decision they are stuck on
-3. Ship the thing taht answers it
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-0B0B0B?logo=nextdotjs)](package.json)
+[![Lint](https://img.shields.io/badge/Checks-npm%20run%20lint-2A78D6)](package.json)
+[![Demo](https://img.shields.io/badge/Demo-Local-2A78D6)](#installation)
 
-## Audience Wants:
-What would I buy?
-What would I wear?
-What is worth it?
-What fits my life?
-## Sofia wants:
-1. More audience intimacy
-2. Less admin
-3. More time spent making content
-4. Find great producers
-### Deliverable
-Working 90 second demo 
-6pm deadline
-## Judgement Evaluation Criteria
-1. Value to a real audience member
-2. Focus to her judgement
-3. Use of the evidence
-4. Does it work?
-5. Something simple that works >> Complicated
+Creators who give personal shopping advice also have to answer repeated sizing questions, paste links and reconcile affiliate reports. In the Operation Lookbook brief, Sofia has roughly 3,100 DMs per month and one part-time assistant.
 
-# Numbers
-50k followers
-3.1k DMs / month
-## Sofia Processes
-1. Checks DMs
-2. Films content
-3. Edits videos + makes captions
-4. Negotiates with brands
-5. Messages
-6. Copies links into replies - this is easily automated
-7. Plans future content
+Edna brings that work into one inbox, with draft replies based on Sofia's notes and tagged links that show when readers come back. The seeded demo includes **94 waiting DMs** and illustrates how the inbox separates routine drafts from questions that need her judgement. [Seeded counts](data/reconciliation.json)
 
-## Questions
-"value to a real audience member" - what does this mean? - page 1
- -> One of her followers. Want them to like it, share it, buy it. About building **trust** and relationship building
-What is a "known associate" - page 4 - Is this the audience? Is this an AI agent?
--> Types of followers. This is categories of people.
-Where are her notes currently stored?
--> Imagine across notebooks, notion, notes pages, voice notes. Could also be physical notebooks
-"copies links into replies" - what does this mean?
--> literally her copying the link and many-chat
+Built for TANO Creator Heist's Operation Lookbook challenge. The team reported the Most Innovative Solution award. The historical audience is synthetic, and the comment-to-DM walkthrough simulates sending. The local redirect records demo clicks in the app.
 
-How does she make money?
--> Assume affiliates, will be variations
-Why is the info trapped in her? Is it because she can't respond to that many messages?
--> Can't respond to that many messages. Doesn't have time. Small variations
-Does the brand provide feedback? What are their wants?
--> Don't worry about that
-Make clear the assumptions we are making
+**[Run the interactive demo](#installation)** · **[Watch the seeded workflow](docs/assets/edna-demo.mp4)**
 
-SIPOC
-RCA
+![Edna triages DMs and runs a simulated comment-to-DM workflow that records clicks locally](docs/assets/demo.gif)
 
-## Interesting
-She also said she loved the loafers, yet never made a post about them. - organisational
--- how does she currently make her notes. Where are they?
+<sub>Recorded from the working app with its seeded data. The demo sends no external messages.</sub>
 
-Questions she's asked can easily be automated - bottom left of page 9
-More about carrying her context
+## How it works
 
+1. **Triage the inbox.** Edna uses templates and wardrobe notes to prepare repeated replies. Questions that need the creator's judgement remain in a separate queue, and the creator can edit both templates and drafts (`app/inbox/Triage.tsx`, `lib/templates.ts`).
 
+   ![The working inbox switches to the messages that need Sofia](docs/assets/how-triage.gif)
 
+2. **Send readers through a tagged link.** The Links page plays a sample keyword-to-DM flow. The local redirect records a click with its source and item, so the feed shows the new events as the demo runs (`app/links/CommentDemo.tsx`, `app/r/[slug]/route.ts`).
 
-The WAY she communicates with her audience - page 8
+   ![A simulated comment-to-DM run adds click events to the Edna dashboard](docs/assets/how-link.gif)
 
-## Problems
-### 1. Sofia forgetting about content in her notes
-e.g. She mentioned loafers she loved, but never made a post about it. Unlike her post about the blazer she loved.
+3. **See who returns after the affiliate window.** The reporting screen compares first and last clicks with the affiliate window. It shows late returners separately from the commission estimate (`app/owed/page.tsx`, `lib/owed.ts`).
 
-Causes:
-1. Notes are everywhere
-    a. Several note apps
-    b. Voice Notes
-    c. Physical
+   ![The affiliate-window report opens with the late-return data](docs/assets/how-audience.gif)
 
-Sofia operates in chaos. This is part of her process and should be respected. However, she is missing out on key information from lack of organisation.
+## Results
 
+![Three counts from the synthetic Operation Lookbook replay dataset](docs/assets/results.png)
 
-### 2. Sofia not responding to all her DMs
-At the end of each day, she still has 90+ unresponded to messages
+The figures describe the original seeded dataset. The seed assumptions and saved reconciliation explain which quantities came from the case file and which were modelled. Late returns count clicks after the 24-hour window. [Reconciliation](data/reconciliation.json) · [Seed assumptions](scripts/seed.mjs)
 
-Causes:
-1. She hand responds to all messages
-WHY? Because she needs a tailored response.
-WHY? Because this is important to her brand and is not willing to trade quantity for quality.
-*How can we ensure quality at scale?*
-2. Responding to repeat messages
-3. Hand copying links
-### 3. Lack of visibility
-She's not focusing on a specific customer segment because she doesn't know which customers are best. It is possible that the most profitable posts are due to the Ellas sharing it with their friends who are then more inclined to buy it. It could alternatively be the Priyas save the "worth it posts" and then find out
+| Seeded demo quantity | Result |
+| --- | ---: |
+| Waiting DMs | **MEASURED in seeded data** · 94 |
+| People with a recorded synthetic click | **MEASURED in seeded data** · 7,277 |
+| People returning after the pay window | **MEASURED in seeded data** · 3,136 |
 
-This is an information problem. Therefore, we need to find more information from customers.
+| Audience dashboard | Inbox triage | Tagged-link run |
+| --- | --- | --- |
+| ![Edna dashboard showing audience groups](docs/assets/screen-dashboard.png) | ![Creator inbox on the Needs you tab](docs/assets/screen-inbox.png) | ![Completed comment-to-DM simulation and the click feed](docs/assets/screen-links.png) |
 
-## Solutions
-### 1. Organised Notes
-AI organiser that combines all her notes
-She can take photos of physical notes and it reads them
-### 2. Data 
-Finds the highest ROI DMs or comments for her so it's manageable. What about if each day she only had to respond to 50 messages a day. It would then be more manageable and valuable.
-Respond to word-for-word repeat questions with a bot
-### 3. Customer fill-out forms
-A solution to this could be an additional promo code that is applied if customers fill out a form.
+## Installation
 
+You need Git and Node.js 22 or later. The bundled demo runs with local data.
 
-Problem: We don't know which customer segment is buying. Is it the Claras, Jamies, Priyas or the friends of Ellas?
+```sh
+git clone https://github.com/atiladeokegab/corgi_hack.git
+cd corgi_hack
+npm ci                 # Install the pinned dependencies
+node scripts/seed.mjs  # Optional, regenerate the synthetic starting dataset
+npm run dev            # Open http://localhost:3000
+```
 
-We should find out!
+## Documentation
 
-To do so, we could offer a form for the user to fill out. We could ask a set of questions to identify which customer group they belong to. At the end, we offer a custom promo code.
-Assuming the brand can supply the purchase information (which they likely would, as they would also be incentivised to find out the customer segment).
-From this, we can then figure out the customer segments that are most profitable and tailor our content to them.
+[Demo walkthrough](DEMO.md) · [Saved dataset summary](data/reconciliation.json) · [Seed assumptions](scripts/seed.mjs).
 
+## Contact
 
-"What kind of post would you like next?" / "What has been you favourite post? Link it her:"
+Use [GitHub Issues](https://github.com/atiladeokegab/corgi_hack/issues) for bugs or questions. [Repository contributors](https://github.com/atiladeokegab/corgi_hack/graphs/contributors).
 
-## Demo
-1. Dashboard
-2. Working cookies + urls
-3. 
+## Contributing
+
+Run `npm run lint` and check the inbox and tagged-link workflows locally. Keep examples grounded in the synthetic case material.
+
+## Citation
+
+```bibtex
+@software{edna_2026,
+  title = {Edna: Operation Lookbook},
+  author = {{Team Edna}},
+  year = {2026},
+  url = {https://github.com/atiladeokegab/corgi_hack}
+}
+```
+
+## License
+
+Contact the maintainers for terms on the project code. The [event case material](evidence/) comes from TANO Creator Heist. The click and inbox examples are synthetic outputs of the [repository seed script](scripts/seed.mjs).
